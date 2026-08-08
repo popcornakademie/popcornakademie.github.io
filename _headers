@@ -1,0 +1,34 @@
+# Cloudflare Pages liest diese Datei automatisch aus dem Wurzelverzeichnis.
+# Reihenfolge: spezifischere Regeln stehen weiter unten.
+
+/*
+  # Erzwingt HTTPS fuer zwei Jahre, inklusive Subdomains.
+  # Erst aktivieren, wenn HTTPS auf allen Subdomains sicher laeuft.
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+  # Verhindert, dass der Browser Dateitypen erraet.
+  X-Content-Type-Options: nosniff
+
+  # Die Seite darf nicht in fremde Frames eingebettet werden (Clickjacking).
+  X-Frame-Options: DENY
+
+  # Beim Wechsel auf fremde Seiten wird nur die Domain uebermittelt, nicht der Pfad.
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Browser-Funktionen, die diese Seite nicht braucht, werden abgeschaltet.
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+
+  # Content Security Policy.
+  # - 'unsafe-inline' ist noetig, weil CSS und JS direkt im HTML stehen.
+  # - assets.zeeg.me / zeeg.me sind fuer die Terminbuchung freigegeben.
+  #   Sollte Zeeg entfernt werden, koennen diese Eintraege ebenfalls weg.
+  # - frame-ancestors 'none' entspricht X-Frame-Options fuer moderne Browser.
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://assets.zeeg.me https://zeeg.me; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; frame-src https://zeeg.me https://*.zeeg.me; connect-src 'self' https://zeeg.me https://*.zeeg.me; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+
+# Schriften aendern sich nie - ein Jahr Cache, unveraenderlich.
+/fonts.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# PDF darf gecacht werden, aber kuerzer, damit Preisaenderungen ankommen.
+/popcorn-akademie-workshops.pdf
+  Cache-Control: public, max-age=86400

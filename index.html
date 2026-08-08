@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Popcorn Akademie — Medienkompetenz für Kinder und Jugendliche</title>
+<meta name="description" content="Die Popcorn Akademie bringt Kindern und Jugendlichen bei, wie Medien funktionieren — mit Kamera, Schnittprogramm und guten Fragen. Workshops in Wolfratshausen, Bad Tölz, München und online.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231E1233'/%3E%3Cg fill='%23FFF4E0'%3E%3Ccircle cx='50' cy='27' r='13'/%3E%3Ccircle cx='33' cy='35' r='11'/%3E%3Ccircle cx='67' cy='35' r='11'/%3E%3Ccircle cx='41' cy='18' r='9'/%3E%3Ccircle cx='60' cy='18' r='9'/%3E%3Ccircle cx='50' cy='39' r='12'/%3E%3Ccircle cx='23' cy='44' r='8'/%3E%3Ccircle cx='77' cy='44' r='8'/%3E%3C/g%3E%3Cpath d='M19 53 h62 l-8 38 h-46 z' fill='%23E5423C'/%3E%3Cg fill='%23FFF4E0'%3E%3Cpath d='M29 53 h9 l-5 38 h-7 z'/%3E%3Cpath d='M46 53 h9 l-2 38 h-8 z'/%3E%3Cpath d='M63 53 h9 l1 38 h-8 z'/%3E%3C/g%3E%3Crect x='15' y='46' width='70' height='11' rx='5.5' fill='%23FFC24B'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="fonts.css">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --night:#1E1233;        /* projector dark */
+  --night-2:#2B1B47;
+  --night-3:#392260;
+  --butter:#FFC24B;       /* butter gold */
+  --kernel:#F0803C;       /* caramel */
+  --curtain:#E5423C;      /* popcorn box stripe red */
+  --cream:#FFF4E0;        /* popcorn */
+  --cream-2:#F6E6C8;
+  --mint:#46D6C0;         /* the "digital" accent */
+  --ink:#2A1A20;
+
+  --display:"Alfa Slab One",Georgia,serif;
+  --body:"Outfit Variable",system-ui,-apple-system,sans-serif;
+  --slate:"Space Mono",ui-monospace,monospace;
+
+  --wrap:1180px;
+  --r:18px;
+  --shadow:0 18px 40px -18px rgba(30,18,51,.45);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--body);
+  font-weight:400;
+  font-size:17px;
+  line-height:1.65;
+  color:var(--cream);
+  background:var(--night);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit}
+
+/* popcorn field used as faint background texture */
+.pop-bg{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='%23FFFFFF' fill-opacity='.05'%3E%3Cg transform='translate(30 34) scale(.42)'%3E%3Ccircle cx='50' cy='35' r='20'/%3E%3Ccircle cx='30' cy='50' r='18'/%3E%3Ccircle cx='70' cy='52' r='17'/%3E%3Ccircle cx='45' cy='68' r='19'/%3E%3Ccircle cx='65' cy='30' r='14'/%3E%3Ccircle cx='33' cy='30' r='13'/%3E%3C/g%3E%3Cg transform='translate(150 120) scale(.34) rotate(24 50 50)'%3E%3Ccircle cx='50' cy='35' r='20'/%3E%3Ccircle cx='30' cy='50' r='18'/%3E%3Ccircle cx='70' cy='52' r='17'/%3E%3Ccircle cx='45' cy='68' r='19'/%3E%3Ccircle cx='65' cy='30' r='14'/%3E%3Ccircle cx='33' cy='30' r='13'/%3E%3C/g%3E%3Cg transform='translate(96 176) scale(.28) rotate(-15 50 50)'%3E%3Ccircle cx='50' cy='35' r='20'/%3E%3Ccircle cx='30' cy='50' r='18'/%3E%3Ccircle cx='70' cy='52' r='17'/%3E%3Ccircle cx='45' cy='68' r='19'/%3E%3Ccircle cx='65' cy='30' r='14'/%3E%3Ccircle cx='33' cy='30' r='13'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.pop-bg--dark{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='%231E1233' fill-opacity='.055'%3E%3Cg transform='translate(30 34) scale(.42)'%3E%3Ccircle cx='50' cy='35' r='20'/%3E%3Ccircle cx='30' cy='50' r='18'/%3E%3Ccircle cx='70' cy='52' r='17'/%3E%3Ccircle cx='45' cy='68' r='19'/%3E%3Ccircle cx='65' cy='30' r='14'/%3E%3Ccircle cx='33' cy='30' r='13'/%3E%3C/g%3E%3Cg transform='translate(150 120) scale(.34) rotate(24 50 50)'%3E%3Ccircle cx='50' cy='35' r='20'/%3E%3Ccircle cx='30' cy='50' r='18'/%3E%3Ccircle cx='70' cy='52' r='17'/%3E%3Ccircle cx='45' cy='68' r='19'/%3E%3Ccircle cx='65' cy='30' r='14'/%3E%3Ccircle cx='33' cy='30' r='13'/%3E%3C/g%3E%3Cg transform='translate(96 176) scale(.28) rotate(-15 50 50)'%3E%3Ccircle cx='50' cy='35' r='20'/%3E%3Ccircle cx='30' cy='50' r='18'/%3E%3Ccircle cx='70' cy='52' r='17'/%3E%3Ccircle cx='45' cy='68' r='19'/%3E%3Ccircle cx='65' cy='30' r='14'/%3E%3Ccircle cx='33' cy='30' r='13'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ============ TYPE ============ */
+.eyebrow{
+  font-family:var(--slate);
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--butter);
+  display:flex;align-items:center;gap:10px;
+  margin:0 0 18px;
+}
+.eyebrow--ink{color:var(--curtain)}
+.h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,7vw,80px);line-height:1.02;letter-spacing:-.01em;margin:0}
+.h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,4.4vw,50px);line-height:1.08;margin:0 0 16px}
+.h3{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.2;margin:0 0 8px}
+.lede{font-size:clamp(17px,1.6vw,20px);font-weight:300;line-height:1.7;opacity:.88;max-width:62ch;margin:0}
+.gold{color:var(--butter)}
+.red{color:var(--curtain)}
+.mint{color:var(--mint)}
+
+/* ============ LAYOUT ============ */
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 26px}
+.sec{padding:96px 0;position:relative}
+.sec--cream{background:var(--cream);color:var(--ink)}
+.sec--night{background:var(--night-2);color:var(--cream)}
+
+/* ============ NAV ============ */
+.nav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(30,18,51,.82);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,244,224,.1);
+}
+.nav__in{max-width:var(--wrap);margin:0 auto;padding:11px 26px;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 1 auto;min-width:0}
+.brand__chip{
+  width:46px;height:46px;flex:0 0 46px;border-radius:13px;
+  background:linear-gradient(158deg,#3A2560,#1B1030);
+  display:grid;place-items:center;overflow:hidden;box-shadow:0 0 0 2px rgba(255,194,75,.6);
+}
+.brand__chip{position:relative}
+.brand__logo{width:100%;height:100%;display:block}
+.brand__txt{font-family:var(--display);font-size:16px;line-height:1.05;letter-spacing:.01em}
+.brand__txt small{display:block;font-family:var(--slate);font-size:9px;letter-spacing:.2em;opacity:.6;margin-top:3px}
+.nav__links{display:flex;gap:4px;margin-left:auto;align-items:center}
+.nav__links a{
+  text-decoration:none;font-size:14.5px;font-weight:500;padding:9px 13px;border-radius:99px;
+  opacity:.82;transition:.2s;
+}
+.nav__links a:hover{opacity:1;background:rgba(255,244,224,.09)}
+.lang{display:flex;border:1px solid rgba(255,244,224,.24);border-radius:99px;overflow:hidden;font-family:var(--slate);font-size:11px}
+.lang button{background:none;border:0;color:var(--cream);padding:7px 11px;cursor:pointer;opacity:.6;letter-spacing:.06em}
+.lang button.on{background:var(--butter);color:var(--night);opacity:1;font-weight:700}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  font-weight:600;font-size:15px;padding:13px 24px;border-radius:99px;
+  border:0;cursor:pointer;transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;
+}
+.btn--gold{background:var(--butter);color:var(--night);box-shadow:0 6px 0 #C9902B}
+.btn--gold:hover{transform:translateY(-2px);box-shadow:0 8px 0 #C9902B}
+.btn--gold:active{transform:translateY(3px);box-shadow:0 2px 0 #C9902B}
+.btn--red{background:var(--curtain);color:#fff;box-shadow:0 6px 0 #A82B26}
+.btn--red:hover{transform:translateY(-2px);box-shadow:0 8px 0 #A82B26}
+.btn--ghost{background:transparent;color:inherit;border:1.5px solid currentColor}
+.btn--ghost:hover{transform:translateY(-2px)}
+.btn--sm{padding:10px 18px;font-size:14px}
+.nav__cta{flex:0 0 auto}
+.burger{display:none;background:none;border:1px solid rgba(255,244,224,.25);color:var(--cream);border-radius:10px;padding:8px 11px;cursor:pointer}
+
+/* ============ HERO ============ */
+.hero{position:relative;overflow:hidden;padding:88px 0 96px;background:
+  radial-gradient(1100px 620px at 12% -8%, rgba(255,194,75,.20), transparent 62%),
+  radial-gradient(900px 560px at 92% 12%, rgba(70,214,192,.12), transparent 60%),
+  var(--night);
+}
+/* projector beam */
+.beam{
+  position:absolute;top:-14%;left:-6%;width:78%;height:150%;
+  background:linear-gradient(102deg, rgba(255,240,205,.20) 0%, rgba(255,240,205,.05) 42%, transparent 70%);
+  clip-path:polygon(0 22%, 0 30%, 100% 100%, 100% 4%);
+  filter:blur(3px);
+  animation:flicker 5.5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes flicker{0%,100%{opacity:.85}42%{opacity:.62}58%{opacity:.95}72%{opacity:.7}}
+.hero__grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:52px;align-items:center}
+.hero__sub{margin-top:22px}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px;padding-top:26px;border-top:1px solid rgba(255,244,224,.14)}
+.fact{
+  font-family:var(--slate);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid rgba(255,244,224,.22);border-radius:99px;padding:8px 14px;opacity:.85;
+}
+/* the bucket */
+.bucket-wrap{position:relative;display:grid;place-items:center;min-height:400px}
+.bucket{width:min(100%,400px);filter:drop-shadow(0 30px 40px rgba(0,0,0,.45))}
+.float{animation:bob 6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-14px) rotate(1deg)}}
+.drift{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.drift svg{position:absolute;opacity:.9}
+@keyframes drift{
+  0%{transform:translate3d(0,0,0) rotate(0deg);opacity:0}
+  10%{opacity:.9}
+  90%{opacity:.6}
+  100%{transform:translate3d(var(--dx),var(--dy),0) rotate(var(--rot));opacity:0}
+}
+
+/* ============ MARQUEE BAND ============ */
+.marquee{background:var(--curtain);color:#fff;padding:13px 0;overflow:hidden;border-top:3px solid var(--butter);border-bottom:3px solid var(--butter)}
+.marquee__track{display:flex;gap:44px;white-space:nowrap;animation:slide 34s linear infinite;font-family:var(--display);font-size:17px;letter-spacing:.01em}
+.marquee__track span{display:flex;align-items:center;gap:44px}
+.marquee__track i{font-style:normal;color:var(--butter)}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============ SECTION HEAD + POP SIGNATURE ============ */
+.sechead{max-width:720px;margin-bottom:52px}
+.popmark{position:relative;width:20px;height:20px;flex:0 0 auto}
+.popmark svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .5s cubic-bezier(.34,1.7,.5,1),opacity .35s}
+.popmark .kern{transform:scale(1)}
+.popmark .puff{transform:scale(.1);opacity:0}
+.in .popmark .kern{transform:scale(.1);opacity:0}
+.in .popmark .puff{transform:scale(1);opacity:1}
+
+/* ============ PILLARS ============ */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.pillar{
+  background:#fff;border-radius:var(--r);padding:30px 26px 32px;
+  border:2px solid rgba(42,26,32,.09);position:relative;overflow:hidden;
+  transition:transform .3s cubic-bezier(.34,1.4,.6,1),box-shadow .3s,border-color .3s;
+}
+.pillar:hover{transform:translateY(-6px);box-shadow:0 22px 40px -22px rgba(42,26,32,.4);border-color:var(--butter)}
+.pillar__ico{width:52px;height:52px;margin-bottom:18px}
+.pillar p{margin:0;font-size:16px;line-height:1.6;color:rgba(42,26,32,.75)}
+.pillar__list{list-style:none;margin:16px 0 0;padding:0;font-size:14.5px}
+.pillar__list li{padding:6px 0 6px 22px;position:relative;color:rgba(42,26,32,.72)}
+.pillar__list li::before{content:"";position:absolute;left:0;top:14px;width:9px;height:9px;border-radius:50%;background:var(--kernel)}
+
+/* ============ PROGRAMS ============ */
+.progs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.prog{
+  background:linear-gradient(180deg, rgba(255,244,224,.075), rgba(255,244,224,.03));
+  border:1px solid rgba(255,244,224,.16);border-radius:var(--r);
+  padding:26px 24px 24px;display:flex;flex-direction:column;
+  transition:transform .3s cubic-bezier(.34,1.4,.6,1),border-color .3s,background .3s;
+}
+.prog:hover{transform:translateY(-6px);border-color:var(--butter);background:linear-gradient(180deg, rgba(255,194,75,.14), rgba(255,244,224,.04))}
+.prog__tag{font-family:var(--slate);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mint);margin-bottom:14px}
+.prog p{font-size:15.5px;line-height:1.62;opacity:.82;margin:0 0 20px}
+.prog__price{
+  margin:auto 0 0;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  font-family:var(--display);font-size:22px;color:var(--butter);line-height:1.2;
+}
+.prog__price small{font-family:var(--body);font-weight:400;font-size:13.5px;color:var(--cream);opacity:.6;letter-spacing:0}
+.prog__meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;padding-top:16px;border-top:1px solid rgba(255,244,224,.14)}
+.chip{font-family:var(--slate);font-size:10.5px;letter-spacing:.08em;background:rgba(255,244,224,.1);border-radius:6px;padding:5px 9px;opacity:.9}
+
+/* ============ MEHR-INFOS-BUTTON + MODAL ============ */
+.prog__more{
+  margin-top:14px;background:transparent;border:1px solid rgba(255,244,224,.3);color:var(--cream);
+  font-family:var(--slate);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  border-radius:99px;padding:9px 15px;cursor:pointer;transition:.2s;align-self:flex-start;
+}
+.prog__more:hover{background:var(--butter);color:var(--night);border-color:var(--butter)}
+.prog__more::after{content:" →"}
+
+.modal{position:fixed;inset:0;z-index:200;display:none}
+.modal.open{display:block}
+.modal__bg{position:absolute;inset:0;background:rgba(20,11,36,.86);backdrop-filter:blur(6px)}
+.modal__panel{
+  position:relative;max-width:760px;margin:4vh auto;max-height:92vh;
+  background:var(--cream);color:var(--ink);border-radius:20px;overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:0 40px 90px -30px rgba(0,0,0,.7);
+  animation:pop .28s cubic-bezier(.3,1.4,.6,1);
+}
+@keyframes pop{from{transform:translateY(18px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.modal__head{background:var(--night);color:var(--cream);padding:26px 30px 22px;position:relative;flex:0 0 auto}
+.modal__tag{font-family:var(--slate);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mint);margin:0 0 10px}
+.modal__head h3{font-family:var(--display);font-weight:400;font-size:clamp(21px,3.4vw,28px);line-height:1.14;margin:0 0 8px;max-width:88%}
+.modal__sub{margin:0;font-size:15px;line-height:1.55;opacity:.8;max-width:60ch}
+.modal__meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,244,224,.18)}
+.modal__meta div{min-width:74px}
+.modal__meta dt{font-family:var(--slate);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin:0 0 3px}
+.modal__meta dd{margin:0;font-size:14.5px;font-weight:500}
+.modal__meta .price{color:var(--butter);font-family:var(--display);font-size:17px}
+.modal__x{
+  position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;
+  background:rgba(255,244,224,.12);border:0;color:var(--cream);font-size:21px;line-height:1;cursor:pointer;
+}
+.modal__x:hover{background:var(--curtain);color:#fff}
+.modal__body{padding:28px 30px 10px;overflow-y:auto;flex:1 1 auto}
+.modal__body h4{
+  font-family:var(--slate);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--curtain);margin:26px 0 12px;
+}
+.modal__body h4:first-child{margin-top:0}
+.step{display:flex;gap:14px;padding:9px 0;border-bottom:1px dashed rgba(42,26,32,.13)}
+.step:last-child{border-bottom:0}
+.step__t{font-family:var(--slate);font-size:11px;color:var(--kernel);flex:0 0 62px;padding-top:3px;letter-spacing:.03em}
+.step__c{margin:0;font-size:15px;line-height:1.55;color:rgba(42,26,32,.82)}
+.step__c b{font-weight:600;color:var(--ink)}
+.mlist{list-style:none;margin:0;padding:0}
+.mlist li{padding:5px 0 5px 20px;position:relative;font-size:15px;line-height:1.55;color:rgba(42,26,32,.8)}
+.mlist li::before{content:"";position:absolute;left:0;top:13px;width:8px;height:8px;border-radius:50%;background:var(--butter)}
+.mnote{background:rgba(229,66,60,.08);border-left:3px solid var(--curtain);border-radius:0 10px 10px 0;padding:14px 16px;font-size:14.5px;line-height:1.55;color:rgba(42,26,32,.8);margin:0}
+.mprep{font-size:14.5px;line-height:1.6;color:rgba(42,26,32,.72);margin:0}
+.modal__foot{
+  flex:0 0 auto;padding:18px 30px;background:var(--cream-2);
+  display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+}
+.modal__foot p{margin:0;font-size:13px;line-height:1.5;color:rgba(42,26,32,.65);max-width:40ch}
+body.locked{overflow:hidden}
+@media(max-width:600px){
+  .modal__panel{margin:0;max-height:100vh;height:100vh;border-radius:0}
+  .modal__head{padding:22px 20px 18px}
+  .modal__head h3{max-width:82%}
+  .modal__body{padding:22px 20px 6px}
+  .modal__foot{padding:14px 20px}
+  .step{flex-direction:column;gap:2px}
+  .step__t{flex:none}
+}
+
+/* ============ PROGRAM FILTER ============ */
+.filters{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 30px}
+.filter{
+  font-family:var(--slate);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;color:var(--cream);border:1px solid rgba(255,244,224,.24);
+  border-radius:99px;padding:9px 16px;cursor:pointer;opacity:.7;transition:.2s;
+}
+.filter:hover{opacity:1;border-color:var(--butter)}
+.filter.on{background:var(--butter);color:var(--night);border-color:var(--butter);opacity:1;font-weight:700}
+.prog[hidden]{display:none}
+.progs__empty{font-size:15px;opacity:.6;margin:0}
+
+/* ============ PROCESS / FILMSTRIP ============ */
+.strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  background:var(--ink);border-radius:14px;overflow:hidden;position:relative;
+  padding:26px 0;
+}
+.strip::before,.strip::after{
+  content:"";position:absolute;left:0;right:0;height:26px;
+  background-image:radial-gradient(circle at 12px 50%, var(--cream) 5.5px, transparent 6px);
+  background-size:34px 26px;
+}
+.strip::before{top:0}
+.strip::after{bottom:0}
+.frame{padding:30px 24px;border-right:2px dashed rgba(255,244,224,.2);color:var(--cream)}
+.frame:last-child{border-right:0}
+.frame__no{font-family:var(--display);font-size:38px;color:var(--butter);line-height:1;margin-bottom:12px;display:block}
+.frame h4{font-family:var(--body);font-weight:600;font-size:17px;margin:0 0 8px}
+.frame p{margin:0;font-size:14.5px;line-height:1.6;opacity:.75}
+
+/* ============ ABOUT ============ */
+.people{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
+.person{
+  background:rgba(255,244,224,.06);border:1px solid rgba(255,244,224,.16);
+  border-radius:var(--r);padding:30px;display:flex;gap:22px;align-items:flex-start;
+}
+.person__av{
+  width:88px;height:88px;flex:0 0 88px;border-radius:50%;
+  display:grid;place-items:center;font-family:var(--display);font-size:30px;color:var(--night);
+}
+.person__av--a{background:linear-gradient(140deg,var(--butter),var(--kernel))}
+.person__av--j{background:linear-gradient(140deg,var(--mint),#7FE3D3)}
+.person h3{margin:0 0 3px;font-family:var(--display);font-size:21px}
+.person .role{font-family:var(--slate);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--butter);margin:0 0 12px}
+.person p{margin:0;font-size:15.5px;line-height:1.65;opacity:.84}
+
+/* ============ SCHOOLS BAND ============ */
+.band{background:var(--butter);color:var(--night);padding:60px 0}
+.band__in{display:flex;gap:36px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.band h2{font-family:var(--display);font-size:clamp(26px,3.4vw,38px);margin:0 0 10px;line-height:1.12}
+.band p{margin:0;max-width:56ch;font-size:16.5px;opacity:.82}
+
+/* ============ QUOTES ============ */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.quote{background:#fff;border-radius:var(--r);padding:26px 26px 24px;border:2px solid rgba(42,26,32,.09);display:flex;flex-direction:column}
+.quote__mark{font-family:var(--display);font-size:40px;color:var(--butter);line-height:.7;margin-bottom:10px}
+.quote p{margin:0 0 18px;font-size:16px;line-height:1.6;color:rgba(42,26,32,.8)}
+.quote cite{margin-top:auto;font-style:normal;font-family:var(--slate);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--curtain)}
+.ph{background:rgba(229,66,60,.1);border:1px dashed var(--curtain);border-radius:7px;padding:3px 8px;font-family:var(--slate);font-size:13px;color:#B03731;display:inline-block;line-height:1.5}
+
+/* ============ BOOKING ============ */
+.booking{max-width:840px;margin:0 auto}
+.consent{background:rgba(255,244,224,.06);border:1px dashed rgba(255,244,224,.3);border-radius:var(--r);padding:44px 30px;text-align:center}
+.consent p{margin:0 auto 20px;max-width:54ch;opacity:.86}
+.consent .fine{font-size:13px;opacity:.55;margin:18px auto 0;max-width:56ch}
+#zeegWidget{border-radius:var(--r);overflow:hidden;background:#fff}
+
+/* ============ FAQ ============ */
+.faq{max-width:820px;margin:0 auto}
+.q{border-bottom:2px solid rgba(42,26,32,.12)}
+.q button{
+  width:100%;background:none;border:0;text-align:left;cursor:pointer;
+  padding:22px 44px 22px 0;font-size:18px;font-weight:600;color:var(--ink);position:relative;
+}
+.q button::after{
+  content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  font-size:26px;color:var(--curtain);transition:transform .3s;line-height:1;
+}
+.q.open button::after{transform:translateY(-50%) rotate(45deg)}
+.q .a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.q .a p{margin:0 0 22px;font-size:16px;line-height:1.65;color:rgba(42,26,32,.75);max-width:66ch}
+
+/* ============ CONTACT ============ */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+.form{display:grid;gap:14px}
+.field{display:grid;gap:6px}
+.field label{font-family:var(--slate);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.field input,.field textarea,.field select{
+  background:rgba(255,244,224,.07);border:1px solid rgba(255,244,224,.22);border-radius:12px;
+  padding:13px 15px;color:var(--cream);font:inherit;font-size:16px;
+}
+.field textarea{min-height:118px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--butter);outline-offset:1px;border-color:transparent}
+.field select option{background:var(--night-2)}
+.contact__info{display:grid;gap:14px;margin-top:26px}
+.info-row{display:flex;gap:12px;align-items:flex-start;font-size:16px}
+.info-row .k{font-family:var(--slate);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;min-width:78px;padding-top:4px}
+
+/* ============ FOOTER ============ */
+.foot{background:var(--night);padding:52px 0 30px;border-top:1px solid rgba(255,244,224,.12)}
+.foot__in{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+.foot__links{display:flex;gap:22px;flex-wrap:wrap;font-size:14.5px}
+.foot__links a{text-decoration:none;opacity:.7}
+.foot__links a:hover{opacity:1;color:var(--butter)}
+.foot__bot{margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,244,224,.1);font-size:13px;opacity:.55;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ============ REVEAL ============ */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:980px){
+  .hero__grid{grid-template-columns:1fr;gap:20px}
+  .bucket-wrap{min-height:300px;order:-1}
+  .bucket{width:min(72%,300px)}
+  .pillars,.progs,.quotes{grid-template-columns:1fr 1fr}
+  .strip{grid-template-columns:1fr 1fr}
+  .frame:nth-child(2n){border-right:0}
+  .people,.contact{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .nav__in{padding:9px 16px;gap:10px}
+  .brand__chip{width:40px;height:40px;flex:0 0 40px;border-radius:11px}
+  .brand__txt{font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .brand__txt small{font-size:8px;letter-spacing:.16em;margin-top:2px}
+  .nav__links{display:none}
+  .burger{display:block;margin-left:auto}
+  .nav__cta{display:none}
+  .nav__links.show{
+    display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;
+    background:var(--night);padding:12px;gap:2px;border-bottom:1px solid rgba(255,244,224,.14);
+  }
+  .pillars,.progs,.strip,.quotes{grid-template-columns:1fr}
+  .frame{border-right:0;border-bottom:2px dashed rgba(255,244,224,.2)}
+  .frame:last-child{border-bottom:0}
+  .sec{padding:70px 0}
+  .person{flex-direction:column}
+}
+
+@media(max-width:380px){
+  .brand__txt small{display:none}
+  .brand__txt{font-size:12.5px}
+  .brand__chip{width:36px;height:36px;flex:0 0 36px;border-radius:10px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  .popmark .kern{opacity:0}
+  .popmark .puff{transform:scale(1);opacity:1}
+  html{scroll-behavior:auto}
+}
+:focus-visible{outline:3px solid var(--butter);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<!-- reusable popcorn shape -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="pop" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <circle cx="50" cy="34" r="20"/><circle cx="29" cy="50" r="18"/><circle cx="71" cy="52" r="17"/>
+      <circle cx="45" cy="69" r="19"/><circle cx="66" cy="29" r="14"/><circle cx="32" cy="30" r="13"/>
+      <circle cx="60" cy="60" r="15"/>
+    </g>
+    <g fill="#FFC24B" opacity=".45">
+      <circle cx="43" cy="41" r="8"/><circle cx="61" cy="57" r="6.5"/><circle cx="34" cy="57" r="5.5"/>
+    </g>
+  </symbol>
+  <symbol id="kernel" viewBox="0 0 100 100">
+    <ellipse cx="50" cy="52" rx="27" ry="34" fill="currentColor"/>
+    <ellipse cx="41" cy="42" rx="8" ry="12" fill="#fff" opacity=".25"/>
+  </symbol>
+</svg>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav__in">
+    <a class="brand" href="#top">
+      <span class="brand__chip"><svg class="brand__logo" viewBox="0 0 100 100" role="img" aria-label="Popcorn Akademie"><g fill="#FFF4E0"><circle cx="50" cy="27" r="13"/><circle cx="33" cy="35" r="11"/><circle cx="67" cy="35" r="11"/><circle cx="41" cy="18" r="9"/><circle cx="60" cy="18" r="9"/><circle cx="50" cy="39" r="12"/><circle cx="23" cy="44" r="8"/><circle cx="77" cy="44" r="8"/></g><g fill="#FFC24B" opacity=".5"><circle cx="44" cy="29" r="5"/><circle cx="62" cy="37" r="4"/><circle cx="34" cy="39" r="3.5"/></g><path d="M19 53 h62 l-8 38 h-46 z" fill="#E5423C"/><g fill="#FFF4E0"><path d="M29 53 h9 l-5 38 h-7 z"/><path d="M46 53 h9 l-2 38 h-8 z"/><path d="M63 53 h9 l1 38 h-8 z"/></g><rect x="15" y="46" width="70" height="11" rx="5.5" fill="#FFC24B"/></svg></span>
+      <span class="brand__txt">Popcorn Akademie<small data-de="MEDIENKOMPETENZ" data-es="COMPETENCIA MEDIÁTICA" data-en="MEDIA LITERACY">MEDIENKOMPETENZ</small></span>
+    </a>
+    <button class="burger" id="burger" aria-label="Menü" aria-expanded="false">☰</button>
+    <nav class="nav__links" id="navlinks">
+      <a href="#angebot" data-de="Angebot" data-es="Talleres" data-en="Programs">Angebot</a>
+      <a href="#ablauf" data-de="Ablauf" data-es="Cómo funciona" data-en="How it works">Ablauf</a>
+      <a href="#ueber-uns" data-de="Über uns" data-es="Quiénes somos" data-en="About us">Über uns</a>
+      <a href="#schulen" data-de="Für Schulen" data-es="Para colegios" data-en="For schools">Für Schulen</a>
+      <a href="#termine" data-de="Termine" data-es="Citas" data-en="Booking">Termine</a>
+      <a href="#faq" data-de="FAQ" data-es="Preguntas" data-en="FAQ">FAQ</a>
+      <div class="lang" role="group" aria-label="Sprache / Language">
+        <button data-lang="de" class="on">DE</button><button data-lang="en">EN</button><button data-lang="es">ES</button>
+      </div>
+    </nav>
+    <a class="btn btn--gold btn--sm nav__cta" href="#kontakt" data-de="Termin anfragen" data-es="Solicitar una cita" data-en="Book a session">Termin anfragen</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero pop-bg" id="top">
+  <span class="beam" aria-hidden="true"></span>
+  <div class="wrap hero__grid">
+    <div>
+      <p class="eyebrow"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--cream)"><use href="#pop"/></svg></span>
+        <span data-de="Medienbildung für 8 bis 18 Jahre" data-es="Educación mediática de 8 a 18 años" data-en="Media education, ages 8 to 18">Medienbildung für 8 bis 18 Jahre</span></p>
+      <h1 class="h1"><span data-de="Medien verstehen." data-es="Entender los medios." data-en="Understand media.">Medien verstehen.</span><br>
+        <span class="gold" data-de="Selber machen." data-es="Hacerlos tú mismo." data-en="Make your own.">Selber machen.</span><br>
+        <span data-de="Popcorn dazu." data-es="Palomitas incluidas." data-en="Popcorn included.">Popcorn dazu.</span></h1>
+      <p class="lede hero__sub" data-de="Wir zeigen Kindern und Jugendlichen, wie Medien wirklich funktionieren — mit Kamera, Schnittprogramm und richtig guten Fragen. Workshops in Wolfratshausen, Bad Tölz und München — und online, wenn es passt." data-es="Enseñamos a niñas, niños y adolescentes cómo funcionan de verdad los medios: con una cámara, una mesa de montaje y muy buenas preguntas. Talleres en Wolfratshausen, Bad Tölz y Múnich, y en línea cuando conviene."
+         data-en="We show children and teenagers how media actually works — with a camera, an editing timeline and really good questions. Workshops in Wolfratshausen, Bad Tölz and Munich — and online when that suits better.">Wir zeigen Kindern und Jugendlichen, wie Medien wirklich funktionieren — mit Kamera, Schnittprogramm und richtig guten Fragen. Workshops in Wolfratshausen, Bad Tölz und München — und online, wenn es passt.</p>
+      <div class="hero__cta">
+        <a class="btn btn--gold" href="#angebot" data-de="Workshops ansehen" data-es="Ver los talleres" data-en="See the workshops">Workshops ansehen</a>
+        <a class="btn btn--ghost" href="#ueber-uns" data-de="Wer wir sind" data-es="Quiénes somos" data-en="Who we are">Wer wir sind</a>
+      </div>
+      <div class="facts">
+        <span class="fact" data-de="Wolfratshausen · Bad Tölz · München" data-es="Wolfratshausen · Bad Tölz · Múnich" data-en="Wolfratshausen · Bad Tölz · Munich">Wolfratshausen · Bad Tölz · München</span>
+        <span class="fact" data-de="Auch online" data-es="También en línea" data-en="Online too">Auch online</span>
+        <span class="fact" data-de="Deutsch · Englisch · Español" data-es="Alemán · Inglés · Español" data-en="German · English · Spanish">Deutsch · Englisch · Español</span>
+        <span class="fact" data-de="Ab 90 Minuten bis 5 Tage" data-es="Desde 90 minutos hasta 5 días" data-en="From 90 minutes to 5 days">Ab 90 Minuten bis 5 Tage</span>
+      </div>
+    </div>
+    <div class="bucket-wrap">
+      <div class="drift" id="drift" aria-hidden="true"></div>
+      <svg class="bucket float" viewBox="0 0 300 320" aria-hidden="true">
+        <!-- popcorn pile -->
+        <g fill="var(--cream)">
+          <circle cx="150" cy="105" r="34"/><circle cx="106" cy="128" r="30"/><circle cx="196" cy="126" r="29"/>
+          <circle cx="128" cy="92" r="24"/><circle cx="176" cy="88" r="26"/><circle cx="80" cy="152" r="24"/>
+          <circle cx="222" cy="150" r="23"/><circle cx="150" cy="140" r="30"/>
+        </g>
+        <g fill="var(--butter)" opacity=".5">
+          <circle cx="140" cy="110" r="12"/><circle cx="188" cy="120" r="10"/><circle cx="108" cy="132" r="9"/><circle cx="163" cy="140" r="11"/>
+        </g>
+        <!-- bucket -->
+        <path d="M62 150 h176 l-22 160 h-132 z" fill="var(--curtain)"/>
+        <g fill="#FFF4E0">
+          <path d="M88 150 h24 l-14 160 h-20 z"/>
+          <path d="M138 150 h24 l-4 160 h-20 z"/>
+          <path d="M188 150 h24 l6 160 h-20 z"/>
+        </g>
+        <rect x="54" y="139" width="192" height="23" rx="9" fill="var(--butter)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track" id="marquee"></div>
+</div>
+
+<!-- ============ PILLARS ============ -->
+<section class="sec sec--cream pop-bg pop-bg--dark">
+  <div class="wrap">
+    <div class="sechead rv">
+      <p class="eyebrow eyebrow--ink"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--curtain)"><use href="#pop"/></svg></span>
+        <span data-de="Worum es geht" data-es="De qué se trata" data-en="What this is about">Worum es geht</span></p>
+      <h2 class="h2" data-de="Medienkompetenz ist kein Vortrag. Sie ist eine Werkstatt." data-es="La competencia mediática no es una charla. Es un taller." data-en="Media literacy isn't a lecture. It's a workshop.">Medienkompetenz ist kein Vortrag. Sie ist eine Werkstatt.</h2>
+      <p class="lede" style="opacity:.75" data-de="Kinder lernen Medien am besten, wenn sie selbst welche machen. Wer einmal einen Clip geschnitten hat, erkennt beim nächsten Video sofort, was da mit ihm gemacht wird. Darauf bauen alle unsere Kurse auf." data-es="Los niños aprenden los medios haciéndolos. Quien ha montado un vídeo una vez reconoce enseguida qué hace con él el siguiente. Sobre esa idea se construyen todos nuestros cursos."
+         data-en="Kids learn media best by making it. Once you've cut a clip yourself, you spot instantly what the next video is doing to you. Every one of our courses is built on that.">Kinder lernen Medien am besten, wenn sie selbst welche machen. Wer einmal einen Clip geschnitten hat, erkennt beim nächsten Video sofort, was da mit ihm gemacht wird. Darauf bauen alle unsere Kurse auf.</p>
+    </div>
+    <div class="pillars">
+      <article class="pillar rv">
+        <svg class="pillar__ico" viewBox="0 0 100 100" style="color:var(--curtain)"><use href="#pop"/></svg>
+        <h3 class="h3" data-de="Durchschauen" data-es="Mirar detrás" data-en="See through it">Durchschauen</h3>
+        <p data-de="Woher kommt diese Nachricht? Wer verdient daran? Und warum sehe ich ausgerechnet das?" data-es="¿De dónde viene esta noticia? ¿Quién gana con ella? ¿Y por qué me la están enseñando justo a mí?"
+           data-en="Where did this come from? Who profits from it? And why am I the one seeing it?">Woher kommt diese Nachricht? Wer verdient daran? Und warum sehe ich ausgerechnet das?</p>
+        <ul class="pillar__list">
+          <li data-de="Quellen prüfen und Bilder rückwärts suchen" data-es="Verificar fuentes y buscar imágenes al revés" data-en="Checking sources and reverse-searching images">Quellen prüfen und Bilder rückwärts suchen</li>
+          <li data-de="Wie Algorithmen Aufmerksamkeit sortieren" data-es="Cómo los algoritmos ordenan la atención" data-en="How algorithms sort attention">Wie Algorithmen Aufmerksamkeit sortieren</li>
+          <li data-de="Werbung, Sponsoring und versteckte Absichten" data-es="Publicidad, patrocinios e intenciones ocultas" data-en="Ads, sponsorship and hidden intent">Werbung, Sponsoring und versteckte Absichten</li>
+        </ul>
+      </article>
+      <article class="pillar rv">
+        <svg class="pillar__ico" viewBox="0 0 100 100" style="color:var(--kernel)"><use href="#pop"/></svg>
+        <h3 class="h3" data-de="Selber machen" data-es="Hacerlo tú mismo" data-en="Make it yourself">Selber machen</h3>
+        <p data-de="Von der Idee zum fertigen Film, Podcast oder Beitrag — mit echtem Equipment und echtem Publikum." data-es="De la idea a la película, el pódcast o la publicación terminada, con equipo real y público real."
+           data-en="From idea to finished film, podcast or post — with real equipment and a real audience.">Von der Idee zum fertigen Film, Podcast oder Beitrag — mit echtem Equipment und echtem Publikum.</p>
+        <ul class="pillar__list">
+          <li data-de="Geschichte, Storyboard, Dreh" data-es="Historia, storyboard y rodaje" data-en="Story, storyboard, shoot">Geschichte, Storyboard, Dreh</li>
+          <li data-de="Schnitt, Ton und Musik" data-es="Montaje, sonido y música" data-en="Editing, sound and music">Schnitt, Ton und Musik</li>
+          <li data-de="Premiere vor der eigenen Gruppe" data-es="Estreno ante el propio grupo" data-en="A premiere in front of the group">Premiere vor der eigenen Gruppe</li>
+        </ul>
+      </article>
+      <article class="pillar rv">
+        <svg class="pillar__ico" viewBox="0 0 100 100" style="color:#7BC4B4"><use href="#pop"/></svg>
+        <h3 class="h3" data-de="Sicher unterwegs" data-es="Moverse con seguridad" data-en="Stay safe online">Sicher unterwegs</h3>
+        <p data-de="Das Netz gehört zum Alltag. Wir üben, wie man sich darin bewegt, ohne dabei die Kontrolle abzugeben." data-es="Internet forma parte del día a día. Practicamos cómo moverse por él sin ceder el control."
+           data-en="The internet is everyday life. We practise moving through it without handing over control.">Das Netz gehört zum Alltag. Wir üben, wie man sich darin bewegt, ohne dabei die Kontrolle abzugeben.</p>
+        <ul class="pillar__list">
+          <li data-de="Privatsphäre, Passwörter, Einstellungen" data-es="Privacidad, contraseñas y ajustes" data-en="Privacy, passwords, settings">Privatsphäre, Passwörter, Einstellungen</li>
+          <li data-de="Chats, Gruppendruck und Cybermobbing" data-es="Chats, presión de grupo y ciberacoso" data-en="Chats, peer pressure and cyberbullying">Chats, Gruppendruck und Cybermobbing</li>
+          <li data-de="Kostenfallen und Abzocke erkennen" data-es="Detectar estafas y costes ocultos" data-en="Spotting scams and hidden costs">Kostenfallen und Abzocke erkennen</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROGRAMS ============ -->
+<section class="sec sec--night pop-bg" id="angebot">
+  <div class="wrap">
+    <div class="sechead rv">
+      <p class="eyebrow"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--cream)"><use href="#pop"/></svg></span>
+        <span data-de="Unser Angebot" data-es="Nuestros talleres" data-en="Our programs">Unser Angebot</span></p>
+      <h2 class="h2" data-de="Workshops, die man nicht absitzt" data-es="Talleres que nadie aguanta sentado" data-en="Workshops nobody sits through">Workshops, die man nicht absitzt</h2>
+      <p class="lede" data-de="Jedes Format lässt sich auf Alter, Gruppengröße und Zeitfenster zuschneiden. Alle Workshops gibt es auf Deutsch, Englisch und Spanisch." data-es="Cada formato se adapta a la edad, al tamaño del grupo y al tiempo disponible. Todos los talleres están disponibles en alemán, inglés y español."
+         data-en="Every format adapts to age, group size and the time you have. Every workshop is available in German, English and Spanish.">Jedes Format lässt sich auf Alter, Gruppengröße und Zeitfenster zuschneiden. Alle Workshops gibt es auf Deutsch, Englisch und Spanisch.</p>
+    </div>
+    <div class="filters rv" role="group" aria-label="Workshops filtern">
+      <button type="button" class="filter on" data-cat="all" aria-pressed="true" data-de="Alle Formate" data-es="Todos los formatos" data-en="All formats">Alle Formate</button>
+      <button type="button" class="filter" data-cat="schule" aria-pressed="false" data-de="Für Schulen" data-es="Para colegios" data-en="For schools">Für Schulen</button>
+      <button type="button" class="filter" data-cat="ferien" aria-pressed="false" data-de="Ferien & Gruppen" data-es="Vacaciones y grupos" data-en="Holidays & groups">Ferien &amp; Gruppen</button>
+      <button type="button" class="filter" data-cat="erwachsene" aria-pressed="false" data-de="Für Erwachsene" data-es="Para personas adultas" data-en="For grown-ups">Für Erwachsene</button>
+    </div>
+    <div class="progs">
+      <article class="prog rv" data-cat="schule" data-id="fake">
+        <p class="prog__tag" data-de="Nachrichten & Wahrheit" data-es="Noticias y verdad" data-en="News & truth">Nachrichten &amp; Wahrheit</p>
+        <h3 class="h3" data-de="Fake oder echt?" data-es="¿Falso o real?" data-en="Fake or real?">Fake oder echt?</h3>
+        <p data-de="Die Gruppe bekommt echte und gefälschte Beiträge und muss sie auseinandersortieren. Danach bauen alle selbst eine Falschmeldung — und merken, wie leicht das geht." data-es="El grupo recibe publicaciones reales y falsas y tiene que separarlas. Después cada uno fabrica su propio bulo y descubre lo fácil que resulta."
+           data-en="The group gets real and fabricated posts and has to sort them apart. Then everyone builds a fake story themselves — and sees how easy it is.">Die Gruppe bekommt echte und gefälschte Beiträge und muss sie auseinandersortieren. Danach bauen alle selbst eine Falschmeldung — und merken, wie leicht das geht.</p>
+        <p class="prog__price"><span data-de="ab 390 €" data-es="desde 390 €" data-en="from €390">ab 390 €</span><small data-de="pro Gruppe, inkl. Technik" data-es="por grupo, equipo incluido" data-en="per group, equipment included">pro Gruppe, inkl. Technik</small></p>
+        <div class="prog__meta"><span class="chip">10–14</span><span class="chip" data-de="2–4 Stunden" data-es="2–4 horas" data-en="2–4 hours">2–4 Stunden</span><span class="chip" data-de="Schule" data-es="Colegio" data-en="School">Schule</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="ferien" data-id="film">
+        <p class="prog__tag" data-de="Film & Erzählen" data-es="Cine y narración" data-en="Film & storytelling">Film &amp; Erzählen</p>
+        <h3 class="h3" data-de="Der erste eigene Film" data-es="Tu primera película" data-en="Your first real film">Der erste eigene Film</h3>
+        <p data-de="Fünf Tage von der leeren Seite bis zur Premiere: Idee, Drehbuch, Rollen, Dreh, Schnitt. Am Ende läuft der Film vor Publikum, mit Popcorn." data-es="Cinco días desde la página en blanco hasta el estreno: idea, guion, reparto, rodaje y montaje. Al final la película se proyecta ante público, con palomitas."
+           data-en="Five days from blank page to premiere: idea, script, roles, shoot, edit. At the end the film screens for an audience, with popcorn.">Fünf Tage von der leeren Seite bis zur Premiere: Idee, Drehbuch, Rollen, Dreh, Schnitt. Am Ende läuft der Film vor Publikum, mit Popcorn.</p>
+        <p class="prog__price"><span data-de="ab 249 €" data-es="desde 249 €" data-en="from €249">ab 249 €</span><small data-de="pro Kind, ganze Woche" data-es="por niño, semana completa" data-en="per child, full week">pro Kind, ganze Woche</small></p>
+        <div class="prog__meta"><span class="chip">10–18</span><span class="chip" data-de="3–5 Tage" data-es="3–5 días" data-en="3–5 days">3–5 Tage</span><span class="chip" data-de="Ferien & Projektwoche" data-es="Vacaciones y semanas de proyecto" data-en="Holidays & project weeks">Ferien &amp; Projektwoche</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="ferien" data-id="stopmotion">
+        <p class="prog__tag" data-de="Animation" data-es="Animación" data-en="Animation">Animation</p>
+        <h3 class="h3" data-de="Stop-Motion-Studio" data-es="Estudio de stop-motion" data-en="Stop-motion studio">Stop-Motion-Studio</h3>
+        <p data-de="Knete, Papier, Lego — alles wird zum Darsteller. Bild für Bild entsteht ein Kurzfilm, und ganz nebenbei versteht jeder, wie Bewegung im Film überhaupt funktioniert." data-es="Plastilina, papel, Lego: todo se convierte en personaje. Fotograma a fotograma nace un cortometraje y, de paso, todos entienden cómo funciona el movimiento en el cine."
+           data-en="Clay, paper, Lego — anything becomes a cast member. Frame by frame a short film appears, and everyone quietly learns how movement on screen works.">Knete, Papier, Lego — alles wird zum Darsteller. Bild für Bild entsteht ein Kurzfilm, und ganz nebenbei versteht jeder, wie Bewegung im Film überhaupt funktioniert.</p>
+        <p class="prog__price"><span data-de="ab 89 €" data-es="desde 89 €" data-en="from €89">ab 89 €</span><small data-de="pro Kind, ganzer Tag" data-es="por niño, día completo" data-en="per child, full day">pro Kind, ganzer Tag</small></p>
+        <div class="prog__meta"><span class="chip">8–12</span><span class="chip" data-de="1 Tag" data-es="1 día" data-en="1 day">1 Tag</span><span class="chip" data-de="Gruppe" data-es="Grupo" data-en="Group">Gruppe</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="schule" data-id="feed">
+        <p class="prog__tag" data-de="Soziale Netzwerke" data-es="Redes sociales" data-en="Social platforms">Soziale Netzwerke</p>
+        <h3 class="h3" data-de="Mein Feed, meine Regeln" data-es="Mi feed, mis reglas" data-en="My feed, my rules">Mein Feed, meine Regeln</h3>
+        <p data-de="Wir sehen uns gemeinsam an, was der eigene Feed anzeigt und warum. Danach räumt jede und jeder die eigenen Einstellungen auf — Privatsphäre inklusive." data-es="Miramos juntos qué muestra el propio feed y por qué. Después cada persona ordena sus ajustes, privacidad incluida."
+           data-en="We look together at what your own feed shows and why. Then everyone cleans up their own settings — privacy included.">Wir sehen uns gemeinsam an, was der eigene Feed anzeigt und warum. Danach räumt jede und jeder die eigenen Einstellungen auf — Privatsphäre inklusive.</p>
+        <p class="prog__price"><span data-de="ab 340 €" data-es="desde 340 €" data-en="from €340">ab 340 €</span><small data-de="pro Gruppe, beide Termine" data-es="por grupo, las dos sesiones" data-en="per group, both sessions">pro Gruppe, beide Termine</small></p>
+        <div class="prog__meta"><span class="chip">12–16</span><span class="chip" data-de="2 × 90 Min" data-es="2 × 90 min" data-en="2 × 90 min">2 × 90 Min</span><span class="chip" data-de="Schule" data-es="Colegio" data-en="School">Schule</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="ferien" data-id="podcast">
+        <p class="prog__tag" data-de="Audio" data-es="Audio" data-en="Audio">Audio</p>
+        <h3 class="h3" data-de="Ohren auf: Podcast & Hörspiel" data-es="Abre los oídos: pódcast y radioteatro" data-en="Ears open: podcast & audio drama">Ohren auf: Podcast &amp; Hörspiel</h3>
+        <p data-de="Mikrofon an, Geräusche sammeln, Interviews führen. Wer Ton schneidet, hört danach jedem Radiobeitrag an, wo er zurechtgebogen wurde." data-es="Micrófono abierto, sonidos recogidos, entrevistas grabadas. Quien ha montado audio distingue después en cualquier reportaje dónde se ha retocado."
+           data-en="Mic on, sounds collected, interviews recorded. Once you've cut audio, you can hear where any broadcast has been bent into shape.">Mikrofon an, Geräusche sammeln, Interviews führen. Wer Ton schneidet, hört danach jedem Radiobeitrag an, wo er zurechtgebogen wurde.</p>
+        <p class="prog__price"><span data-de="ab 139 €" data-es="desde 139 €" data-en="from €139">ab 139 €</span><small data-de="pro Kind, zwei Tage" data-es="por niño, dos días" data-en="per child, two days">pro Kind, zwei Tage</small></p>
+        <div class="prog__meta"><span class="chip">10–16</span><span class="chip" data-de="2 Tage" data-es="2 días" data-en="2 days">2 Tage</span><span class="chip" data-de="Gruppe" data-es="Grupo" data-en="Group">Gruppe</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="erwachsene" data-id="elternabend">
+        <p class="prog__tag" data-de="Für Erwachsene" data-es="Para personas adultas" data-en="For grown-ups">Für Erwachsene</p>
+        <h3 class="h3" data-de="Elternabend: Bildschirmzeit ohne Streit" data-es="Sesión para familias: pantallas sin discusiones" data-en="Parents' evening: screen time without the fight">Elternabend: Bildschirmzeit ohne Streit</h3>
+        <p data-de="Ein Abend für Eltern und Lehrkräfte: Was Kinder online tatsächlich machen, welche Regeln funktionieren und welche Gespräche mehr bringen als jede Sperre." data-es="Una tarde para familias y docentes: qué hacen realmente los niños en internet, qué normas funcionan y qué conversaciones sirven más que cualquier bloqueo."
+           data-en="An evening for parents and teachers: what kids actually do online, which rules work, and which conversations beat any parental lock.">Ein Abend für Eltern und Lehrkräfte: Was Kinder online tatsächlich machen, welche Regeln funktionieren und welche Gespräche mehr bringen als jede Sperre.</p>
+        <p class="prog__price"><span data-de="290 €" data-es="290 €" data-en="€290">290 €</span><small data-de="pauschal, online 190 €" data-es="tarifa fija, 190 € en línea" data-en="flat rate, €190 online">pauschal, online 190 €</small></p>
+        <div class="prog__meta"><span class="chip" data-de="Erwachsene" data-es="Adultos" data-en="Adults">Erwachsene</span><span class="chip">90 Min</span><span class="chip" data-de="Vor Ort & online" data-es="Presencial y en línea" data-en="On site & online">Vor Ort &amp; online</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="schule" data-id="ki">
+        <p class="prog__tag" data-de="Künstliche Intelligenz" data-es="Inteligencia artificial" data-en="Artificial intelligence">Künstliche Intelligenz</p>
+        <h3 class="h3" data-de="Echt, oder ausgedacht?" data-es="¿Real o inventado?" data-en="Real, or made up?">Echt, oder ausgedacht?</h3>
+        <p data-de="Die Gruppe erzeugt ein Bild und eine Stimme von sich selbst — und sucht danach die Spuren, an denen man beides enttarnt. Zum Schluss die größere Frage: Warum klingt ein Text überzeugend, obwohl nichts davon stimmt?" data-es="El grupo genera una imagen y una voz de sí mismo y después busca las huellas que delatan a ambas. Al final, la pregunta más importante: ¿por qué un texto suena convincente aunque nada de lo que dice sea cierto?" data-en="The group generates an image and a voice of themselves — then hunts for the traces that give both away. Ending on the bigger question: why does a text sound convincing when none of it is true?">Die Gruppe erzeugt ein Bild und eine Stimme von sich selbst — und sucht danach die Spuren, an denen man beides enttarnt. Zum Schluss die größere Frage: Warum klingt ein Text überzeugend, obwohl nichts davon stimmt?</p>
+        <p class="prog__price"><span data-de="ab 420 €" data-es="desde 420 €" data-en="from €420">ab 420 €</span><small data-de="pro Gruppe, inkl. Technik" data-es="por grupo, equipo incluido" data-en="per group, equipment included">pro Gruppe, inkl. Technik</small></p>
+        <div class="prog__meta"><span class="chip">12–16</span><span class="chip" data-de="3 Stunden" data-es="3 horas" data-en="3 hours">3 Stunden</span><span class="chip" data-de="Schule" data-es="Colegio" data-en="School">Schule</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="erwachsene" data-id="fortbildung">
+        <p class="prog__tag" data-de="Für Erwachsene" data-es="Para personas adultas" data-en="For grown-ups">Für Erwachsene</p>
+        <h3 class="h3" data-de="Fortbildung: Medien unterrichten" data-es="Formación: enseñar medios" data-en="Training: teaching media">Fortbildung: Medien unterrichten</h3>
+        <p data-de="Ein Halbtag für das Kollegium. Wir zeigen, wie sich Medienarbeit ohne Technikangst in den Fachunterricht einbauen lässt — mit Übungen, die am Montag darauf sofort funktionieren." data-es="Media jornada para el claustro. Mostramos cómo integrar el trabajo con medios en las clases sin miedo a la técnica, con ejercicios que funcionan el lunes siguiente." data-en="A half day for the staff room. We show how media work fits into regular lessons without any fear of the tech — with exercises that work the very next Monday.">Ein Halbtag für das Kollegium. Wir zeigen, wie sich Medienarbeit ohne Technikangst in den Fachunterricht einbauen lässt — mit Übungen, die am Montag darauf sofort funktionieren.</p>
+        <p class="prog__price"><span data-de="ab 690 €" data-es="desde 690 €" data-en="from €690">ab 690 €</span><small data-de="pro Kollegium, bis 25 Personen" data-es="por claustro, hasta 25 personas" data-en="per staff group, up to 25">pro Kollegium, bis 25 Personen</small></p>
+        <div class="prog__meta"><span class="chip" data-de="Lehrkräfte" data-es="Docentes" data-en="Teachers">Lehrkräfte</span><span class="chip" data-de="4 Stunden" data-es="4 horas" data-en="4 hours">4 Stunden</span><span class="chip" data-de="Vor Ort & online" data-es="Presencial y en línea" data-en="On site & online">Vor Ort & online</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="schule" data-id="games">
+        <p class="prog__tag" data-de="Games" data-es="Videojuegos" data-en="Games">Games</p>
+        <h3 class="h3" data-de="Warum das Spiel nie aufhört" data-es="Por qué el juego nunca acaba" data-en="Why the game never ends">Warum das Spiel nie aufhört</h3>
+        <p data-de="Tagesbelohnung, Lootbox, „nur noch eine Runde“ — wir nehmen auseinander, mit welchen Tricks Spiele Zeit und Geld holen. Danach entwirft jede Gruppe ein Spiel, das genau das nicht tut." data-es="Recompensa diaria, cajas de botín, «solo una partida más»: desmontamos los trucos con los que los juegos consiguen tiempo y dinero. Después cada grupo diseña un juego que no hace nada de eso." data-en="Daily rewards, loot boxes, one more round — we take apart the tricks games use to pull in time and money. Then each group designs a game that does none of it.">Tagesbelohnung, Lootbox, „nur noch eine Runde“ — wir nehmen auseinander, mit welchen Tricks Spiele Zeit und Geld holen. Danach entwirft jede Gruppe ein Spiel, das genau das nicht tut.</p>
+        <p class="prog__price"><span data-de="ab 360 €" data-es="desde 360 €" data-en="from €360">ab 360 €</span><small data-de="pro Gruppe, inkl. Technik" data-es="por grupo, equipo incluido" data-en="per group, equipment included">pro Gruppe, inkl. Technik</small></p>
+        <div class="prog__meta"><span class="chip">10–14</span><span class="chip" data-de="2–3 Stunden" data-es="2–3 horas" data-en="2–3 hours">2–3 Stunden</span><span class="chip" data-de="Schule" data-es="Colegio" data-en="School">Schule</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="schule" data-id="werbung">
+        <p class="prog__tag" data-de="Werbung & Influencer" data-es="Publicidad e influencers" data-en="Ads & influencers">Werbung & Influencer</p>
+        <h3 class="h3" data-de="Wer bezahlt diesen Beitrag?" data-es="¿Quién paga esta publicación?" data-en="Who paid for this post?">Wer bezahlt diesen Beitrag?</h3>
+        <p data-de="Wie kommt Geld in den Feed? Wir suchen versteckte Werbung in echten Beiträgen und drehen anschließend selbst eine Kampagne für ein erfundenes Produkt — samt der Frage, wo Übertreibung aufhört und Lüge anfängt." data-es="¿Cómo entra el dinero en el feed? Buscamos publicidad encubierta en publicaciones reales y después rodamos una campaña para un producto inventado, con la pregunta de dónde acaba la exageración y empieza la mentira." data-en="How does money get into the feed? We hunt hidden advertising in real posts, then shoot a campaign for an invented product — including the question of where exaggeration ends and lying starts.">Wie kommt Geld in den Feed? Wir suchen versteckte Werbung in echten Beiträgen und drehen anschließend selbst eine Kampagne für ein erfundenes Produkt — samt der Frage, wo Übertreibung aufhört und Lüge anfängt.</p>
+        <p class="prog__price"><span data-de="ab 340 €" data-es="desde 340 €" data-en="from €340">ab 340 €</span><small data-de="pro Gruppe, beide Termine" data-es="por grupo, las dos sesiones" data-en="per group, both sessions">pro Gruppe, beide Termine</small></p>
+        <div class="prog__meta"><span class="chip">11–15</span><span class="chip" data-de="2 × 90 Min" data-es="2 × 90 min" data-en="2 × 90 min">2 × 90 Min</span><span class="chip" data-de="Schule" data-es="Colegio" data-en="School">Schule</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+      <article class="prog rv" data-cat="ferien" data-id="bild">
+        <p class="prog__tag" data-de="Bild & Bearbeitung" data-es="Imagen y edición" data-en="Image & editing">Bild & Bearbeitung</p>
+        <h3 class="h3" data-de="Das perfekte Bild gibt es nicht" data-es="La foto perfecta no existe" data-en="There is no perfect picture">Das perfekte Bild gibt es nicht</h3>
+        <p data-de="Ausschnitt, Licht, Filter, Retusche: Wir fotografieren, bearbeiten und vergleichen, was dabei aus einem Gesicht wird. Ein Tag, der nebenbei zeigt, wie viel von dem, was online schön aussieht, gar nicht existiert." data-es="Encuadre, luz, filtros, retoque: fotografiamos, editamos y comparamos en qué se convierte un rostro. Un día que muestra de paso cuánto de lo que se ve bonito en internet no existe." data-en="Framing, light, filters, retouching: we shoot, edit and compare what happens to a face along the way. A day that quietly shows how much of what looks beautiful online was never there.">Ausschnitt, Licht, Filter, Retusche: Wir fotografieren, bearbeiten und vergleichen, was dabei aus einem Gesicht wird. Ein Tag, der nebenbei zeigt, wie viel von dem, was online schön aussieht, gar nicht existiert.</p>
+        <p class="prog__price"><span data-de="ab 99 €" data-es="desde 99 €" data-en="from €99">ab 99 €</span><small data-de="pro Kind, ganzer Tag" data-es="por niño, día completo" data-en="per child, full day">pro Kind, ganzer Tag</small></p>
+        <div class="prog__meta"><span class="chip">11–16</span><span class="chip" data-de="1 Tag" data-es="1 día" data-en="1 day">1 Tag</span><span class="chip" data-de="Gruppe" data-es="Grupo" data-en="Group">Gruppe</span></div>
+        <button type="button" class="prog__more" data-de="Mehr Infos" data-es="Más información" data-en="More details">Mehr Infos</button>
+      </article>
+    </div>
+    <p class="rv" style="margin:26px 0 0;font-size:14.5px;opacity:.62;max-width:70ch"
+       data-de="Alle Preise sind Endpreise und enthalten Technik, Material und Vorbereitung. Als Bildungsleistung sind unsere Workshops von der Umsatzsteuer befreit (§ 4 Nr. 21 UStG). Außerhalb von Wolfratshausen, Bad Tölz und München kommt die Anfahrt dazu. Für Schulen und gemeinnützige Träger gibt es reduzierte Sätze — fragen Sie einfach nach." data-es="Todos los precios son finales e incluyen equipo, material y preparación. Por tratarse de servicios educativos, nuestros talleres están exentos de IVA (§ 4 nº 21 UStG). Fuera de Wolfratshausen, Bad Tölz y Múnich se añade el desplazamiento. Hay tarifas reducidas para colegios y entidades sin ánimo de lucro: basta con preguntar."
+       data-en="All prices are final and include equipment, materials and preparation. As educational services our workshops are exempt from German VAT (§ 4 no. 21 UStG). Travel is added outside Wolfratshausen, Bad Tölz and Munich. Reduced rates are available for schools and non-profits — just ask.">Alle Preise sind Endpreise und enthalten Technik, Material und Vorbereitung. Als Bildungsleistung sind unsere Workshops von der Umsatzsteuer befreit (§ 4 Nr. 21 UStG). Außerhalb von Wolfratshausen, Bad Tölz und München kommt die Anfahrt dazu. Für Schulen und gemeinnützige Träger gibt es reduzierte Sätze — fragen Sie einfach nach.</p>
+  </div>
+</section>
+<section class="sec sec--cream pop-bg pop-bg--dark" id="ablauf">
+  <div class="wrap">
+    <div class="sechead rv">
+      <p class="eyebrow eyebrow--ink"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--curtain)"><use href="#pop"/></svg></span>
+        <span data-de="So läuft es ab" data-es="Así funciona" data-en="How it works">So läuft es ab</span></p>
+      <h2 class="h2" data-de="Vier Schritte, keine Überraschungen" data-es="Cuatro pasos, ninguna sorpresa" data-en="Four steps, no surprises">Vier Schritte, keine Überraschungen</h2>
+    </div>
+    <div class="strip rv">
+      <div class="frame"><span class="frame__no">1</span>
+        <h4 data-de="Anfragen" data-es="Escribir" data-en="Get in touch">Anfragen</h4>
+        <p data-de="Sie schreiben uns Alter, Gruppengröße und wie viel Zeit zur Verfügung steht. Antwort kommt in der Regel innerhalb von zwei Werktagen." data-es="Nos cuenta la edad, el tamaño del grupo y el tiempo disponible. Respondemos normalmente en dos días laborables."
+           data-en="Tell us the age group, how many, and how much time you have. We usually reply within two working days.">Sie schreiben uns Alter, Gruppengröße und wie viel Zeit zur Verfügung steht. Antwort kommt in der Regel innerhalb von zwei Werktagen.</p></div>
+      <div class="frame"><span class="frame__no">2</span>
+        <h4 data-de="Zuschneiden" data-es="Ajustar" data-en="Tailor it">Zuschneiden</h4>
+        <p data-de="Wir stimmen Inhalte, Technik und Ablauf auf die Gruppe ab. Sie bekommen einen Plan, den auch die Schulleitung versteht." data-es="Adaptamos contenidos, equipo y horario al grupo. Usted recibe un plan que también entiende la dirección del centro."
+           data-en="We match content, equipment and schedule to the group. You get a plan the head teacher can read too.">Wir stimmen Inhalte, Technik und Ablauf auf die Gruppe ab. Sie bekommen einen Plan, den auch die Schulleitung versteht.</p></div>
+      <div class="frame"><span class="frame__no">3</span>
+        <h4 data-de="Machen" data-es="Crear" data-en="Make things">Machen</h4>
+        <p data-de="Der Workshop läuft bei Ihnen vor Ort oder online. Equipment bringen wir mit, Vorwissen ist nicht nötig." data-es="El taller se hace en su centro o en línea. El equipo lo llevamos nosotros y no hacen falta conocimientos previos."
+           data-en="The workshop runs at your place or online. We bring the equipment; no prior knowledge needed.">Der Workshop läuft bei Ihnen vor Ort oder online. Equipment bringen wir mit, Vorwissen ist nicht nötig.</p></div>
+      <div class="frame"><span class="frame__no">4</span>
+        <h4 data-de="Zeigen" data-es="Mostrar" data-en="Show it">Zeigen</h4>
+        <p data-de="Am Ende steht immer ein Ergebnis: ein Film, ein Podcast, eine Ausstellung. Dazu eine kurze Rückmeldung für Lehrkräfte und Eltern." data-es="Siempre hay un resultado al final: una película, un pódcast, una exposición. Con un breve informe para docentes y familias."
+           data-en="There's always something to show at the end: a film, a podcast, an exhibition. Plus a short debrief for teachers and parents.">Am Ende steht immer ein Ergebnis: ein Film, ein Podcast, eine Ausstellung. Dazu eine kurze Rückmeldung für Lehrkräfte und Eltern.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="sec sec--night pop-bg" id="ueber-uns">
+  <div class="wrap">
+    <div class="sechead rv">
+      <p class="eyebrow"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--cream)"><use href="#pop"/></svg></span>
+        <span data-de="Über uns" data-es="Quiénes somos" data-en="About us">Über uns</span></p>
+      <h2 class="h2" data-de="Zwei Filmemacher, eine ziemlich klare Idee" data-es="Dos cineastas y una idea bastante clara" data-en="Two filmmakers, one fairly clear idea">Zwei Filmemacher, eine ziemlich klare Idee</h2>
+      <p class="lede" data-de="Die Popcorn Akademie wurde von Josefina Mata Zetina und Alec Hahn gegründet. Beide arbeiten mit Film und Geschichten und wollten etwas, das es so nicht gab: einen Ort, an dem junge Menschen Medien nicht nur konsumieren, sondern begreifen — indem sie sie selbst herstellen." data-es="Popcorn Akademie fue fundada por Josefina Mata Zetina y Alec Hahn. Ambos trabajan con el cine y las historias y querían algo que no existía: un lugar donde la gente joven no solo consuma medios, sino que los comprenda, fabricándolos."
+         data-en="Popcorn Akademie was founded by Josefina Mata Zetina and Alec Hahn. Both work with film and stories, and both wanted something that didn't exist yet: a place where young people don't just consume media but grasp it — by making it themselves.">Die Popcorn Akademie wurde von Josefina Mata Zetina und Alec Hahn gegründet. Beide arbeiten mit Film und Geschichten und wollten etwas, das es so nicht gab: einen Ort, an dem junge Menschen Medien nicht nur konsumieren, sondern begreifen — indem sie sie selbst herstellen.</p>
+    </div>
+    <div class="people">
+      <article class="person rv">
+        <div class="person__av person__av--j">JM</div>
+        <div>
+          <h3>Josefina Mata Zetina</h3>
+          <p class="role" data-de="Gründerin · Film & Erzählen" data-es="Fundadora · Cine y narración" data-en="Co-founder · Film & storytelling">Gründerin · Film &amp; Erzählen</p>
+          <p data-de="Filmemacherin und Autorin. Josefina bringt die Frage in jeden Kurs, die den Unterschied macht: Warum erzählen wir diese Geschichte, und wem nützt sie? Sie leitet die Dreh- und Schreibwerkstätten und arbeitet daneben an eigenen Kurzfilmen." data-es="Cineasta y escritora. Josefina lleva a cada curso la pregunta que marca la diferencia: ¿por qué contamos esta historia y a quién le sirve? Dirige los talleres de rodaje y escritura, imparte en español y trabaja además en sus propios cortometrajes."
+             data-en="Filmmaker and writer. Josefina brings the question that makes the difference into every course: why are we telling this story, and who does it serve? She leads the shooting and writing workshops and works on her own short films alongside.">Filmemacherin und Autorin. Josefina bringt die Frage in jeden Kurs, die den Unterschied macht: Warum erzählen wir diese Geschichte, und wem nützt sie? Sie leitet die Dreh- und Schreibwerkstätten und arbeitet daneben an eigenen Kurzfilmen.</p>
+        </div>
+      </article>
+      <article class="person rv">
+        <div class="person__av person__av--a">AH</div>
+        <div>
+          <h3>Alec Hahn</h3>
+          <p class="role" data-de="Gründer · Medienpädagogik & Technik" data-es="Fundador · Pedagogía mediática y técnica" data-en="Co-founder · Media education & tech">Gründer · Medienpädagogik &amp; Technik</p>
+          <p data-de="Filmemacher und Medienpädagoge. Alec baut die Werkstätten, in denen aus einer Idee ein fertiger Film wird — vom Storyboard bis zum letzten Schnitt. Er kümmert sich außerdem um alles, was mit Kameras, Ton und Software zu tun hat." data-es="Cineasta y pedagogo de medios. Alec construye los talleres en los que una idea se convierte en película terminada, del storyboard al último corte. Además se ocupa de todo lo que tiene que ver con cámaras, sonido y software."
+             data-en="Filmmaker and media educator. Alec builds the workshops where an idea turns into a finished film — from storyboard to final cut. He also handles everything involving cameras, sound and software.">Filmemacher und Medienpädagoge. Alec baut die Werkstätten, in denen aus einer Idee ein fertiger Film wird — vom Storyboard bis zum letzten Schnitt. Er kümmert sich außerdem um alles, was mit Kameras, Ton und Software zu tun hat.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ STIMMEN ============ -->
+<section class="sec sec--cream pop-bg pop-bg--dark" id="stimmen">
+  <div class="wrap">
+    <div class="sechead rv">
+      <p class="eyebrow eyebrow--ink"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--curtain)"><use href="#pop"/></svg></span>
+        <span data-de="Rückmeldungen" data-es="Comentarios" data-en="Feedback">Rückmeldungen</span></p>
+      <h2 class="h2" data-de="Was danach gesagt wird" data-es="Lo que se dice después" data-en="What people say afterwards">Was danach gesagt wird</h2>
+    </div>
+    <!-- ================= BITTE ERSETZEN =================
+         Diese drei Zitate sind Platzhalter. Echte Zitate von Lehrkraeften,
+         Eltern oder Teilnehmenden hier eintragen (Name/Rolle in <cite>).
+         Erfundene Kundenstimmen sind nach UWG unzulaessig - bis echte
+         Zitate vorliegen, diesen ganzen <section> auskommentieren.
+         ================================================== -->
+    <div class="quotes">
+      <article class="quote rv">
+        <span class="quote__mark" aria-hidden="true">&ldquo;</span>
+        <p><span class="ph">Zitat einer Lehrkraft eintragen — z. B. wie die Klasse reagiert hat.</span></p>
+        <cite><span class="ph">Name, Schule</span></cite>
+      </article>
+      <article class="quote rv">
+        <span class="quote__mark" aria-hidden="true">&ldquo;</span>
+        <p><span class="ph">Zitat eines Elternteils eintragen — z. B. was sich zu Hause verändert hat.</span></p>
+        <cite><span class="ph">Name, Elternteil</span></cite>
+      </article>
+      <article class="quote rv">
+        <span class="quote__mark" aria-hidden="true">&ldquo;</span>
+        <p><span class="ph">Zitat einer teilnehmenden Person eintragen — mit Einwilligung, bei Minderjährigen der Eltern.</span></p>
+        <cite><span class="ph">Vorname, Alter</span></cite>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCHOOLS BAND ============ -->
+<section class="band" id="schulen">
+  <div class="wrap band__in">
+    <div>
+      <h2 data-de="Für Schulen, Vereine und Bibliotheken" data-es="Para colegios, asociaciones y bibliotecas" data-en="For schools, clubs and libraries">Für Schulen, Vereine und Bibliotheken</h2>
+      <p data-de="Projekttage, Wandertage, Ferienprogramme oder eine feste AG über das Schuljahr — wir kommen nach Wolfratshausen, Bad Tölz und München und passen uns an Ihren Stundenplan an, nicht umgekehrt. Auf Wunsch schicken wir eine Kurzbeschreibung mit Preisen, die Sie direkt weiterreichen können." data-es="Jornadas de proyecto, semanas temáticas, programas de vacaciones o una actividad fija durante el curso: vamos a Wolfratshausen, Bad Tölz y Múnich y nos adaptamos a su horario, no al revés. Si lo desea, enviamos un resumen con precios que puede reenviar directamente."
+         data-en="Project days, activity weeks, holiday programmes or a regular club across the school year — we come to Wolfratshausen, Bad Tölz and Munich, and we fit your timetable rather than the other way round. On request we'll send a one-pager with prices you can forward straight on.">Projekttage, Wandertage, Ferienprogramme oder eine feste AG über das Schuljahr — wir kommen nach Wolfratshausen, Bad Tölz und München und passen uns an Ihren Stundenplan an, nicht umgekehrt. Auf Wunsch schicken wir eine Kurzbeschreibung mit Preisen, die Sie direkt weiterreichen können.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <a class="btn btn--red" href="#kontakt" data-de="Angebot anfordern" data-es="Pedir presupuesto" data-en="Request a quote">Angebot anfordern</a>
+      <a class="btn btn--ghost" href="popcorn-akademie-workshops.pdf" download data-de="Übersicht als PDF" data-es="Resumen en PDF" data-en="Overview as PDF">Übersicht als PDF</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ TERMINE / BERATUNG ============ -->
+<section class="sec sec--night pop-bg" id="termine">
+  <div class="wrap">
+    <div class="sechead rv" style="margin:0 auto 44px;text-align:center;max-width:660px">
+      <p class="eyebrow" style="justify-content:center"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--cream)"><use href="#pop"/></svg></span>
+        <span data-de="Termine" data-es="Citas" data-en="Booking">Termine</span></p>
+      <h2 class="h2" data-de="Kostenfreie Beratung buchen" data-es="Reservar una asesoría gratuita" data-en="Book a free consultation">Kostenfreie Beratung buchen</h2>
+      <p class="lede" style="margin:0 auto" data-de="Zwanzig Minuten am Telefon oder per Video: Wir klären, welches Format zu Ihrer Gruppe passt und was es kostet. Unverbindlich und ohne Vorbereitung."
+         data-es="Veinte minutos por teléfono o vídeo: vemos qué formato encaja con su grupo y cuánto cuesta. Sin compromiso y sin preparación previa."
+         data-en="Twenty minutes by phone or video: we work out which format fits your group and what it costs. No obligation, no preparation needed.">Zwanzig Minuten am Telefon oder per Video: Wir klären, welches Format zu Ihrer Gruppe passt und was es kostet. Unverbindlich und ohne Vorbereitung.</p>
+    </div>
+    <div class="booking rv">
+      <div class="consent" id="zeegConsent">
+        <p data-de="Den Kalender stellt unser Terminbuchungs-Dienst Zeeg bereit. Wir laden ihn erst, wenn Sie zustimmen — so wird ohne Ihr Zutun keine Verbindung zu Zeeg hergestellt."
+           data-es="El calendario lo proporciona Zeeg, nuestro servicio de reservas. Solo lo cargamos si usted lo autoriza, de modo que no se establece ninguna conexión con Zeeg sin su consentimiento."
+           data-en="The calendar is provided by Zeeg, our booking service. We only load it once you agree, so no connection to Zeeg is made without your say-so.">Den Kalender stellt unser Terminbuchungs-Dienst Zeeg bereit. Wir laden ihn erst, wenn Sie zustimmen — so wird ohne Ihr Zutun keine Verbindung zu Zeeg hergestellt.</p>
+        <button class="btn btn--gold" type="button" id="zeegLoad" data-de="Kalender laden" data-es="Cargar el calendario" data-en="Load the calendar">Kalender laden</button>
+        <p class="fine" data-de="Dabei werden Ihre IP-Adresse und Browserdaten an Zeeg übertragen. Näheres in unserer Datenschutzerklärung. Lieber ohne Kalender? Schreiben Sie einfach an hallo@popcornakademie.de."
+           data-es="Al hacerlo se transmiten su dirección IP y datos del navegador a Zeeg. Más información en nuestra política de privacidad. ¿Prefiere no usar el calendario? Escríbanos a hallo@popcornakademie.de."
+           data-en="This transmits your IP address and browser data to Zeeg. See our privacy policy for details. Rather not use the calendar? Just email hallo@popcornakademie.de.">Dabei werden Ihre IP-Adresse und Browserdaten an Zeeg übertragen. Näheres in unserer Datenschutzerklärung. Lieber ohne Kalender? Schreiben Sie einfach an hallo@popcornakademie.de.</p>
+      </div>
+      <div id="zeegWidget" hidden>
+        <div class="zeeg-inline-widget" id="zeeg-embed-afmhahn-kostenfreie-beratung" style="min-width:320px;min-height:780px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec sec--cream pop-bg pop-bg--dark" id="faq">
+  <div class="wrap">
+    <div class="sechead rv" style="margin:0 auto 44px;text-align:center;max-width:640px">
+      <p class="eyebrow eyebrow--ink" style="justify-content:center"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--curtain)"><use href="#pop"/></svg></span>
+        <span data-de="Häufige Fragen" data-es="Preguntas frecuentes" data-en="Common questions">Häufige Fragen</span></p>
+      <h2 class="h2" data-de="Bevor Sie fragen" data-es="Antes de preguntar" data-en="Before you ask">Bevor Sie fragen</h2>
+    </div>
+    <div class="faq rv">
+      <div class="q"><button data-de="Brauchen die Kinder eigene Geräte?" data-es="¿Hacen falta dispositivos propios?" data-en="Do the kids need their own devices?">Brauchen die Kinder eigene Geräte?</button>
+        <div class="a"><p data-de="Nein. Kameras, Mikrofone und Tablets bringen wir mit. Wenn die Gruppe eigene Handys nutzen möchte, geht das aber ebenso — oft ist das sogar lehrreicher." data-es="No. Cámaras, micrófonos y tabletas los llevamos nosotros. Si el grupo prefiere usar sus propios móviles, también funciona, y a menudo se aprende más así."
+          data-en="No. We bring cameras, microphones and tablets. If the group would rather use their own phones, that works too — and is often more instructive.">Nein. Kameras, Mikrofone und Tablets bringen wir mit. Wenn die Gruppe eigene Handys nutzen möchte, geht das aber ebenso — oft ist das sogar lehrreicher.</p></div></div>
+      <div class="q"><button data-de="Wie groß darf die Gruppe sein?" data-es="¿De qué tamaño puede ser el grupo?" data-en="How big can a group be?">Wie groß darf die Gruppe sein?</button>
+        <div class="a"><p data-de="Am besten arbeiten wir mit 8 bis 20 Teilnehmenden. Ganze Klassen sind möglich, dann teilen wir in Kleingruppen auf und arbeiten zu zweit." data-es="Trabajamos mejor con entre 8 y 20 participantes. Una clase entera es posible: la dividimos en grupos pequeños y damos el taller entre los dos."
+          data-en="We work best with 8 to 20 participants. Whole classes are possible — we split into small teams and run the session as a pair.">Am besten arbeiten wir mit 8 bis 20 Teilnehmenden. Ganze Klassen sind möglich, dann teilen wir in Kleingruppen auf und arbeiten zu zweit.</p></div></div>
+      <div class="q"><button data-de="Was kostet ein Workshop?" data-es="¿Cuánto cuesta un taller?" data-en="What does a workshop cost?">Was kostet ein Workshop?</button>
+        <div class="a"><p data-de="Die Startpreise stehen bei jedem Format direkt dabei — ab 89 € pro Kind, ab 290 € pro Gruppe. Es sind Endpreise: als Bildungsleistung sind die Workshops umsatzsteuerbefreit. Technik, Material und Vorbereitung sind enthalten, und in Wolfratshausen, Bad Tölz und München fällt keine Anfahrtspauschale an." data-es="Los precios de partida aparecen en cada formato: desde 89 € por niño y desde 290 € por grupo. Son precios finales: por tratarse de servicios educativos están exentos de IVA. Incluyen equipo, material y preparación, y en Wolfratshausen, Bad Tölz y Múnich no cobramos desplazamiento."
+          data-en="Starting prices are listed on every format — from €89 per child, from €290 per group. These are final prices: as educational services the workshops are VAT-exempt. Equipment, materials and preparation are included, and there is no travel fee in Wolfratshausen, Bad Tölz or Munich.">Die Startpreise stehen bei jedem Format direkt dabei — ab 89 € pro Kind, ab 290 € pro Gruppe. Es sind Endpreise: als Bildungsleistung sind die Workshops umsatzsteuerbefreit. Technik, Material und Vorbereitung sind enthalten, und in Wolfratshausen, Bad Tölz und München fällt keine Anfahrtspauschale an.</p></div></div>
+      <div class="q"><button data-de="Geht das auch auf Englisch oder Spanisch?" data-es="¿También en inglés o en español?" data-en="Can you run it in English or Spanish?">Geht das auch auf Englisch oder Spanisch?</button>
+        <div class="a"><p data-de="Ja. Alle Formate laufen auf Deutsch, Englisch und Spanisch, auf Wunsch auch zweisprachig. Josefina unterrichtet auf Spanisch — für zweisprachige Familien und internationale Schulen ist das oft genau das Richtige." data-es="Sí. Todos los formatos se imparten en alemán, inglés y español, y de forma bilingüe si se desea. Josefina da clase en español, algo que suele encajar muy bien con familias bilingües y colegios internacionales."
+          data-en="Yes. Every format runs in German, English and Spanish, and bilingually on request. Josefina teaches in Spanish, which is often exactly right for bilingual families and international schools.">Ja. Alle Formate laufen auf Deutsch, Englisch und Spanisch, auf Wunsch auch zweisprachig. Josefina unterrichtet auf Spanisch — für zweisprachige Familien und internationale Schulen ist das oft genau das Richtige.</p></div></div>
+      <div class="q"><button data-de="Was passiert mit den fertigen Filmen?" data-es="¿Qué pasa con las películas terminadas?" data-en="What happens to the finished films?">Was passiert mit den fertigen Filmen?</button>
+        <div class="a"><p data-de="Die Ergebnisse gehören der Gruppe. Veröffentlicht wird nur, was alle Beteiligten und ihre Eltern ausdrücklich freigeben." data-es="Los resultados pertenecen al grupo. Solo se publica aquello que todas las personas participantes y sus familias autorizan expresamente."
+          data-en="The results belong to the group. Nothing gets published unless everyone involved and their parents explicitly agree.">Die Ergebnisse gehören der Gruppe. Veröffentlicht wird nur, was alle Beteiligten und ihre Eltern ausdrücklich freigeben.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="sec sec--night pop-bg" id="kontakt">
+  <div class="wrap contact">
+    <div class="rv">
+      <p class="eyebrow"><span class="popmark"><svg class="kern" style="color:var(--kernel)"><use href="#kernel"/></svg><svg class="puff" style="color:var(--cream)"><use href="#pop"/></svg></span>
+        <span data-de="Kontakt" data-es="Contacto" data-en="Contact">Kontakt</span></p>
+      <h2 class="h2" data-de="Erzählen Sie uns von Ihrer Gruppe" data-es="Cuéntenos cómo es su grupo" data-en="Tell us about your group">Erzählen Sie uns von Ihrer Gruppe</h2>
+      <p class="lede" data-de="Ein paar Zeilen reichen: Alter, wie viele, wann. Den Rest klären wir zusammen." data-es="Con unas líneas basta: qué edades, cuántos y cuándo. El resto lo vemos juntos."
+         data-en="A couple of lines is enough: how old, how many, when. We'll work out the rest together.">Ein paar Zeilen reichen: Alter, wie viele, wann. Den Rest klären wir zusammen.</p>
+      <div class="contact__info">
+        <div class="info-row"><span class="k">E-Mail</span><a href="mailto:hallo@popcornakademie.de" style="color:var(--butter)">hallo@popcornakademie.de</a></div>
+        <div class="info-row"><span class="k" data-de="Adresse" data-es="Dirección" data-en="Address">Adresse</span><span>Geltingerstraße 12, 82515 Wolfratshausen</span></div>
+        <div class="info-row"><span class="k" data-de="Telefon" data-es="Teléfono" data-en="Phone">Telefon</span><a href="tel:+4917685911204" style="color:var(--butter)">+49 176 85911204</a></div>
+        <div class="info-row"><span class="k" data-de="Einsatz" data-es="Zona" data-en="Area">Einsatz</span><span data-de="Wolfratshausen, Bad Tölz und München — sowie online, bundesweit" data-es="Wolfratshausen, Bad Tölz y Múnich, además de en línea desde cualquier lugar" data-en="Wolfratshausen, Bad Tölz and Munich — plus online, anywhere">Wolfratshausen, Bad Tölz und München — sowie online, bundesweit</span></div>
+        <div class="info-row"><span class="k" data-de="Sprachen" data-es="Idiomas" data-en="Languages">Sprachen</span><span data-de="Deutsch, Englisch und Spanisch" data-es="Alemán, inglés y español" data-en="German, English and Spanish">Deutsch, Englisch und Spanisch</span></div>
+        <div class="info-row"><span class="k" data-de="Antwort" data-es="Respuesta" data-en="Reply">Antwort</span><span data-de="In der Regel innerhalb von zwei Werktagen" data-es="Normalmente en dos días laborables" data-en="Usually within two working days">In der Regel innerhalb von zwei Werktagen</span></div>
+      </div>
+    </div>
+    <form class="form rv" id="form">
+      <div class="field"><label for="n" data-de="Name" data-es="Nombre" data-en="Name">Name</label><input id="n" name="name" required></div>
+      <div class="field"><label for="e" data-de="E-Mail" data-es="Correo electrónico" data-en="Email">E-Mail</label><input id="e" name="email" type="email" required></div>
+      <div class="field"><label for="t" data-de="Was schwebt Ihnen vor?" data-es="¿Qué tiene en mente?" data-en="What do you have in mind?">Was schwebt Ihnen vor?</label>
+        <select id="t" name="format">
+          <option data-de="Workshop an einer Schule" data-es="Taller en un colegio" data-en="Workshop at a school">Workshop an einer Schule</option>
+          <option data-de="Ferien- oder Projektwoche" data-es="Semana de vacaciones o de proyecto" data-en="Holiday or project week">Ferien- oder Projektwoche</option>
+          <option data-de="Elternabend / Fortbildung" data-es="Sesión para familias / formación" data-en="Parents' evening / training">Elternabend / Fortbildung</option>
+          <option data-de="Etwas anderes" data-es="Otra cosa" data-en="Something else">Etwas anderes</option>
+        </select></div>
+      <div class="field"><label for="m" data-de="Nachricht" data-es="Mensaje" data-en="Message">Nachricht</label>
+        <textarea id="m" name="msg" data-de-ph="Alter der Gruppe, ungefähre Teilnehmerzahl, Wunschtermin …" data-es-ph="Edad del grupo, número aproximado de participantes, fecha deseada…" data-en-ph="Age of the group, roughly how many, preferred date …" placeholder="Alter der Gruppe, ungefähre Teilnehmerzahl, Wunschtermin …"></textarea></div>
+      <button class="btn btn--gold" type="submit" style="justify-content:center" data-de="Anfrage senden" data-es="Enviar solicitud" data-en="Send request">Anfrage senden</button>
+      <p id="formnote" style="font-size:13.5px;opacity:.6;margin:2px 0 0"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="wrap foot__in">
+    <a class="brand" href="#top">
+      <span class="brand__chip"><svg class="brand__logo" viewBox="0 0 100 100" role="img" aria-label="Popcorn Akademie"><g fill="#FFF4E0"><circle cx="50" cy="27" r="13"/><circle cx="33" cy="35" r="11"/><circle cx="67" cy="35" r="11"/><circle cx="41" cy="18" r="9"/><circle cx="60" cy="18" r="9"/><circle cx="50" cy="39" r="12"/><circle cx="23" cy="44" r="8"/><circle cx="77" cy="44" r="8"/></g><g fill="#FFC24B" opacity=".5"><circle cx="44" cy="29" r="5"/><circle cx="62" cy="37" r="4"/><circle cx="34" cy="39" r="3.5"/></g><path d="M19 53 h62 l-8 38 h-46 z" fill="#E5423C"/><g fill="#FFF4E0"><path d="M29 53 h9 l-5 38 h-7 z"/><path d="M46 53 h9 l-2 38 h-8 z"/><path d="M63 53 h9 l1 38 h-8 z"/></g><rect x="15" y="46" width="70" height="11" rx="5.5" fill="#FFC24B"/></svg></span>
+      <span class="brand__txt">Popcorn Akademie<small data-de="MEDIENKOMPETENZ" data-es="COMPETENCIA MEDIÁTICA" data-en="MEDIA LITERACY">MEDIENKOMPETENZ</small></span>
+    </a>
+    <nav class="foot__links">
+      <a href="#angebot" data-de="Angebot" data-es="Talleres" data-en="Programs">Angebot</a>
+      <a href="#ablauf" data-de="Ablauf" data-es="Cómo funciona" data-en="How it works">Ablauf</a>
+      <a href="#ueber-uns" data-de="Über uns" data-es="Quiénes somos" data-en="About us">Über uns</a>
+      <a href="#termine" data-de="Termine" data-es="Citas" data-en="Booking">Termine</a>
+      <a href="#faq" data-de="FAQ" data-es="Preguntas" data-en="FAQ">FAQ</a>
+      <a href="#kontakt" data-de="Kontakt" data-es="Contacto" data-en="Contact">Kontakt</a>
+      <a href="tel:+4917685911204">+49 176 85911204</a>
+    </nav>
+  </div>
+  <div class="wrap foot__bot">
+    <span>© <span id="yr"></span> Popcorn Akademie · Josefina Mata Zetina &amp; Alec Hahn</span>
+    <span><a href="agb.html" style="text-decoration:none" data-de="AGB" data-es="Condiciones" data-en="Terms">AGB</a> · <a href="impressum.html" style="text-decoration:none" data-de="Impressum" data-es="Aviso legal" data-en="Legal notice">Impressum</a> · <a href="datenschutz.html" style="text-decoration:none" data-de="Datenschutz" data-es="Privacidad" data-en="Privacy">Datenschutz</a></span>
+  </div>
+</footer>
+
+<!-- ============ WORKSHOP-MODAL ============ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+  <div class="modal__bg" data-close></div>
+  <div class="modal__panel">
+    <div class="modal__head">
+      <button class="modal__x" type="button" data-close aria-label="Schließen">&times;</button>
+      <p class="modal__tag" id="modalTag"></p>
+      <h3 id="modalTitle"></h3>
+      <p class="modal__sub" id="modalSub"></p>
+      <dl class="modal__meta" id="modalMeta"></dl>
+    </div>
+    <div class="modal__body" id="modalBody"></div>
+    <div class="modal__foot">
+      <p id="modalFoot"></p>
+      <a class="btn btn--gold btn--sm" href="#kontakt" id="modalCta"></a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- year ---- */
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ---- language toggle ---- */
+  var meta = {
+    de:{title:'Popcorn Akademie — Medienkompetenz für Kinder und Jugendliche', note:'Dieses Formular ist noch nicht angebunden — schreiben Sie uns bitte direkt an hallo@popcornakademie.de oder rufen Sie an: +49 176 85911204.'},
+    en:{title:'Popcorn Akademie — Media literacy for children and teenagers', note:'This form isn\'t connected yet — please email hallo@popcornakademie.de or call +49 176 85911204.'},
+    es:{title:'Popcorn Akademie — Competencia mediática para niños y adolescentes', note:'Este formulario aún no está conectado: escríbanos a hallo@popcornakademie.de o llame al +49 176 85911204.'}
+  };
+  function setLang(l){
+    document.documentElement.lang = l;
+    document.title = meta[l].title;
+    document.querySelectorAll('[data-de][data-en][data-es]').forEach(function(el){
+      el.textContent = el.getAttribute('data-'+l);
+    });
+    document.querySelectorAll('[data-de-ph]').forEach(function(el){
+      el.setAttribute('placeholder', el.getAttribute('data-'+l+'-ph'));
+    });
+    document.querySelectorAll('.lang button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.lang===l);
+    });
+    buildMarquee(l);
+    if(typeof openId !== 'undefined' && openId) renderModal(openId, l);
+    var note = document.getElementById('formnote');
+    if(note.dataset.shown) note.textContent = meta[l].note;
+  }
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.lang); });
+  });
+
+  /* ---- marquee ---- */
+  var words = {
+    de:['Kamera läuft','Fragen stellen','Selber schneiden','Quellen prüfen','Ton aufnehmen','Premiere feiern','Nicht alles glauben'],
+    en:['Camera rolling','Ask questions','Cut it yourself','Check the source','Record the sound','Throw a premiere','Believe less, check more'],
+    es:['Cámara en marcha','Hacer preguntas','Montarlo tú mismo','Comprobar la fuente','Grabar el sonido','Celebrar el estreno','Creer menos, comprobar más']
+  };
+  function buildMarquee(l){
+    var track = document.getElementById('marquee');
+    var half = words[l].map(function(w){ return w + ' <i>✦</i>'; }).join(' ');
+    track.innerHTML = '<span>'+half+'</span><span>'+half+'</span>';
+  }
+  buildMarquee('de');
+
+  /* ---- burger ---- */
+  var burger = document.getElementById('burger'), links = document.getElementById('navlinks');
+  burger.addEventListener('click', function(){
+    var open = links.classList.toggle('show');
+    burger.setAttribute('aria-expanded', open);
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ links.classList.remove('show'); burger.setAttribute('aria-expanded', false); });
+  });
+
+  /* ---- scroll reveal ---- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  },{threshold:.16, rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.rv').forEach(function(el,i){
+    el.style.transitionDelay = (Math.min(i%3,2)*90)+'ms';
+    io.observe(el);
+  });
+  /* hero popmark pops immediately */
+  document.querySelectorAll('.hero .eyebrow').forEach(function(el){
+    setTimeout(function(){ el.classList.add('in'); }, 600);
+  });
+  document.querySelectorAll('.sechead, .contact > .rv').forEach(function(el){ io.observe(el); });
+
+  /* ---- FAQ ---- */
+  document.querySelectorAll('.q').forEach(function(q){
+    var btn = q.querySelector('button'), a = q.querySelector('.a');
+    btn.setAttribute('aria-expanded','false');
+    btn.addEventListener('click', function(){
+      var open = q.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      a.style.maxHeight = open ? a.scrollHeight + 'px' : 0;
+    });
+  });
+
+  /* ---- form ---- */
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var note = document.getElementById('formnote');
+    note.dataset.shown = '1';
+    note.textContent = (meta[document.documentElement.lang] || meta.de).note;
+  });
+
+  var COURSES = {"fake":{"tag":{"de":"Nachrichten & Wahrheit · Schulformat","en":"News & truth · School format","es":"Noticias y verdad · Formato escolar"},"title":{"de":"Fake oder echt?","en":"Fake or real?","es":"¿Falso o real?"},"sub":{"de":"Falschmeldungen erkennt man nicht am Bauchgefühl, sondern an drei Handgriffen. Die Gruppe lernt sie, wendet sie an — und baut anschließend selbst eine Falschmeldung, um zu merken, wie wenig dafür nötig ist.","en":"You don't spot disinformation by gut feeling but with three concrete moves. The group learns them, applies them — and then builds a fake story of their own, to see how little it takes.","es":"Los bulos no se detectan por intuición, sino con tres gestos concretos. El grupo los aprende, los aplica y después fabrica su propio bulo para ver lo poco que hace falta."},"meta":{"alter":{"de":"10–14 Jahre","en":"Ages 10–14","es":"10–14 años"},"dauer":{"de":"2–4 Stunden","en":"2–4 hours","es":"2–4 horas"},"ort":{"de":"Schule oder online","en":"School or online","es":"Colegio o en línea"},"preis":{"de":"ab 390 € pro Gruppe","en":"from €390 per group","es":"desde 390 € por grupo"}},"ablauf":[{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Sortieren.</b> Zwölf Beiträge liegen auf dem Tisch, echte und gefälschte. Erst wird geraten, dann begründet. Die erste Runde geht fast immer daneben — genau darum beginnt der Workshop damit.","en":"<b>Sorting.</b> Twelve posts on the table, real and fabricated. First guesswork, then reasons. The first round almost always goes wrong — which is exactly why we start there.","es":"<b>Clasificar.</b> Doce publicaciones sobre la mesa, reales y falsas. Primero se adivina, luego se argumenta. La primera ronda casi siempre falla, y por eso empezamos así."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Drei Handgriffe.</b> Bildrückwärtssuche, Quellenprüfung, Zeitprüfung. Geübt wird an Beispielen aus der laufenden Woche, nicht an Museumsstücken.","en":"<b>Three moves.</b> Reverse image search, source check, date check. Practised on examples from the current week, not on museum pieces.","es":"<b>Tres gestos.</b> Búsqueda inversa de imágenes, verificación de la fuente y de la fecha. Se practica con ejemplos de la semana en curso, no con piezas de museo."}},{"t":{"de":"60 MIN","en":"60 MIN","es":"60 MIN"},"c":{"de":"<b>Selber bauen.</b> Kleingruppen erfinden eine Meldung: reißerische Überschrift, echtes Foto im falschen Zusammenhang, erfundene Quelle. Wir zeigen keine Fälschungswerkzeuge — Bordmittel reichen erschreckend weit.","en":"<b>Building one.</b> Small groups invent a story: a lurid headline, a real photo in the wrong context, an invented source. We show no faking tools — everyday means get alarmingly far.","es":"<b>Fabricar uno.</b> En grupos pequeños se inventa una noticia: titular sensacionalista, foto real fuera de contexto, fuente inventada. No mostramos herramientas de falsificación: los medios corrientes llegan inquietantemente lejos."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Auseinandernehmen.</b> Jede Gruppe stellt ihr Produkt vor, die anderen suchen die Bruchstellen mit den drei Handgriffen. Wer den Fehler zuerst findet, erklärt ihn.","en":"<b>Taking it apart.</b> Each group presents; the others hunt the cracks with the three moves. Whoever finds the flaw first explains it.","es":"<b>Desmontarlo.</b> Cada grupo presenta lo suyo y el resto busca las grietas con los tres gestos. Quien encuentra el fallo primero, lo explica."}},{"t":{"de":"20 MIN","en":"20 MIN","es":"20 MIN"},"c":{"de":"<b>Warum das funktioniert.</b> Empörung verbreitet sich schneller als Korrektur. Am Ende steht eine Regel für den Alltag: erst prüfen, dann teilen.","en":"<b>Why it works.</b> Outrage travels faster than correction. We end on one everyday rule: check first, share second.","es":"<b>Por qué funciona.</b> La indignación circula más rápido que la corrección. Terminamos con una regla para el día a día: comprobar antes de compartir."}}],"ergebnis":[{"de":"Eine selbstgebaute Falschmeldung je Kleingruppe, samt schriftlicher Auflösung","en":"A self-built fake story per group, with a written debunk","es":"Un bulo propio por grupo, con su explicación por escrito"},{"de":"Ein Merkblatt „Drei Handgriffe“, das im Klassenzimmer hängen bleiben kann","en":"A handout of the three moves that can stay on the classroom wall","es":"Una ficha con los tres gestos que puede quedarse en el aula"},{"de":"Eine gemeinsam formulierte Klassenregel zum Weiterleiten","en":"A shared class rule about forwarding things on","es":"Una norma de clase formulada en común sobre reenviar contenidos"}],"lernen":[{"de":"Quellenkritik als Handwerk: prüfen statt glauben oder pauschal misstrauen","en":"Source criticism as a craft: checking rather than believing or blanket distrust","es":"La crítica de fuentes como oficio: comprobar en vez de creer o desconfiar de todo"},{"de":"Unterscheidung von Nachricht, Meinung, Werbung und Satire","en":"Telling news, opinion, advertising and satire apart","es":"Distinguir noticia, opinión, publicidad y sátira"},{"de":"Bildrückwärtssuche und Kontextrecherche als konkrete Technik","en":"Reverse image search and context research as concrete technique","es":"La búsqueda inversa y la investigación de contexto como técnica concreta"},{"de":"Verständnis dafür, wie Reichweitenlogik Inhalte auswählt","en":"Understanding how reach-driven logic selects content","es":"Comprender cómo la lógica del alcance selecciona los contenidos"},{"de":"KMK-Kompetenzbereiche 1 und 6","en":"German KMK competence areas 1 and 6","es":"Áreas de competencia 1 y 6 del marco alemán KMK"}],"prep":{"de":"<b>Sie stellen:</b> Raum mit Beamer oder großem Bildschirm, Strom, Internetzugang. <b>Wir bringen:</b> Tablets und Laptops für Kleingruppen, gedrucktes Beispielmaterial.","en":"<b>You provide:</b> a room with a projector or large screen, power, internet. <b>We bring:</b> tablets and laptops for the small groups, printed example material.","es":"<b>Ustedes ponen:</b> sala con proyector o pantalla grande, electricidad e internet. <b>Nosotros llevamos:</b> tabletas y portátiles para los grupos y material impreso."},"note":{"de":"Die gebauten Falschmeldungen bleiben im Raum und werden am Ende gemeinsam gelöscht. Wer seine behalten will, bekommt sie nur mit sichtbarem Wasserzeichen „Übung“. Es entstehen keine Fälschungen über reale Personen aus dem Umfeld der Gruppe.","en":"The fake stories stay in the room and are deleted together at the end. Anyone who wants to keep theirs gets it only with a visible watermark reading “exercise”. No fakes are made about real people the group knows.","es":"Los bulos creados se quedan en el aula y se borran juntos al final. Quien quiera conservar el suyo lo recibe solo con una marca de agua visible que dice «ejercicio». No se crean falsificaciones sobre personas reales del entorno del grupo."}},"feed":{"tag":{"de":"Soziale Netzwerke · Schulformat","en":"Social platforms · School format","es":"Redes sociales · Formato escolar"},"title":{"de":"Mein Feed, meine Regeln","en":"My feed, my rules","es":"Mi feed, mis reglas"},"sub":{"de":"Zwei Termine mit einer Woche Abstand. Beim ersten sehen wir uns an, was der eigene Feed anzeigt und warum. Dazwischen beobachtet die Gruppe. Beim zweiten wird aufgeräumt — Einstellungen, Sichtbarkeit, Privatsphäre.","en":"Two sessions a week apart. In the first we look at what your own feed shows and why. In between, the group observes. In the second we tidy up — settings, visibility, privacy.","es":"Dos sesiones separadas por una semana. En la primera vemos qué muestra el propio feed y por qué. Entre medias, el grupo observa. En la segunda se ordena: ajustes, visibilidad, privacidad."},"meta":{"alter":{"de":"12–16 Jahre","en":"Ages 12–16","es":"12–16 años"},"dauer":{"de":"2 × 90 Minuten","en":"2 × 90 minutes","es":"2 × 90 minutos"},"ort":{"de":"Schule oder online","en":"School or online","es":"Colegio o en línea"},"preis":{"de":"ab 340 € pro Gruppe","en":"from €340 per group","es":"desde 340 € por grupo"}},"ablauf":[{"t":{"de":"TERMIN 1","en":"SESSION 1","es":"SESIÓN 1"},"c":{"de":"<b>Feed-Protokoll.</b> Zehn Minuten scrollen, jede und jeder notiert die ersten fünfzehn Beiträge nach Art: Freunde, Fremde, Werbung, Empfehlung. Die Frage, die immer zieht: Was hatten alle, und was hatte nur eine Person?","en":"<b>Feed log.</b> Ten minutes of scrolling; everyone notes the first fifteen posts by type: friends, strangers, ads, recommendations. The question that always lands: what did everyone get, and what did only one person get?","es":"<b>Registro del feed.</b> Diez minutos deslizando; cada persona anota las primeras quince publicaciones por tipo: amigos, desconocidos, publicidad, recomendaciones. La pregunta que siempre funciona: ¿qué le salió a todo el mundo y qué a una sola persona?"}},{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Die Maschine dahinter.</b> Kein Zauber, sondern Signale: Verweildauer, Wiederholung, wen du kennst. Wir bauen das Prinzip an der Tafel nach und lassen die Gruppe vorhersagen, was als Nächstes käme.","en":"<b>The machine behind it.</b> No magic, just signals: dwell time, repetition, who you know. We rebuild the principle on the board and let the group predict what would come next.","es":"<b>La máquina detrás.</b> No hay magia, solo señales: tiempo de permanencia, repetición, a quién conoces. Reconstruimos el principio en la pizarra y el grupo predice qué vendría después."}},{"t":{"de":"25 MIN","en":"25 MIN","es":"25 MIN"},"c":{"de":"<b>Was Plattformen offenlegen müssen.</b> Der Digital Services Act verlangt von großen Plattformen, ihre Empfehlungskriterien zu erklären und eine Ansicht ohne Profilbildung anzubieten. Wir suchen diese Einstellungen gemeinsam in den Apps.","en":"<b>What platforms must disclose.</b> The Digital Services Act requires large platforms to explain their recommendation criteria and offer a non-profiled view. We find those settings together in the apps.","es":"<b>Lo que las plataformas deben revelar.</b> La Ley de Servicios Digitales obliga a las grandes plataformas a explicar sus criterios de recomendación y ofrecer una vista sin perfilado. Buscamos juntos esos ajustes en las aplicaciones."}},{"t":{"de":"DAZWISCHEN","en":"IN BETWEEN","es":"ENTRE SESIONES"},"c":{"de":"<b>Beobachtungsauftrag.</b> Eine Woche lang eine Sache bewusst anders machen — etwa „Nicht interessiert“ konsequent nutzen — und notieren, was sich ändert.","en":"<b>Observation task.</b> For one week, deliberately do one thing differently — for instance use “not interested” consistently — and note what changes.","es":"<b>Tarea de observación.</b> Durante una semana, hacer una cosa distinta a propósito —por ejemplo, usar «no me interesa» de forma sistemática— y anotar qué cambia."}},{"t":{"de":"TERMIN 2","en":"SESSION 2","es":"SESIÓN 2"},"c":{"de":"<b>Einstellungs-Werkstatt.</b> Schritt für Schritt: Wer sieht meine Beiträge, wer darf mich finden, Standortfreigabe, Kontaktabgleich, personalisierte Werbung, Aktivitätsverlauf. Jede und jeder arbeitet im eigenen Tempo mit Checkliste.","en":"<b>Settings workshop.</b> Step by step: who sees my posts, who can find me, location sharing, contact syncing, personalised ads, activity history. Everyone works at their own pace with a checklist.","es":"<b>Taller de ajustes.</b> Paso a paso: quién ve mis publicaciones, quién puede encontrarme, ubicación, sincronización de contactos, publicidad personalizada, historial de actividad. Cada persona avanza a su ritmo con una lista de verificación."}},{"t":{"de":"20 MIN","en":"20 MIN","es":"20 MIN"},"c":{"de":"<b>Die eigene Datenauskunft.</b> Wie man nach Art. 15 DSGVO eine Kopie seiner Daten anfordert — und was in so einem Export tatsächlich steht. Wir zeigen ein anonymisiertes Beispiel.","en":"<b>Your own data request.</b> How to request a copy of your data under Art. 15 GDPR — and what such an export actually contains. We show an anonymised example.","es":"<b>La propia solicitud de datos.</b> Cómo pedir una copia de tus datos según el art. 15 del RGPD y qué contiene realmente ese archivo. Mostramos un ejemplo anonimizado."}}],"ergebnis":[{"de":"Aufgeräumte Konten — jede Person entscheidet selbst, wie weit","en":"Tidied-up accounts — everyone decides for themselves how far to go","es":"Cuentas ordenadas: cada persona decide hasta dónde"},{"de":"Eine Checkliste zum Mitnehmen, die auch für Konten gilt, die es heute noch nicht gibt","en":"A checklist to take home that works for accounts that don't exist yet","es":"Una lista para llevarse que sirve incluso para cuentas que aún no existen"},{"de":"Eine selbst formulierte Regel pro Person","en":"One self-written rule per person","es":"Una regla escrita por cada participante"}],"lernen":[{"de":"Empfehlungssysteme als erklärbare Technik statt als Blackbox","en":"Recommender systems as explainable technology rather than a black box","es":"Los sistemas de recomendación como tecnología explicable, no como caja negra"},{"de":"Datensparsamkeit praktisch: Was gebe ich her, wofür bekomme ich es?","en":"Data minimisation in practice: what am I giving up, and for what?","es":"Minimización de datos en la práctica: ¿qué entrego y a cambio de qué?"},{"de":"Eigene Rechte kennen und anwenden (Auskunft, Löschung, Widerspruch)","en":"Knowing and using your own rights (access, erasure, objection)","es":"Conocer y ejercer los propios derechos (acceso, supresión, oposición)"},{"de":"KMK-Bereiche 4 und 6","en":"German KMK areas 4 and 6","es":"Áreas 4 y 6 del marco alemán KMK"}],"prep":{"de":"<b>Sie stellen:</b> Raum mit Beamer, Strom, WLAN für Teilnehmendengeräte. <b>Wir bringen:</b> Tablets für alle, die nicht am eigenen Gerät arbeiten wollen, Demokonten, Checklisten.","en":"<b>You provide:</b> a room with a projector, power, Wi-Fi for participants' devices. <b>We bring:</b> tablets for anyone who prefers not to use their own device, demo accounts, checklists.","es":"<b>Ustedes ponen:</b> sala con proyector, electricidad y wifi para los dispositivos. <b>Nosotros llevamos:</b> tabletas para quien no quiera usar su móvil, cuentas de demostración y listas de verificación."},"note":{"de":"Niemand muss sein Handy herzeigen. Es gibt keine Bildschirmkontrolle und keine Runde, in der Feeds vorgeführt werden. Wer nicht am eigenen Konto arbeiten möchte, nutzt ein vorbereitetes Demokonto auf unseren Geräten. Wir sehen keine Passwörter und notieren nichts.","en":"Nobody has to show their phone. There is no screen inspection and no round where feeds get displayed. Anyone who prefers not to work on their own account uses a prepared demo account on our devices. We never see passwords and record nothing.","es":"Nadie tiene que enseñar su móvil. No hay revisión de pantallas ni ronda en la que se muestren los feeds. Quien prefiera no trabajar en su cuenta usa una cuenta de demostración en nuestros dispositivos. No vemos contraseñas ni anotamos nada."}},"werbung":{"tag":{"de":"Werbung & Influencer · Schulformat","en":"Ads & influencers · School format","es":"Publicidad e influencers · Formato escolar"},"title":{"de":"Wer bezahlt diesen Beitrag?","en":"Who paid for this post?","es":"¿Quién paga esta publicación?"},"sub":{"de":"Am ersten Termin suchen wir versteckte Werbung in echten Beiträgen. Am zweiten dreht die Gruppe selbst eine Kampagne für ein erfundenes Produkt — und entscheidet dabei, wo Übertreibung aufhört und Lüge anfängt.","en":"In the first session we hunt hidden advertising in real posts. In the second the group shoots a campaign for an invented product — and decides where exaggeration ends and lying begins.","es":"En la primera sesión buscamos publicidad encubierta en publicaciones reales. En la segunda el grupo rueda una campaña para un producto inventado y decide dónde acaba la exageración y empieza la mentira."},"meta":{"alter":{"de":"11–15 Jahre","en":"Ages 11–15","es":"11–15 años"},"dauer":{"de":"2 × 90 Minuten","en":"2 × 90 minutes","es":"2 × 90 minutos"},"ort":{"de":"Schule oder online","en":"School or online","es":"Colegio o en línea"},"preis":{"de":"ab 340 € pro Gruppe","en":"from €340 per group","es":"desde 340 € por grupo"}},"ablauf":[{"t":{"de":"20 MIN","en":"20 MIN","es":"20 MIN"},"c":{"de":"<b>Woher kommt das Geld?</b> Wir rechnen an einem einfachen Beispiel durch, wie aus Aufmerksamkeit Umsatz wird: Reichweite, Klick, Rabattcode, Provision. Kein Moralurteil — erst einmal nur die Mechanik.","en":"<b>Where does the money come from?</b> We work through a simple example of how attention becomes revenue: reach, click, discount code, commission. No moral verdict — just the mechanics first.","es":"<b>¿De dónde sale el dinero?</b> Calculamos con un ejemplo sencillo cómo la atención se convierte en ingresos: alcance, clic, código de descuento, comisión. Sin juicios morales: primero la mecánica."}},{"t":{"de":"35 MIN","en":"35 MIN","es":"35 MIN"},"c":{"de":"<b>Werbung finden.</b> An echten Beiträgen: Wo steht „Werbung“, wo „bezahlte Partnerschaft“, wo gar nichts? Wir sammeln die Signale — Rabattcodes, Affiliate-Links, auffällig freundliche Produktnennungen, Marken im Bildhintergrund.","en":"<b>Spotting ads.</b> In real posts: where does it say “ad”, where “paid partnership”, where nothing at all? We collect the signals — discount codes, affiliate links, suspiciously warm product mentions, brands in the background.","es":"<b>Encontrar la publicidad.</b> En publicaciones reales: ¿dónde pone «publicidad», dónde «colaboración pagada» y dónde no pone nada? Reunimos las señales: códigos de descuento, enlaces de afiliados, menciones sospechosamente amables, marcas al fondo."}},{"t":{"de":"25 MIN","en":"25 MIN","es":"25 MIN"},"c":{"de":"<b>Die Regel dahinter.</b> Wer für einen Beitrag eine Gegenleistung bekommt, muss ihn kennzeichnen. Wir lesen zwei Beispiele aus dem Leitfaden der Medienanstalten und ordnen die gesammelten Fälle zu.","en":"<b>The rule behind it.</b> Anyone who receives something in return for a post must label it. We read two examples from the German media authorities' guidance and sort the collected cases accordingly.","es":"<b>La norma detrás.</b> Quien recibe algo a cambio de una publicación debe identificarla. Leemos dos ejemplos de la guía de las autoridades audiovisuales alemanas y clasificamos los casos recogidos."}},{"t":{"de":"15 MIN","en":"15 MIN","es":"15 MIN"},"c":{"de":"<b>Briefing wie in der Agentur.</b> Zielgruppe, Versprechen, Tonfall — dazu eine Auflage: Das Versprechen muss so formuliert sein, dass die Gruppe es vor der Klasse verteidigen kann.","en":"<b>An agency-style brief.</b> Target group, promise, tone — with one condition: the promise must be phrased so the group can defend it in front of the class.","es":"<b>Briefing como en una agencia.</b> Público, promesa, tono, con una condición: la promesa debe poder defenderse ante toda la clase."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Dreh.</b> Jede Gruppe produziert einen Beitrag von etwa 60 Sekunden — hochkant, mit Handy oder Kamera. Kennzeichnung inklusive, korrekt platziert und von Anfang an sichtbar.","en":"<b>Shoot.</b> Each group produces a roughly 60-second post — vertical, on a phone or camera. Labelling included, correctly placed and visible from the start.","es":"<b>Rodaje.</b> Cada grupo produce una pieza de unos 60 segundos, en vertical, con móvil o cámara. Con su identificación como publicidad, bien colocada y visible desde el principio."}},{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Vorführung und Streitgespräch.</b> Alle Kampagnen laufen. Danach die eigentliche Frage: Welches Versprechen war Übertreibung, welches schon Täuschung? Die Gruppe entscheidet per Abstimmung und muss begründen.","en":"<b>Screening and debate.</b> All campaigns run. Then the real question: which promise was exaggeration, which was already deception? The group votes and has to justify it.","es":"<b>Proyección y debate.</b> Se ven todas las campañas. Después, la pregunta de fondo: ¿qué promesa era exageración y cuál ya era engaño? El grupo vota y tiene que argumentar."}}],"ergebnis":[{"de":"Ein fertiger Werbeclip je Kleingruppe, korrekt gekennzeichnet","en":"A finished ad clip per group, correctly labelled","es":"Un anuncio terminado por grupo, correctamente identificado"},{"de":"Eine Sammlung echter Beispiele mit Einordnung, im Unterricht weiterverwendbar","en":"A collection of real examples with commentary, reusable in lessons","es":"Una colección de ejemplos reales comentados, reutilizable en clase"},{"de":"Eine von der Gruppe selbst gezogene Linie zwischen Werbung und Täuschung","en":"A line drawn by the group itself between advertising and deception","es":"Una línea trazada por el propio grupo entre publicidad y engaño"}],"lernen":[{"de":"Werbliche Absicht erkennen, auch wenn sie nicht gekennzeichnet ist","en":"Recognising commercial intent even when it isn't labelled","es":"Reconocer la intención comercial aunque no esté señalada"},{"de":"Grundverständnis der Aufmerksamkeitsökonomie","en":"A basic grasp of the attention economy","es":"Comprensión básica de la economía de la atención"},{"de":"Produktion: Bildsprache, Schnitt und Sprache als Überzeugungsmittel — erlebt aus der Herstellerperspektive","en":"Production: visual language, editing and wording as tools of persuasion, experienced from the maker's side","es":"Producción: lenguaje visual, montaje y palabras como herramientas de persuasión, desde el lado de quien las fabrica"},{"de":"Argumentieren und begründen statt pauschal ablehnen","en":"Arguing and justifying rather than rejecting wholesale","es":"Argumentar y justificar en lugar de rechazar en bloque"}],"prep":{"de":"<b>Sie stellen:</b> Raum mit Beamer, Strom, Internet, idealerweise einen zweiten Raum oder Flur für Drehsituationen. <b>Wir bringen:</b> Kameras oder Tablets, Funkmikrofone, Licht, Schnittgeräte, Requisiten.","en":"<b>You provide:</b> a room with a projector, power, internet, ideally a second room or corridor for filming. <b>We bring:</b> cameras or tablets, radio mics, lighting, editing devices, props.","es":"<b>Ustedes ponen:</b> sala con proyector, electricidad, internet y, a ser posible, una segunda sala o pasillo para rodar. <b>Nosotros llevamos:</b> cámaras o tabletas, micrófonos inalámbricos, luz, equipos de montaje y atrezo."},"note":{"de":"Erfundene Produkte, echte Regeln. Wir arbeiten nie mit real existierenden Marken und nie mit Beiträgen von Personen aus dem Umfeld der Gruppe. Die Clips bleiben bei der Gruppe; eine Veröffentlichung wäre nur mit Einwilligung aller Gefilmten und der Erziehungsberechtigten möglich.","en":"Invented products, real rules. We never work with existing brands or with posts by people the group knows. The clips stay with the group; publishing them would require the consent of everyone filmed and their parents.","es":"Productos inventados, normas reales. Nunca trabajamos con marcas existentes ni con publicaciones de personas del entorno del grupo. Los clips se quedan con el grupo; publicarlos requeriría el consentimiento de todas las personas grabadas y de sus familias."}},"games":{"tag":{"de":"Games · Schulformat","en":"Games · School format","es":"Videojuegos · Formato escolar"},"title":{"de":"Warum das Spiel nie aufhört","en":"Why the game never ends","es":"Por qué el juego nunca acaba"},"sub":{"de":"Tagesbelohnung, Serie, Lootbox, „nur noch eine Runde“. Wir nehmen auseinander, mit welchen Mitteln Spiele Zeit und Geld holen — und entwerfen anschließend ein Spiel, das genau das nicht tut.","en":"Daily rewards, streaks, loot boxes, “just one more round”. We take apart the means by which games extract time and money — then design a game that does none of it.","es":"Recompensa diaria, rachas, cajas de botín, «solo una partida más». Desmontamos con qué medios los juegos consiguen tiempo y dinero, y después diseñamos un juego que no hace nada de eso."},"meta":{"alter":{"de":"10–14 Jahre","en":"Ages 10–14","es":"10–14 años"},"dauer":{"de":"2–3 Stunden","en":"2–3 hours","es":"2–3 horas"},"ort":{"de":"Schule oder online","en":"School or online","es":"Colegio o en línea"},"preis":{"de":"ab 360 € pro Gruppe","en":"from €360 per group","es":"desde 360 € por grupo"}},"ablauf":[{"t":{"de":"25 MIN","en":"25 MIN","es":"25 MIN"},"c":{"de":"<b>Sammeln, ohne zu werten.</b> Was spielt ihr, und was bringt euch zurück? Die Gruppe nennt die Mechaniken selbst: tägliche Belohnung, Serien, Season Pass, Kisten, Ranglisten, Freunde, die warten. Niemand muss sich für ein Spiel rechtfertigen.","en":"<b>Collecting, without judging.</b> What do you play, and what brings you back? The group names the mechanics themselves: daily rewards, streaks, season passes, crates, leaderboards, friends waiting. Nobody has to justify a game.","es":"<b>Recoger sin juzgar.</b> ¿A qué juegas y qué te hace volver? El grupo nombra las mecánicas: recompensa diaria, rachas, pase de temporada, cajas, clasificaciones, amigos que esperan. Nadie tiene que justificar un juego."}},{"t":{"de":"40 MIN","en":"40 MIN","es":"40 MIN"},"c":{"de":"<b>Auseinandernehmen.</b> Verlustangst bei Streaks. Der Unterschied zwischen sicherer und zufälliger Belohnung — und warum die zufällige stärker zieht. Fortschrittsbalken, die kurz vor dem Ziel langsamer werden.","en":"<b>Taking it apart.</b> Fear of loss in streaks. The difference between certain and random rewards — and why the random one pulls harder. Progress bars that slow down just before the goal.","es":"<b>Desmontarlo.</b> El miedo a perder la racha. La diferencia entre recompensa segura y aleatoria, y por qué la aleatoria engancha más. Barras de progreso que se ralentizan justo antes de la meta."}},{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Die Lootbox durchrechnen.</b> Echtgeld wird zu Münzen, Münzen zu Kisten, Kisten enthalten Zufall. Wir rechnen mit echten Zahlen: Was kostet ein bestimmtes Ergebnis im Erwartungswert? Und warum gibt es überhaupt eine Zwischenwährung?","en":"<b>Doing the loot-box maths.</b> Real money becomes coins, coins become crates, crates contain chance. We calculate with real figures: what does a given outcome cost in expectation? And why is there an intermediate currency at all?","es":"<b>Calcular la caja de botín.</b> El dinero real se convierte en monedas, las monedas en cajas y las cajas contienen azar. Calculamos con cifras reales: ¿cuánto cuesta un resultado concreto en valor esperado? ¿Y por qué existe una moneda intermedia?"}},{"t":{"de":"25 MIN","en":"25 MIN","es":"25 MIN"},"c":{"de":"<b>Was auf der Packung steht.</b> Nutzungsrisiken wie Kauffunktionen und glücksspielähnliche Mechanismen fließen in die Alterseinstufung ein; die USK vergibt Zusatzhinweise wie „In-Game-Käufe (+ zufällige Objekte)“ oder „Druck zum Vielspielen“. Wir suchen sie an bekannten Spielen.","en":"<b>What's on the box.</b> Usage risks such as purchase functions and gambling-like mechanics now feed into age ratings; the German USK adds notes like “in-game purchases (+ random items)” or “pressure to play a lot”. We look for them on games the group knows.","es":"<b>Lo que pone en la caja.</b> Riesgos como las funciones de compra y las mecánicas parecidas al juego de azar influyen en la clasificación por edades; la USK alemana añade avisos como «compras dentro del juego (+ objetos aleatorios)». Los buscamos en juegos que el grupo conoce."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Gegenentwurf.</b> Jede Kleingruppe entwirft auf Papier ein Spiel, das Spaß macht ohne diese Mittel: Wie belohnt man, ohne zu binden? Wie endet eine Sitzung von selbst? Pitch vor der Gruppe, zwei Minuten, danach kritische Fragen.","en":"<b>Counter-design.</b> Each group designs a paper game that is fun without these devices: how do you reward without binding? How does a session end by itself? Two-minute pitch, then critical questions.","es":"<b>Contrapropuesta.</b> Cada grupo diseña sobre papel un juego divertido sin esos recursos: ¿cómo recompensar sin atar? ¿Cómo termina sola una partida? Presentación de dos minutos y preguntas críticas."}}],"ergebnis":[{"de":"Ein Spielkonzept auf Plakat je Kleingruppe, mit Regelwerk und Belohnungslogik","en":"A game concept on a poster per group, with rules and reward logic","es":"Un concepto de juego en cartel por grupo, con reglas y lógica de recompensas"},{"de":"Die gemeinsame Liste der Warnzeichen, direkt fürs Klassenzimmer","en":"A shared list of warning signs, ready for the classroom wall","es":"Una lista común de señales de alarma, lista para el aula"},{"de":"Eine durchgerechnete Beispielrechnung zur Kistenmechanik","en":"A worked example calculation of the crate mechanic","es":"Un cálculo de ejemplo resuelto sobre la mecánica de cajas"}],"lernen":[{"de":"Spielmechaniken als Designentscheidungen erkennen, nicht als Naturgesetz","en":"Seeing game mechanics as design decisions, not laws of nature","es":"Ver las mecánicas de juego como decisiones de diseño, no como leyes naturales"},{"de":"Wahrscheinlichkeit und Erwartungswert an einem Beispiel, das die Gruppe interessiert","en":"Probability and expected value on an example the group actually cares about","es":"Probabilidad y valor esperado con un ejemplo que al grupo le interesa"},{"de":"Alterskennzeichen und Zusatzhinweise lesen können","en":"Being able to read age ratings and their added notes","es":"Saber leer las clasificaciones por edad y sus avisos"},{"de":"KMK-Bereiche 5 und 6","en":"German KMK areas 5 and 6","es":"Áreas 5 y 6 del marco alemán KMK"}],"prep":{"de":"<b>Sie stellen:</b> Raum mit Beamer, Strom, Internet, Tafel oder Flipchart. <b>Wir bringen:</b> Tablets und Laptops, Rechenblätter, Plakatmaterial.","en":"<b>You provide:</b> a room with a projector, power, internet, a board or flipchart. <b>We bring:</b> tablets and laptops, calculation sheets, poster materials.","es":"<b>Ustedes ponen:</b> sala con proyector, electricidad, internet y pizarra o rotafolio. <b>Nosotros llevamos:</b> tabletas y portátiles, hojas de cálculo y material para carteles."},"note":{"de":"Kein Spiel wird verurteilt. Der Workshop bewertet nicht das Spielen und nicht die Spiele der Gruppe, sondern legt Mechanik offen. Wir stellen keine Diagnosen zu Spielverhalten. Zeigt sich eine belastende Situation, geben wir das im Nachgespräch an die Lehrkraft weiter und nennen Beratungsstellen — wir übernehmen keine Beratung.","en":"No game gets condemned. The workshop judges neither the playing nor the group's games; it exposes mechanics. We make no diagnoses about gaming behaviour. If a difficult situation surfaces, we pass it to the teacher in the debrief and name support services — we do not provide counselling ourselves.","es":"No se condena ningún juego. El taller no juzga ni el hecho de jugar ni los juegos del grupo: expone mecánicas. No hacemos diagnósticos sobre conducta de juego. Si aparece una situación preocupante, lo trasladamos al profesorado en la reunión posterior e indicamos servicios de orientación; nosotros no asesoramos."}},"ki":{"tag":{"de":"Künstliche Intelligenz · Schulformat","en":"Artificial intelligence · School format","es":"Inteligencia artificial · Formato escolar"},"title":{"de":"Echt, oder ausgedacht?","en":"Real, or made up?","es":"¿Real o inventado?"},"sub":{"de":"Die Gruppe erzeugt ein Bild und eine Stimme — und sucht danach die Spuren, an denen man beides enttarnt. Zum Schluss die größere Frage: Warum klingt ein Text überzeugend, obwohl nichts davon stimmt?","en":"The group generates an image and a voice — then hunts for the traces that give both away. Finally the bigger question: why does a text sound convincing when none of it is true?","es":"El grupo genera una imagen y una voz, y después busca las huellas que delatan a ambas. Al final, la pregunta mayor: ¿por qué un texto suena convincente aunque nada de lo que dice sea cierto?"},"meta":{"alter":{"de":"12–16 Jahre","en":"Ages 12–16","es":"12–16 años"},"dauer":{"de":"3 Stunden","en":"3 hours","es":"3 horas"},"ort":{"de":"Schule oder online","en":"School or online","es":"Colegio o en línea"},"preis":{"de":"ab 420 € pro Gruppe","en":"from €420 per group","es":"desde 420 € por grupo"}},"ablauf":[{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Selbst erzeugen.</b> Wir generieren gemeinsam ein Bild und eine kurze Sprachaufnahme. Standard sind Fantasiefiguren und das Demomaterial der Kursleitung — wir arbeiten mit unseren eigenen Gesichtern und Stimmen.","en":"<b>Generating it ourselves.</b> Together we generate an image and a short voice recording. The default is invented characters and the instructors' own demo material — we work with our own faces and voices.","es":"<b>Generarlo nosotros mismos.</b> Generamos juntos una imagen y una grabación de voz breve. Por defecto usamos personajes inventados y el material de demostración del equipo docente: trabajamos con nuestras propias caras y voces."}},{"t":{"de":"40 MIN","en":"40 MIN","es":"40 MIN"},"c":{"de":"<b>Spuren suchen.</b> Hände und Zähne, Schrift im Bild, Schmuck und Ohren, Licht aus zwei Richtungen, sich wiederholende Muster. Bei Stimmen: fehlende Atempausen, gleichbleibender Raumklang, Betonungen an falscher Stelle.","en":"<b>Hunting for traces.</b> Hands and teeth, text inside images, jewellery and ears, light from two directions, repeating patterns. In voices: missing breaths, unchanging room tone, stress in the wrong place.","es":"<b>Buscar huellas.</b> Manos y dientes, texto dentro de la imagen, joyas y orejas, luz desde dos direcciones, patrones repetidos. En las voces: ausencia de respiraciones, sonido de sala constante, acentos donde no corresponde."}},{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Der Haken an den Spuren.</b> Diese Merkmale werden weniger, nicht mehr. Deshalb der zweite Weg: nicht das Bild anstarren, sondern die Herkunft prüfen. Metadaten, Herkunftsnachweise, die Frage „Wer hat das zuerst veröffentlicht?“","en":"<b>The catch with traces.</b> These giveaways are getting fewer, not more. Hence the second route: don't stare at the image, check its provenance. Metadata, provenance credentials, the question “who published this first?”","es":"<b>El problema de las huellas.</b> Estas pistas son cada vez menos, no más. De ahí la segunda vía: no mirar fijamente la imagen, sino comprobar su origen. Metadatos, credenciales de procedencia y la pregunta «¿quién lo publicó primero?»"}},{"t":{"de":"35 MIN","en":"35 MIN","es":"35 MIN"},"c":{"de":"<b>Was gekennzeichnet sein muss.</b> Seit August 2026 gelten die Transparenzpflichten aus Artikel 50 der KI-Verordnung: Systeme müssen erkennbar machen, dass man mit einer Maschine spricht, und wer Deepfakes veröffentlicht, muss das offenlegen. Wir sehen nach, wo das umgesetzt ist.","en":"<b>What must be labelled.</b> Since August 2026 the transparency duties of Article 50 of the EU AI Act apply: systems must make clear you are talking to a machine, and anyone publishing deepfakes must disclose it. We check where this has actually been implemented.","es":"<b>Lo que debe identificarse.</b> Desde agosto de 2026 rigen las obligaciones de transparencia del artículo 50 del Reglamento europeo de IA: los sistemas deben dejar claro que se habla con una máquina y quien publique ultrafalsos debe declararlo. Comprobamos dónde se aplica de verdad."}},{"t":{"de":"35 MIN","en":"35 MIN","es":"35 MIN"},"c":{"de":"<b>Der überzeugende Text, der nichts weiß.</b> Ein Sprachmodell schreibt über ein Thema, in dem die Gruppe sich sicher auskennt — den eigenen Ort, die eigene Schulgeschichte. Dann wird Satz für Satz geprüft. Die Erkenntnis kommt zuverlässig: Es klingt richtig, weil es klingt wie richtig.","en":"<b>The convincing text that knows nothing.</b> A language model writes about a topic the group knows inside out — their own town, their own school's history. Then it gets checked sentence by sentence. The realisation lands reliably: it sounds right because it sounds like right.","es":"<b>El texto convincente que no sabe nada.</b> Un modelo de lenguaje escribe sobre un tema que el grupo domina: su propio pueblo, la historia de su colegio. Después se comprueba frase por frase. La conclusión llega siempre: suena verdadero porque suena a verdadero."}},{"t":{"de":"10 MIN","en":"10 MIN","es":"10 MIN"},"c":{"de":"<b>Eigene Regeln.</b> Die Gruppe formuliert, wofür sie solche Werkzeuge nutzen will und wofür nicht — und was sie dazuschreibt, wenn sie es nutzt.","en":"<b>Their own rules.</b> The group writes down what they want to use such tools for and what not — and what they will disclose when they do.","es":"<b>Reglas propias.</b> El grupo formula para qué quiere usar estas herramientas y para qué no, y qué indicará cuando las use."}}],"ergebnis":[{"de":"Eine Prüf-Reihenfolge auf einer Seite: erst Herkunft, dann Merkmale, dann Gegenprobe","en":"A one-page checking sequence: provenance first, then features, then cross-check","es":"Una secuencia de verificación en una página: primero el origen, luego los rasgos, luego la contraprueba"},{"de":"Die selbst erzeugten Beispiele als Anschauungsmaterial — sofern die Gruppe sie behalten will","en":"The self-generated examples as teaching material — if the group wants to keep them","es":"Los ejemplos generados como material de muestra, si el grupo quiere conservarlos"},{"de":"Eine Nutzungsregel für Hausaufgaben, von der Gruppe selbst geschrieben","en":"A homework usage rule, written by the group itself","es":"Una norma de uso para los deberes, escrita por el propio grupo"}],"lernen":[{"de":"Erzeugte Bilder und Stimmen an Merkmalen und an der Herkunft prüfen","en":"Checking generated images and voices by their features and their provenance","es":"Comprobar imágenes y voces generadas por sus rasgos y por su origen"},{"de":"Warum Sprachmodelle überzeugend klingen können, ohne etwas zu wissen","en":"Why language models can sound convincing without knowing anything","es":"Por qué los modelos de lenguaje pueden sonar convincentes sin saber nada"},{"de":"Die Transparenzpflichten der KI-Verordnung und was sie im Alltag bedeuten","en":"The AI Act's transparency duties and what they mean day to day","es":"Las obligaciones de transparencia del Reglamento de IA y qué significan en el día a día"},{"de":"Eigene Nutzung begründen können statt sie zu verstecken","en":"Being able to justify your own use instead of hiding it","es":"Poder justificar el propio uso en lugar de ocultarlo"}],"prep":{"de":"<b>Sie stellen:</b> Raum mit Beamer, Strom, stabiles Internet. <b>Wir bringen:</b> Tablets und Laptops, mobilen Ersatz-Router, vorbereitete Beispielserien für den Fall, dass das Netz streikt.","en":"<b>You provide:</b> a room with a projector, power, stable internet. <b>We bring:</b> tablets and laptops, a backup mobile router, prepared example sets in case the network fails.","es":"<b>Ustedes ponen:</b> sala con proyector, electricidad e internet estable. <b>Nosotros llevamos:</b> tabletas y portátiles, un router móvil de reserva y series de ejemplos preparadas por si falla la red."},"note":{"de":"Ohne schriftliche Einwilligung der Erziehungsberechtigten werden keine Gesichter oder Stimmen von Minderjährigen in Werkzeuge Dritter gegeben. Alles Erzeugte wird am Ende des Workshops gelöscht, sofern die Gruppe nichts anderes vereinbart.","en":"Without written parental consent, no minor's face or voice is fed into third-party tools. Everything generated is deleted at the end of the workshop unless the group agrees otherwise.","es":"Sin consentimiento escrito de las familias, ninguna cara ni voz de menores se introduce en herramientas de terceros. Todo lo generado se borra al final del taller, salvo que el grupo acuerde otra cosa."}},"film":{"tag":{"de":"Film & Erzählen · Ferien- und Projektwoche","en":"Film & storytelling · Holiday and project week","es":"Cine y narración · Semana de vacaciones o de proyecto"},"title":{"de":"Der erste eigene Film","en":"Your first real film","es":"Tu primera película"},"sub":{"de":"Fünf Tage von der leeren Seite bis zur Premiere: Idee, Drehbuch, Rollen, Dreh, Schnitt. Am Ende läuft der Film vor Publikum, mit Popcorn.","en":"Five days from blank page to premiere: idea, script, roles, shoot, edit. At the end the film screens for an audience, with popcorn.","es":"Cinco días desde la página en blanco hasta el estreno: idea, guion, reparto, rodaje, montaje. Al final la película se proyecta ante público, con palomitas."},"meta":{"alter":{"de":"10–18 Jahre","en":"Ages 10–18","es":"10–18 años"},"dauer":{"de":"3–5 Tage","en":"3–5 days","es":"3–5 días"},"ort":{"de":"Ferienprogramm, Projektwoche","en":"Holiday programme, project week","es":"Programa de vacaciones, semana de proyecto"},"preis":{"de":"ab 249 € pro Kind","en":"from €249 per child","es":"desde 249 € por niño"}},"ablauf":[{"t":{"de":"TAG 1","en":"DAY 1","es":"DÍA 1"},"c":{"de":"<b>Idee und Buch.</b> Was ist eigentlich eine Geschichte? Eine Figur will etwas, und etwas steht im Weg. Wir schreiben ein Treatment und daraus ein Drehbuch für zwei bis fünf Minuten Film. Die Frage, die in jedem Kurs den Unterschied macht: Warum erzählen wir diese Geschichte, und wem nützt sie?","en":"<b>Idea and script.</b> What is a story, actually? A character wants something and something stands in the way. We write a treatment and from it a script for two to five minutes of film. The question that makes the difference in every course: why are we telling this story, and who does it serve?","es":"<b>Idea y guion.</b> ¿Qué es en realidad una historia? Un personaje quiere algo y algo se interpone. Escribimos un tratamiento y, a partir de él, un guion para dos o cinco minutos. La pregunta que marca la diferencia en cada curso: ¿por qué contamos esta historia y a quién le sirve?"}},{"t":{"de":"TAG 2","en":"DAY 2","es":"DÍA 2"},"c":{"de":"<b>Auflösung und Technik.</b> Aus Text werden Bilder: Storyboard oder Shotlist. Einstellungsgrößen, Schuss und Gegenschuss, die 180-Grad-Regel und was passiert, wenn man sie bricht. Danach Technik zum Anfassen — jede und jeder probiert alles einmal, bevor Rollen verteilt werden.","en":"<b>Coverage and kit.</b> Text becomes images: storyboard or shot list. Shot sizes, shot–reverse shot, the 180-degree rule and what happens when you break it. Then hands-on technology — everyone tries everything once before roles are assigned.","es":"<b>Desglose y técnica.</b> El texto se convierte en imágenes: storyboard o lista de planos. Tipos de plano, plano y contraplano, la regla de los 180 grados y qué pasa al romperla. Después, técnica en mano: cada persona prueba todo una vez antes de repartir los papeles."}},{"t":{"de":"TAG 3–4","en":"DAYS 3–4","es":"DÍAS 3–4"},"c":{"de":"<b>Dreh.</b> Nach Drehplan, nicht nach Reihenfolge der Geschichte. Setdisziplin ist Teil des Lernstoffs: Ruhe vor dem Take, Klappe, Anschluss prüfen. Ton bekommt so viel Aufmerksamkeit wie Bild — schlechter Ton ruiniert mehr Filme als schlechtes Bild.","en":"<b>Shoot.</b> To a shooting schedule, not in story order. Set discipline is part of the lesson: quiet before the take, clapperboard, continuity checks. Sound gets as much attention as image — bad sound ruins more films than bad pictures.","es":"<b>Rodaje.</b> Según plan de rodaje, no según el orden de la historia. La disciplina de set forma parte del aprendizaje: silencio antes de la toma, claqueta, comprobar el raccord. El sonido recibe tanta atención como la imagen: el mal sonido arruina más películas que la mala imagen."}},{"t":{"de":"TAG 4–5","en":"DAYS 4–5","es":"DÍAS 4–5"},"c":{"de":"<b>Schnitt und Ton.</b> Rohschnitt, dann Feinschnitt. Was ein Schnitt an anderer Stelle mit derselben Szene macht, wird hier zum ersten Mal körperlich spürbar. Tonangleich, Geräusche, Musik — ausschließlich mit Material, das verwendet werden darf.","en":"<b>Edit and sound.</b> Rough cut, then fine cut. What a cut in a different place does to the same scene becomes physically tangible here for the first time. Level matching, effects, music — only with material that may legally be used.","es":"<b>Montaje y sonido.</b> Primero el montaje bruto, después el fino. Aquí se percibe físicamente por primera vez lo que hace un corte colocado en otro sitio. Ajuste de niveles, efectos, música, solo con material que puede usarse legalmente."}},{"t":{"de":"TAG 5","en":"DAY 5","es":"DÍA 5"},"c":{"de":"<b>Premiere.</b> Vorführung vor eingeladenem Publikum, Titel und Abspann inklusive. Danach beantwortet die Crew Fragen aus dem Saal.","en":"<b>Premiere.</b> Screening for an invited audience, titles and credits included. Afterwards the crew takes questions from the room.","es":"<b>Estreno.</b> Proyección ante público invitado, con títulos y créditos. Después el equipo responde preguntas de la sala."}}],"ergebnis":[{"de":"Ein fertiger Kurzfilm mit Titel und Abspann, als Datei für alle Beteiligten","en":"A finished short film with titles and credits, as a file for everyone involved","es":"Un cortometraje terminado con títulos y créditos, como archivo para todas las personas participantes"},{"de":"Das eigene Drehbuch und Storyboard","en":"Their own script and storyboard","es":"El propio guion y storyboard"},{"de":"Eine Gruppe, die weiß, was ein Drehplan ist und warum es ihn braucht","en":"A group that knows what a shooting schedule is and why it exists","es":"Un grupo que sabe qué es un plan de rodaje y por qué hace falta"}],"lernen":[{"de":"Dramaturgie: Figur, Konflikt, Wendepunkt, Auflösung","en":"Dramaturgy: character, conflict, turning point, resolution","es":"Dramaturgia: personaje, conflicto, punto de giro, desenlace"},{"de":"Filmsprache aktiv — Einstellung, Perspektive, Licht, Montage","en":"Film language actively — shot, perspective, light, montage","es":"Lenguaje cinematográfico en activo: plano, perspectiva, luz, montaje"},{"de":"Kamera-, Ton- und Lichttechnik im praktischen Gebrauch","en":"Camera, sound and lighting technology in practical use","es":"Técnica de cámara, sonido y luz en uso práctico"},{"de":"Arbeitsteilung, Absprachen, Termindruck aushalten","en":"Division of labour, agreements, coping with deadlines","es":"Reparto de tareas, acuerdos y aguantar la presión del calendario"},{"de":"Urheber- und Persönlichkeitsrecht am eigenen Werk","en":"Copyright and personality rights in your own work","es":"Derechos de autor y de la propia imagen sobre la obra"}],"prep":{"de":"<b>Sie stellen:</b> Raum für die ganze Woche, Strom, Internet, möglichst zwei Räume für parallele Arbeit, Raum für die Premiere. <b>Wir bringen:</b> Kameras, Stative, Funkmikrofone, Recorder, Licht, Schnittlaptops, Kopfhörer.","en":"<b>You provide:</b> a room for the whole week, power, internet, ideally two rooms for parallel work, a space for the premiere. <b>We bring:</b> cameras, tripods, radio mics, recorders, lighting, editing laptops, headphones.","es":"<b>Ustedes ponen:</b> una sala para toda la semana, electricidad, internet, a ser posible dos salas para trabajar en paralelo y un espacio para el estreno. <b>Nosotros llevamos:</b> cámaras, trípodes, micrófonos inalámbricos, grabadoras, luz, portátiles de montaje y auriculares."},"note":{"de":"Der Film gehört der Gruppe. Veröffentlichung, Einreichung bei Festivals oder Zeigen über den Premierenkreis hinaus nur mit ausdrücklicher, jederzeit widerruflicher Einwilligung aller Beteiligten und ihrer Erziehungsberechtigten. Wer nicht vor der Kamera stehen will, arbeitet dahinter — das ist keine geringere Rolle.","en":"The film belongs to the group. Publication, festival submission or any screening beyond the premiere circle happens only with the explicit, revocable consent of everyone involved and their parents. Anyone who doesn't want to be on camera works behind it — that is not a lesser role.","es":"La película pertenece al grupo. Publicarla, enviarla a festivales o proyectarla más allá del estreno requiere el consentimiento expreso y revocable de todas las personas participantes y de sus familias. Quien no quiera ponerse delante de la cámara trabaja detrás, y no es un papel menor."}},"stopmotion":{"tag":{"de":"Animation · Ferien- und Tagesformat","en":"Animation · Holiday and day format","es":"Animación · Formato de vacaciones y de un día"},"title":{"de":"Stop-Motion-Studio","en":"Stop-motion studio","es":"Estudio de stop-motion"},"sub":{"de":"Knete, Papier, Lego — alles wird zum Darsteller. Bild für Bild entsteht ein Kurzfilm, und ganz nebenbei versteht jedes Kind, wie Bewegung im Film überhaupt funktioniert.","en":"Clay, paper, Lego — anything becomes a cast member. Frame by frame a short film appears, and along the way every child understands how movement on screen actually works.","es":"Plastilina, papel, Lego: todo se convierte en personaje. Fotograma a fotograma nace un cortometraje y, de paso, cada niño entiende cómo funciona el movimiento en el cine."},"meta":{"alter":{"de":"8–12 Jahre","en":"Ages 8–12","es":"8–12 años"},"dauer":{"de":"1 Tag","en":"1 day","es":"1 día"},"ort":{"de":"Ferienprogramm, Bibliothek, Verein","en":"Holiday programme, library, club","es":"Programa de vacaciones, biblioteca, asociación"},"preis":{"de":"ab 89 € pro Kind","en":"from €89 per child","es":"desde 89 € por niño"}},"ablauf":[{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Warum sich Bilder bewegen.</b> Jedes Kind bastelt ein Daumenkino. Dann die Erklärung dazu: Ab etwa zwölf Einzelbildern pro Sekunde setzt unsere Wahrnehmung getrennte Bilder zu Bewegung zusammen. Wer das einmal in der Hand hatte, vergisst es nicht.","en":"<b>Why pictures move.</b> Every child makes a flipbook. Then the explanation: from about twelve frames per second our perception assembles separate images into movement. Once you've held that in your hand, you don't forget it.","es":"<b>Por qué se mueven las imágenes.</b> Cada niño hace un folioscopio. Después, la explicación: a partir de unos doce fotogramas por segundo nuestra percepción une imágenes sueltas en movimiento. Quien lo ha tenido en la mano no lo olvida."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Geschichte in sechs Bildern.</b> Auf einem Papierstreifen, nur gezeichnet, ohne Text. Sechs Felder zwingen zur Entscheidung: Was ist der Anfang, was ist der Moment, in dem es kippt, was ist das Ende?","en":"<b>A story in six pictures.</b> On a paper strip, drawn only, no words. Six panels force a decision: what is the beginning, what is the moment it turns, what is the end?","es":"<b>Una historia en seis imágenes.</b> En una tira de papel, solo dibujada, sin texto. Seis casillas obligan a decidir: cuál es el principio, cuál el momento en que todo cambia y cuál el final."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Bühne bauen.</b> Kleingruppen bauen ihr Set: Hintergrund, Figuren, Requisiten. Material ist Knete, Papier, Bausteine und was der Raum hergibt. Hier entsteht der erste Stolz — lange bevor eine Kamera läuft.","en":"<b>Building the stage.</b> Small groups build their set: background, characters, props. Materials are clay, paper, bricks and whatever the room offers. The first pride appears here — long before any camera rolls.","es":"<b>Construir el escenario.</b> Los grupos montan su set: fondo, personajes, atrezo. El material es plastilina, papel, piezas de construcción y lo que dé la sala. Aquí surge el primer orgullo, mucho antes de que ruede una cámara."}},{"t":{"de":"90 MIN","en":"90 MIN","es":"90 MIN"},"c":{"de":"<b>Dreh.</b> Tablet auf dem Tischstativ, Zwiebelhaut-Funktion an, Bild für Bild. Die eine Faustregel, die alles verändert: kleine Schritte, viele Bilder. Wir helfen dort, wo es klemmt — meistens beim Licht und bei zu großen Schritten.","en":"<b>Shoot.</b> Tablet on a table tripod, onion-skin on, frame by frame. The single rule that changes everything: small steps, many frames. We help where it jams — usually with the lighting and with steps that are too big.","es":"<b>Rodaje.</b> Tableta sobre trípode de mesa, función de papel cebolla activada, fotograma a fotograma. La regla que lo cambia todo: pasos pequeños, muchas imágenes. Ayudamos donde se atasca, casi siempre con la luz y con pasos demasiado grandes."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Ton selbst machen.</b> Geräusche werden gebaut, nicht heruntergeladen: zerknülltes Papier wird zu Feuer, ein Reissack zu Regen, die eigene Stimme zu allem Übrigen.","en":"<b>Making the sound.</b> Effects get built, not downloaded: crumpled paper becomes fire, a bag of rice becomes rain, your own voice becomes everything else.","es":"<b>Hacer el sonido.</b> Los efectos se construyen, no se descargan: el papel arrugado es fuego, un saco de arroz es lluvia y la propia voz es todo lo demás."}},{"t":{"de":"50 MIN","en":"50 MIN","es":"50 MIN"},"c":{"de":"<b>Schnitt und Kino.</b> Zusammensetzen, Tempo justieren, Namen aller Beteiligten ans Ende. Dann laufen alle Filme hintereinander, Licht aus, Publikum: die anderen Gruppen.","en":"<b>Edit and screening.</b> Assemble, adjust the pace, everyone's name at the end. Then all the films run back to back, lights off, audience: the other groups.","es":"<b>Montaje y cine.</b> Montar, ajustar el ritmo, los nombres de todos al final. Después se ven todas las películas seguidas, luces apagadas, público: los demás grupos."}}],"ergebnis":[{"de":"Ein Film von 30 bis 90 Sekunden je Kleingruppe, mit selbst gebautem Ton","en":"A 30- to 90-second film per group, with self-made sound","es":"Una película de 30 a 90 segundos por grupo, con sonido hecho por ellos"},{"de":"Das Daumenkino zum Mitnehmen","en":"The flipbook to take home","es":"El folioscopio para llevarse a casa"},{"de":"Das Set — wird meistens abgebaut, manchmal aber auch stolz nach Hause getragen","en":"The set — usually dismantled, sometimes carried home in triumph","es":"El set, que suele desmontarse pero a veces se lleva a casa con orgullo"}],"lernen":[{"de":"Bewegung im Film ist gemacht: 12 bis 24 Entscheidungen pro Sekunde","en":"Movement in film is made: 12 to 24 decisions per second","es":"El movimiento en el cine está fabricado: de 12 a 24 decisiones por segundo"},{"de":"Erzählen in Bildern, ohne Sprache","en":"Telling stories in pictures, without language","es":"Narrar con imágenes, sin lenguaje"},{"de":"Geduld und Genauigkeit — das eigentliche Lernziel eines Stop-Motion-Tags","en":"Patience and precision — the real learning goal of a stop-motion day","es":"Paciencia y precisión: el verdadero objetivo de un día de stop-motion"},{"de":"Ton als eigenständiges Gestaltungsmittel","en":"Sound as a design element in its own right","es":"El sonido como recurso expresivo propio"}],"prep":{"de":"<b>Sie stellen:</b> Raum mit Tischen für vier bis fünf Stationen, Strom, abdunkelbar wäre schön. <b>Wir bringen:</b> Tablets mit Tischstativen, Licht, Recorder, Kopfhörer, Knete und Bastelmaterial.","en":"<b>You provide:</b> a room with tables for four or five stations, power; blackout would be nice. <b>We bring:</b> tablets with table tripods, lighting, recorders, headphones, clay and craft materials.","es":"<b>Ustedes ponen:</b> sala con mesas para cuatro o cinco estaciones, electricidad y, a ser posible, posibilidad de oscurecer. <b>Nosotros llevamos:</b> tabletas con trípodes de mesa, luz, grabadoras, auriculares, plastilina y material de manualidades."},"note":{"de":"Vor der Kamera stehen Figuren, keine Kinder. Das Format kommt ohne Aufnahmen von Teilnehmenden aus. Wenn Hände im Bild auftauchen sollen, fragen wir vorher. Die Filme gehören den Gruppen; gezeigt wird über den Kurs hinaus nur mit Einwilligung.","en":"It is figures in front of the camera, not children. The format needs no recordings of participants at all. If hands are to appear in shot, we ask first. The films belong to the groups; screening beyond the course happens only with consent.","es":"Delante de la cámara hay figuras, no niños. El formato no necesita grabaciones de las personas participantes. Si van a aparecer manos en el plano, preguntamos antes. Las películas pertenecen a los grupos; solo se muestran fuera del curso con consentimiento."}},"podcast":{"tag":{"de":"Audio · Ferien- und Projektformat","en":"Audio · Holiday and project format","es":"Audio · Formato de vacaciones y de proyecto"},"title":{"de":"Ohren auf: Podcast & Hörspiel","en":"Ears open: podcast & audio drama","es":"Abre los oídos: pódcast y radioteatro"},"sub":{"de":"Mikrofon an, Geräusche sammeln, Interviews führen. Wer einmal Ton geschnitten hat, hört danach jedem Radiobeitrag an, wo er zurechtgebogen wurde.","en":"Mic on, sounds collected, interviews recorded. Once you have cut audio yourself, you can hear where any broadcast has been bent into shape.","es":"Micrófono abierto, sonidos recogidos, entrevistas grabadas. Quien ha montado audio una vez distingue después en cualquier reportaje dónde se ha retocado."},"meta":{"alter":{"de":"10–16 Jahre","en":"Ages 10–16","es":"10–16 años"},"dauer":{"de":"2 Tage","en":"2 days","es":"2 días"},"ort":{"de":"Ferienprogramm, Schule, Bibliothek","en":"Holiday programme, school, library","es":"Programa de vacaciones, colegio, biblioteca"},"preis":{"de":"ab 139 € pro Kind","en":"from €139 per child","es":"desde 139 € por niño"}},"ablauf":[{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Hörquiz.</b> Drei kurze Ausschnitte: Was davon ist so aufgenommen worden, und was ist gebaut? Die Auflösung überrascht zuverlässig und setzt den Ton für beide Tage.","en":"<b>Listening quiz.</b> Three short clips: which was recorded as heard, and which was built? The answer reliably surprises and sets the tone for both days.","es":"<b>Concurso de escucha.</b> Tres fragmentos breves: ¿cuál se grabó tal cual y cuál está construido? La respuesta sorprende siempre y marca el tono de los dos días."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Mikrofonkunde.</b> Abstand, Poppschutz, Richtung, Raum. Wir nehmen denselben Satz fünfmal auf und hören den Unterschied. Die nützlichste Erkenntnis des Tages: Eine Decke an der Wand bringt oft mehr als das teurere Mikrofon.","en":"<b>Microphone basics.</b> Distance, pop shield, direction, room. We record the same sentence five times and hear the difference. The day's most useful insight: a blanket on the wall often beats the more expensive mic.","es":"<b>Nociones de micrófono.</b> Distancia, antipop, dirección, sala. Grabamos la misma frase cinco veces y escuchamos la diferencia. La conclusión más útil del día: una manta en la pared suele aportar más que un micrófono más caro."}},{"t":{"de":"60 MIN","en":"60 MIN","es":"60 MIN"},"c":{"de":"<b>Geräuschjagd.</b> Mit Handrecordern durchs Gebäude und nach draußen. Auftrag: zehn Geräusche pro Gruppe, mindestens drei davon nicht erkennbar. Zurück im Raum wird geraten.","en":"<b>Sound hunt.</b> Through the building and outside with handheld recorders. The task: ten sounds per group, at least three of them unrecognisable. Back in the room, everyone guesses.","es":"<b>Caza de sonidos.</b> Por el edificio y la calle con grabadoras de mano. La tarea: diez sonidos por grupo, al menos tres irreconocibles. De vuelta en la sala, se adivina."}},{"t":{"de":"60 MIN","en":"60 MIN","es":"60 MIN"},"c":{"de":"<b>Interview führen.</b> Offene Fragen statt Ja-Nein-Fragen, nachfragen statt zur nächsten Frage springen, Pausen aushalten. Geübt wird an echten Gegenübern — Hausmeisterin, Bibliothekarin, eine Nachbarin, wer bereit ist.","en":"<b>Interviewing.</b> Open questions instead of yes-no ones, following up instead of jumping ahead, tolerating silences. Practised on real people — the caretaker, the librarian, a neighbour, whoever is willing.","es":"<b>Hacer entrevistas.</b> Preguntas abiertas en vez de cerradas, repreguntar en lugar de saltar a la siguiente, aguantar los silencios. Se practica con personas reales: el conserje, la bibliotecaria, un vecino, quien esté dispuesto."}},{"t":{"de":"40 MIN","en":"40 MIN","es":"40 MIN"},"c":{"de":"<b>Die Übung, um die es geht.</b> Wir schneiden dasselbe Interview zweimal — einmal fair, einmal so, dass die Aussage kippt. Kein Wort wird erfunden, nur umgestellt und gekürzt. Beide Fassungen laufen hintereinander. Das ist der Moment, in dem die Gruppe versteht, was Montage kann.","en":"<b>The exercise it's all about.</b> We cut the same interview twice — once fairly, once so the statement flips. Not a word is invented, only reordered and shortened. Both versions play back to back. That is the moment the group understands what editing can do.","es":"<b>El ejercicio clave.</b> Montamos la misma entrevista dos veces: una con honestidad y otra de modo que el sentido cambie. No se inventa ni una palabra: solo se reordena y se recorta. Se escuchan ambas versiones seguidas. Ese es el momento en que el grupo entiende lo que puede hacer el montaje."}},{"t":{"de":"90 MIN","en":"90 MIN","es":"90 MIN"},"c":{"de":"<b>Produktion und Sendung.</b> Jede Gruppe entscheidet sich: Podcastfolge von fünf bis acht Minuten oder Hörspielszene. Struktur, Aufnahme, Schnitt, Feinschliff. Am Ende läuft alles am Stück.","en":"<b>Production and broadcast.</b> Each group decides: a five- to eight-minute podcast episode or an audio-drama scene. Structure, recording, editing, polish. At the end everything plays in one go.","es":"<b>Producción y emisión.</b> Cada grupo decide: un episodio de pódcast de cinco a ocho minutos o una escena de radioteatro. Estructura, grabación, montaje y acabado. Al final se escucha todo seguido."}}],"ergebnis":[{"de":"Eine fertige Podcastfolge oder Hörspielszene je Gruppe als Audiodatei","en":"A finished podcast episode or audio-drama scene per group as an audio file","es":"Un episodio de pódcast o escena de radioteatro terminado por grupo, como archivo de audio"},{"de":"Eine Geräuschbibliothek, selbst aufgenommen und benannt","en":"A sound library, recorded and named by the group","es":"Una biblioteca de sonidos grabada y nombrada por ellos mismos"},{"de":"Die beiden Interviewfassungen als Beleg — oft das, worüber zu Hause geredet wird","en":"Both interview versions as evidence — often what gets talked about at home","es":"Las dos versiones de la entrevista como prueba, que suele ser de lo que se habla en casa"}],"lernen":[{"de":"Zuhören als Fähigkeit, die man üben kann","en":"Listening as a skill you can practise","es":"Escuchar como una habilidad que se entrena"},{"de":"Aufnahmetechnik: Mikrofonführung, Pegel, Raumakustik","en":"Recording technique: mic handling, levels, room acoustics","es":"Técnica de grabación: manejo del micrófono, niveles, acústica de sala"},{"de":"Montage und ihre Wirkung — der Kern des Formats","en":"Editing and its effect — the core of the format","es":"El montaje y su efecto: el núcleo del formato"},{"de":"Journalistische Sorgfalt und Fairness gegenüber Gesprächspartnern","en":"Journalistic diligence and fairness towards interviewees","es":"Rigor periodístico y equidad con las personas entrevistadas"}],"prep":{"de":"<b>Sie stellen:</b> zwei Räume, möglichst mit Teppich oder Vorhängen, Strom, Internet. <b>Wir bringen:</b> Handrecorder, Funkmikrofone, Poppschutz, Kopfhörer, Schnittlaptops, kleine Requisiten für Geräusche.","en":"<b>You provide:</b> two rooms, ideally with carpet or curtains, power, internet. <b>We bring:</b> handheld recorders, radio mics, pop shields, headphones, editing laptops, small props for sound effects.","es":"<b>Ustedes ponen:</b> dos salas, a ser posible con moqueta o cortinas, electricidad e internet. <b>Nosotros llevamos:</b> grabadoras de mano, micrófonos inalámbricos, antipop, auriculares, portátiles de montaje y pequeños objetos para efectos."},"note":{"de":"Aufnahmen brauchen Zustimmung. Wer interviewt wird, erfährt vorher, wofür. Aufnahmen von Teilnehmenden bleiben in der Gruppe. Wird die Sendung veröffentlicht, holen wir die Einwilligung aller Sprechenden und — bei Minderjährigen — der Erziehungsberechtigten ein, jederzeit widerruflich.","en":"Recordings need consent. Anyone interviewed is told beforehand what it is for. Recordings of participants stay within the group. If the piece is published, we obtain the consent of everyone speaking and, for minors, of their parents — revocable at any time.","es":"Las grabaciones requieren consentimiento. Quien es entrevistado sabe de antemano para qué. Las grabaciones de participantes se quedan en el grupo. Si la pieza se publica, recabamos el consentimiento de todas las voces y, en el caso de menores, de sus familias, revocable en todo momento."}},"bild":{"tag":{"de":"Bild & Bearbeitung · Ferien- und Tagesformat","en":"Image & editing · Holiday and day format","es":"Imagen y edición · Formato de vacaciones y de un día"},"title":{"de":"Das perfekte Bild gibt es nicht","en":"There is no perfect picture","es":"La foto perfecta no existe"},"sub":{"de":"Ausschnitt, Licht, Filter, Retusche: Wir fotografieren, bearbeiten und vergleichen, was auf dem Weg aus einem Motiv wird. Ein Tag, der nebenbei zeigt, wie viel von dem, was online gut aussieht, gar nicht existiert.","en":"Framing, light, filters, retouching: we shoot, edit and compare what happens to a subject along the way. A day that quietly shows how much of what looks good online was never there.","es":"Encuadre, luz, filtros, retoque: fotografiamos, editamos y comparamos en qué se convierte un motivo por el camino. Un día que muestra de paso cuánto de lo que se ve bien en internet no existe."},"meta":{"alter":{"de":"11–16 Jahre","en":"Ages 11–16","es":"11–16 años"},"dauer":{"de":"1 Tag","en":"1 day","es":"1 día"},"ort":{"de":"Ferienprogramm, Schule, Verein","en":"Holiday programme, school, club","es":"Programa de vacaciones, colegio, asociación"},"preis":{"de":"ab 99 € pro Kind","en":"from €99 per child","es":"desde 99 € por niño"}},"ablauf":[{"t":{"de":"40 MIN","en":"40 MIN","es":"40 MIN"},"c":{"de":"<b>Ausschnitt.</b> Ein Motiv, sechs verschiedene Bildausschnitte, sechs verschiedene Aussagen. Thema des Tages ist damit gesetzt: Ein Bild ist eine Auswahl, keine Abbildung.","en":"<b>Framing.</b> One subject, six different crops, six different statements. That sets the theme for the day: a picture is a selection, not a depiction.","es":"<b>Encuadre.</b> Un motivo, seis encuadres distintos, seis afirmaciones distintas. Con eso queda fijado el tema del día: una imagen es una selección, no una reproducción."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Licht.</b> Dasselbe Objekt, fünf Lichtpositionen — von vorn, von der Seite, von unten, von hinten, weich und hart. Reflektor und Diffusor kommen dazu. Die Gruppe ordnet danach fremde Bilder nach Lichtrichtung, was überraschend gut funktioniert.","en":"<b>Light.</b> The same object, five lighting positions — front, side, below, behind, soft and hard. Reflector and diffuser join in. The group then sorts other people's images by light direction, which works surprisingly well.","es":"<b>Luz.</b> El mismo objeto, cinco posiciones de luz: de frente, de lado, desde abajo, desde atrás, suave y dura. Se añaden reflector y difusor. Después el grupo clasifica imágenes ajenas según la dirección de la luz, y funciona sorprendentemente bien."}},{"t":{"de":"35 MIN","en":"35 MIN","es":"35 MIN"},"c":{"de":"<b>Perspektive und Brennweite.</b> Nah mit Weitwinkel gegen weiter weg mit Tele. Warum Proportionen kippen, ohne dass irgendetwas bearbeitet wurde.","en":"<b>Perspective and focal length.</b> Close with a wide angle versus further away with a telephoto. Why proportions shift without anything being edited at all.","es":"<b>Perspectiva y distancia focal.</b> De cerca con gran angular frente a lejos con teleobjetivo. Por qué cambian las proporciones sin haber editado nada."}},{"t":{"de":"50 MIN","en":"50 MIN","es":"50 MIN"},"c":{"de":"<b>Filter auseinandernehmen.</b> Was macht ein Filter technisch? Kontrast, Sättigung, Farbtemperatur, Weichzeichnung, Vignette, Körnung. Wir bauen einen bekannten Filterlook Regler für Regler selbst nach, statt ihn anzuklicken. Danach ist er entzaubert.","en":"<b>Taking filters apart.</b> What does a filter do technically? Contrast, saturation, colour temperature, blur, vignette, grain. We rebuild a well-known filter look slider by slider instead of tapping it. After that, the magic is gone.","es":"<b>Desmontar los filtros.</b> ¿Qué hace técnicamente un filtro? Contraste, saturación, temperatura de color, desenfoque, viñeteado, grano. Reconstruimos un filtro conocido control a control en vez de pulsarlo. Después ya no tiene misterio."}},{"t":{"de":"50 MIN","en":"50 MIN","es":"50 MIN"},"c":{"de":"<b>Retusche als Handwerk.</b> Kopierstempel und Reparaturwerkzeug an Objekten und Räumen: Stromleitungen aus einer Landschaft entfernen, eine Wand glätten, einen Schatten verlängern. Danach die Gegenprobe — woran erkennt man die Bearbeitung, und ab wann sieht man sie nicht mehr?","en":"<b>Retouching as craft.</b> Clone stamp and healing tool on objects and spaces: removing power lines from a landscape, smoothing a wall, extending a shadow. Then the cross-check — how do you spot the edit, and at what point can you no longer see it?","es":"<b>El retoque como oficio.</b> Tampón de clonar y pincel corrector sobre objetos y espacios: quitar cables de un paisaje, alisar una pared, alargar una sombra. Después la contraprueba: ¿cómo se reconoce la edición y a partir de cuándo deja de verse?"}},{"t":{"de":"50 MIN","en":"50 MIN","es":"50 MIN"},"c":{"de":"<b>Die Vorher-Nachher-Wand und die Regeln.</b> Alle Zwischenschritte hängen nebeneinander. Die Frage lautet nicht, welches Bild schöner ist, sondern: Wie viele Entscheidungen liegen zwischen dem ersten und dem letzten? Dazu ein Blick auf Länder, in denen retuschierte Werbebilder gekennzeichnet werden müssen.","en":"<b>The before-and-after wall and the rules.</b> Every intermediate step hangs side by side. The question is not which picture is nicer but: how many decisions lie between the first and the last? Plus a look at countries where retouched advertising images must be labelled.","es":"<b>El muro del antes y después y las normas.</b> Todos los pasos intermedios cuelgan uno al lado del otro. La pregunta no es qué imagen es más bonita, sino cuántas decisiones hay entre la primera y la última. Además, un vistazo a los países donde las imágenes publicitarias retocadas deben identificarse."}}],"ergebnis":[{"de":"Eine Bildstrecke je Person mit dokumentierten Bearbeitungsschritten","en":"An image series per person with documented editing steps","es":"Una serie de imágenes por persona con los pasos de edición documentados"},{"de":"Der selbst nachgebaute Filter als Voreinstellung","en":"The self-rebuilt filter as a preset","es":"El filtro reconstruido por ellos mismos, como preajuste"},{"de":"Die Vorher-Nachher-Wand als Fotografie — gut geeignet für den Elternabend","en":"The before-and-after wall as a photograph — well suited to a parents' evening","es":"El muro del antes y después fotografiado, muy útil para una reunión de familias"}],"lernen":[{"de":"Bildgestaltung: Ausschnitt, Licht, Perspektive, Brennweite","en":"Image composition: framing, light, perspective, focal length","es":"Composición: encuadre, luz, perspectiva, distancia focal"},{"de":"Bildbearbeitung als Abfolge nachvollziehbarer technischer Schritte","en":"Image editing as a sequence of traceable technical steps","es":"La edición como una secuencia de pasos técnicos comprensibles"},{"de":"Bilder lesen: Was wurde ausgewählt, was weggelassen, was verändert?","en":"Reading images: what was chosen, what left out, what altered?","es":"Leer imágenes: qué se eligió, qué se omitió, qué se modificó"},{"de":"Kennzeichnungsregeln und warum es sie gibt","en":"Labelling rules and why they exist","es":"Las normas de identificación y por qué existen"}],"prep":{"de":"<b>Sie stellen:</b> Raum mit Tischen, Strom, abdunkelbar, gern etwas Platz für Aufbauten. <b>Wir bringen:</b> Kameras, Stative, Licht, Reflektoren, Hintergrundmaterial, Laptops mit Bearbeitungssoftware.","en":"<b>You provide:</b> a room with tables, power, the option to darken it, ideally some space for set-ups. <b>We bring:</b> cameras, tripods, lighting, reflectors, backdrop material, laptops with editing software.","es":"<b>Ustedes ponen:</b> sala con mesas, electricidad, posibilidad de oscurecer y algo de espacio para montajes. <b>Nosotros llevamos:</b> cámaras, trípodes, luz, reflectores, fondos y portátiles con software de edición."},"note":{"de":"Es geht um die Mechanik, nicht um Aussehen. Wir arbeiten an Objekten, Räumen und aufgebauten Szenen. Porträts entstehen nur mit Freiwilligen, und niemand muss fotografiert werden. Bewertungen von Aussehen — über andere oder über sich selbst — sind in diesem Workshop kein Thema; wir halten diese Grenze aktiv. Keine Übung zielt darauf, ein Gesicht zu „verbessern“.","en":"This is about mechanics, not appearance. We work on objects, spaces and constructed scenes. Portraits happen only with volunteers, and nobody has to be photographed. Judgements about appearance — of others or of oneself — are not a topic here; we actively hold that line. No exercise aims at “improving” a face.","es":"Se trata de la mecánica, no del aspecto. Trabajamos con objetos, espacios y escenas montadas. Los retratos solo se hacen con voluntarios y nadie tiene que ser fotografiado. Los juicios sobre el aspecto —propio o ajeno— no son tema en este taller y mantenemos ese límite de forma activa. Ningún ejercicio busca «mejorar» una cara."}},"elternabend":{"tag":{"de":"Für Erwachsene · Abendveranstaltung","en":"For grown-ups · Evening event","es":"Para personas adultas · Sesión de tarde"},"title":{"de":"Elternabend: Bildschirmzeit ohne Streit","en":"Parents' evening: screen time without the fight","es":"Sesión para familias: pantallas sin discusiones"},"sub":{"de":"Ein Abend für Eltern und Lehrkräfte: Was Kinder online tatsächlich machen, welche Regeln funktionieren und welche Gespräche mehr bringen als jede Sperre.","en":"An evening for parents and teachers: what children actually do online, which rules work, and which conversations achieve more than any lock.","es":"Una tarde para familias y docentes: qué hacen realmente los niños en internet, qué normas funcionan y qué conversaciones sirven más que cualquier bloqueo."},"meta":{"alter":{"de":"Eltern, Lehrkräfte","en":"Parents, teachers","es":"Familias, docentes"},"dauer":{"de":"90 Minuten","en":"90 minutes","es":"90 minutos"},"ort":{"de":"Vor Ort oder online","en":"On site or online","es":"Presencial o en línea"},"preis":{"de":"290 € · online 190 €","en":"€290 · €190 online","es":"290 € · 190 € en línea"}},"ablauf":[{"t":{"de":"15 MIN","en":"15 MIN","es":"15 MIN"},"c":{"de":"<b>Zahlen statt Bauchgefühl.</b> Wir beginnen mit dem, was gemessen ist: tägliche Nutzung, durchschnittliche Bildschirmzeit, wie viele Kinder ein eigenes Gerät haben. Das entlastet meistens spürbar — die eigene Familie ist nicht die Ausnahme.","en":"<b>Figures instead of gut feeling.</b> We start with what has actually been measured: daily use, average screen time, how many children own a device. That is usually a noticeable relief — your own family is not the exception.","es":"<b>Datos en vez de intuición.</b> Empezamos por lo que está medido: uso diario, tiempo medio de pantalla, cuántos niños tienen dispositivo propio. Eso suele aliviar bastante: la propia familia no es la excepción."}},{"t":{"de":"20 MIN","en":"20 MIN","es":"20 MIN"},"c":{"de":"<b>Warum Verbote allein nicht tragen.</b> Was Alterskennzeichen leisten und wo sie enden. Was technische Schutzfunktionen können und was nicht. Warum eine Sperre, die das Kind in zehn Minuten umgeht, das Vertrauen kostet, das man später braucht.","en":"<b>Why bans alone don't hold.</b> What age ratings achieve and where they stop. What parental controls can and cannot do. Why a lock the child bypasses in ten minutes costs the trust you will need later.","es":"<b>Por qué las prohibiciones solas no bastan.</b> Qué logran las clasificaciones por edad y dónde acaban. Qué pueden y qué no los controles parentales. Por qué un bloqueo que el niño sortea en diez minutos cuesta la confianza que hará falta más adelante."}},{"t":{"de":"25 MIN","en":"25 MIN","es":"25 MIN"},"c":{"de":"<b>Was funktioniert.</b> Regeln, die gemeinsam ausgehandelt werden und für alle im Haushalt gelten. Geräte nachts aus dem Schlafzimmer — die Maßnahme mit dem besten Verhältnis von Aufwand und Wirkung. Interesse statt Kontrolle: „Zeig mir mal, was daran gut ist.“","en":"<b>What works.</b> Rules negotiated together that apply to everyone in the household. Devices out of the bedroom at night — the measure with the best effort-to-effect ratio. Interest instead of control: “show me what's good about it.”","es":"<b>Lo que sí funciona.</b> Normas negociadas en común que valen para toda la casa. Los dispositivos fuera del dormitorio por la noche: la medida con mejor relación entre esfuerzo y efecto. Interés en vez de control: «enséñame qué tiene de bueno»."}},{"t":{"de":"20 MIN","en":"20 MIN","es":"20 MIN"},"c":{"de":"<b>Fragen aus dem Saal.</b> Die wiederkehrenden: Ab wann ein eigenes Handy? Wie viel ist zu viel? Was tun bei Cybermobbing? Was ist mit KI-Werkzeugen bei den Hausaufgaben? Wir antworten so konkret wie möglich — und sagen deutlich, wenn eine Frage in eine Beratung gehört.","en":"<b>Questions from the room.</b> The recurring ones: at what age a first phone? How much is too much? What to do about cyberbullying? What about AI tools and homework? We answer as concretely as we can — and say clearly when a question belongs in a counselling setting.","es":"<b>Preguntas del público.</b> Las de siempre: ¿a qué edad el primer móvil? ¿Cuánto es demasiado? ¿Qué hacer ante el ciberacoso? ¿Y las herramientas de IA en los deberes? Respondemos con la mayor concreción posible y decimos claramente cuándo una pregunta corresponde a un servicio de orientación."}},{"t":{"de":"10 MIN","en":"10 MIN","es":"10 MIN"},"c":{"de":"<b>Mitnehmen.</b> Ein Merkblatt mit Anlaufstellen und geprüften Informationsangeboten, dazu die Studienquellen zum Selbstnachlesen.","en":"<b>To take away.</b> A handout with support services and vetted information sources, plus the study references for reading up yourself.","es":"<b>Para llevarse.</b> Una ficha con servicios de apoyo y fuentes de información contrastadas, además de los estudios citados para consultarlos por cuenta propia."}}],"ergebnis":[{"de":"Ein Merkblatt mit Gesprächseinstiegen und Anlaufstellen für alle Anwesenden","en":"A handout with conversation openers and support services for everyone present","es":"Una ficha con formas de iniciar la conversación y servicios de apoyo para todos los asistentes"},{"de":"Eine gemeinsame Sprache im Elternhaus einer Klasse — oft der eigentliche Gewinn des Abends","en":"A shared vocabulary among the families of one class — often the real gain of the evening","es":"Un lenguaje común entre las familias de una clase, que suele ser la verdadera ganancia de la tarde"},{"de":"Auf Wunsch eine kurze Zusammenfassung für alle, die nicht kommen konnten","en":"On request, a short summary for those who couldn't attend","es":"Si se desea, un breve resumen para quienes no pudieron asistir"}],"lernen":[{"de":"Keine Werbeveranstaltung für Workshops","en":"Not a sales pitch for our workshops","es":"No es una presentación comercial de nuestros talleres"},{"de":"Keine Empfehlung einzelner Überwachungs-Apps","en":"No recommendation of particular monitoring apps","es":"No recomendamos aplicaciones de vigilancia concretas"},{"de":"Keine Diagnose und keine Therapie — bei Anzeichen belastender Mediennutzung verweisen wir auf Beratungsstellen und ärztliche Anlaufstellen","en":"No diagnosis and no therapy — where media use appears to be causing distress, we point to counselling and medical services","es":"Ni diagnóstico ni terapia: ante indicios de un uso problemático remitimos a servicios de orientación y atención médica"},{"de":"Keine Rechtsberatung — rechtliche Hinweise sind Orientierung","en":"No legal advice — legal pointers are orientation only","es":"No es asesoramiento jurídico: las indicaciones legales son solo orientativas"}],"lernen_label":{"de":"Was der Abend nicht ist","en":"What the evening is not","es":"Lo que esta sesión no es"},"prep":{"de":"<b>Sie stellen:</b> Raum, Beamer oder Bildschirm, Strom; für größere Gruppen einen Tonanschluss. <b>Wir bringen:</b> Präsentation, Merkblätter, bei Bedarf Beamer und kleine Lautsprecheranlage. Online läuft der Abend in derselben Struktur mit Fragefunktion.","en":"<b>You provide:</b> a room, projector or screen, power; for larger groups an audio connection. <b>We bring:</b> the presentation, handouts, and if needed a projector and small PA. Online, the evening runs in the same structure with a question function.","es":"<b>Ustedes ponen:</b> sala, proyector o pantalla, electricidad y, para grupos grandes, conexión de sonido. <b>Nosotros llevamos:</b> la presentación, las fichas y, si hace falta, proyector y un pequeño equipo de sonido. En línea la sesión mantiene la misma estructura con función de preguntas."},"note":{"de":"Keine Fälle aus der Runde. Was Eltern an diesem Abend erzählen, bleibt im Raum. Wir nennen keine Namen von Kindern, sammeln keine Kontaktdaten und geben nichts an die Schule weiter.","en":"No case studies from the room. What parents say that evening stays there. We name no children, collect no contact details and pass nothing on to the school.","es":"Nada de casos de los asistentes. Lo que las familias cuentan esa tarde se queda en la sala. No nombramos a ningún niño, no recogemos datos de contacto y no trasladamos nada al centro."}},"fortbildung":{"tag":{"de":"Für Erwachsene · Kollegiumsfortbildung","en":"For grown-ups · Whole-staff training","es":"Para personas adultas · Formación del claustro"},"title":{"de":"Fortbildung: Medien unterrichten","en":"Training: teaching media","es":"Formación: enseñar medios"},"sub":{"de":"Ein Halbtag für das Kollegium. Wir zeigen, wie sich Medienarbeit ohne Technikangst in den Fachunterricht einbauen lässt — mit Übungen, die am Montag darauf sofort funktionieren.","en":"A half day for the staff room. We show how media work fits into regular lessons without any fear of the technology — with exercises that work the very next Monday.","es":"Media jornada para el claustro. Mostramos cómo integrar el trabajo con medios en las clases sin miedo a la técnica, con ejercicios que funcionan el lunes siguiente."},"meta":{"alter":{"de":"Kollegium, bis 25 Personen","en":"Staff, up to 25 people","es":"Claustro, hasta 25 personas"},"dauer":{"de":"4 Stunden","en":"4 hours","es":"4 horas"},"ort":{"de":"Vor Ort oder online","en":"On site or online","es":"Presencial o en línea"},"preis":{"de":"ab 690 € pauschal","en":"from €690 flat rate","es":"desde 690 € a tanto alzado"}},"ablauf":[{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>Bestandsaufnahme.</b> Kartenabfrage: Was läuft schon, was hakt, was ist letztes Jahr gescheitert und woran? Daraus entsteht die Schwerpunktsetzung für den restlichen Halbtag — die Fortbildung wird an dieser Stelle auf das Kollegium zugeschnitten, nicht vorher.","en":"<b>Taking stock.</b> A card survey: what already works, what sticks, what failed last year and why? That sets the priorities for the rest of the session — the training is tailored to this staff room here, not beforehand.","es":"<b>Diagnóstico.</b> Ronda de tarjetas: qué funciona ya, qué se atasca, qué fracasó el año pasado y por qué. De ahí salen las prioridades para el resto de la jornada: la formación se ajusta al claustro en este punto, no antes."}},{"t":{"de":"40 MIN","en":"40 MIN","es":"40 MIN"},"c":{"de":"<b>Der Rahmen, kurz gehalten.</b> Die sechs Kompetenzbereiche der KMK-Strategie und was davon in welchem Fach längst passiert, ohne dass es so heißt. Ziel ist Entlastung: Vieles ist bereits vorhanden und muss nur benannt werden.","en":"<b>The framework, kept short.</b> The six competence areas of the German KMK strategy and how much of it already happens in each subject without being called that. The aim is relief: much of it exists already and only needs naming.","es":"<b>El marco, en breve.</b> Las seis áreas de competencia de la estrategia alemana KMK y cuánto de eso ya ocurre en cada asignatura sin llamarse así. El objetivo es aliviar: gran parte ya existe y solo hay que nombrarla."}},{"t":{"de":"60 MIN","en":"60 MIN","es":"60 MIN"},"c":{"de":"<b>Werkstatt 1: selbst produzieren.</b> Die Lehrkräfte drehen ein Erklärvideo — in Kleingruppen, mit dem eigenen Diensthandy, drei Einstellungen, ein Schnittprogramm, 45 Minuten. Das ist der Kern der Fortbildung: Wer es einmal selbst gemacht hat, traut es einer Klasse zu.","en":"<b>Workshop 1: producing it yourself.</b> The teachers shoot an explainer video — in small groups, on their own work phone, three shots, one editing app, 45 minutes. This is the core of the training: once you have done it yourself, you trust a class to do it.","es":"<b>Taller 1: producir uno mismo.</b> El profesorado rueda un vídeo explicativo en grupos pequeños, con el móvil de trabajo, tres planos, un programa de montaje, 45 minutos. Este es el núcleo de la formación: quien lo ha hecho una vez, se lo confía a una clase."}},{"t":{"de":"45 MIN","en":"45 MIN","es":"45 MIN"},"c":{"de":"<b>Werkstatt 2: Bausteine für Montag.</b> Fünf Übungen, jede passt in eine Doppelstunde — Bildrückwärtssuche in Geografie, Interviewführung in Deutsch, Wahrscheinlichkeitsrechnung an einer Kistenmechanik in Mathematik, Tonmontage in Musik, Werbekennzeichnung in Wirtschaft und Politik.","en":"<b>Workshop 2: building blocks for Monday.</b> Five exercises, each fitting a double period — reverse image search in geography, interviewing in language class, probability on a loot-crate mechanic in maths, audio montage in music, ad labelling in economics and politics.","es":"<b>Taller 2: piezas para el lunes.</b> Cinco ejercicios, cada uno para una sesión doble: búsqueda inversa de imágenes en Geografía, entrevistas en Lengua, probabilidad con la mecánica de cajas en Matemáticas, montaje sonoro en Música e identificación publicitaria en Economía y Política."}},{"t":{"de":"30 MIN","en":"30 MIN","es":"30 MIN"},"c":{"de":"<b>KI im Unterricht.</b> Was die Handlungsempfehlung der KMK von 2024 vorgibt, welche Transparenzpflichten seit August 2026 gelten und — die praktisch dringendste Frage — welche Aufgabenformate noch tragfähig sind und welche nicht mehr.","en":"<b>AI in the classroom.</b> What the 2024 KMK recommendation requires, which transparency duties have applied since August 2026, and — the most pressing practical question — which assignment formats still hold up and which no longer do.","es":"<b>IA en el aula.</b> Qué exige la recomendación de la KMK de 2024, qué obligaciones de transparencia rigen desde agosto de 2026 y, la pregunta más urgente en la práctica, qué formatos de tarea siguen siendo viables y cuáles ya no."}},{"t":{"de":"35 MIN","en":"35 MIN","es":"35 MIN"},"c":{"de":"<b>Recht und nächste Schritte.</b> Recht am eigenen Bild, Einwilligungen, Nutzung fremder Materialien im Unterricht, Umgang mit Schülerergebnissen — ausdrücklich als Orientierung, nicht als Rechtsberatung. Zum Schluss: Was nimmt das Kollegium konkret mit, wer macht was bis wann?","en":"<b>Law and next steps.</b> Image rights, consent, using third-party material in lessons, handling pupils' work — explicitly as orientation, not legal advice. Finally: what does the staff take away concretely, who does what by when?","es":"<b>Derecho y próximos pasos.</b> Derecho a la propia imagen, consentimientos, uso de material ajeno en clase, tratamiento de los trabajos del alumnado, expresamente como orientación y no como asesoramiento jurídico. Al final: qué se lleva el claustro en concreto, quién hace qué y para cuándo."}}],"ergebnis":[{"de":"Ein Erklärvideo je Kleingruppe — meist sofort im Unterricht einsetzbar","en":"An explainer video per small group — usually usable in class straight away","es":"Un vídeo explicativo por grupo, casi siempre utilizable en clase de inmediato"},{"de":"Fünf ausgearbeitete Unterrichtsbausteine, auf die eigenen Fächer angepasst","en":"Five worked-out lesson modules, adapted to your own subjects","es":"Cinco módulos de clase desarrollados y adaptados a las propias asignaturas"},{"de":"Eine Handreichung mit Ablaufplänen, Materiallisten und Einwilligungsmustern","en":"A handbook with schedules, equipment lists and consent templates","es":"Un dosier con planificaciones, listas de material y modelos de consentimiento"},{"de":"Eine ehrliche Einschätzung zur vorhandenen Technik an Ihrer Schule","en":"An honest assessment of the technology your school actually has","es":"Una valoración honesta de la técnica disponible en su centro"}],"lernen":[{"de":"Medienproduktion als Unterrichtsmethode, nicht als Zusatzprojekt","en":"Media production as a teaching method, not an add-on project","es":"La producción de medios como método docente, no como proyecto extra"},{"de":"Sicherheit im Umgang mit Kamera, Ton und Schnitt — auf Anfängerniveau, aber vollständig","en":"Confidence with camera, sound and editing — at beginner level, but complete","es":"Soltura con cámara, sonido y montaje: a nivel principiante, pero completo"},{"de":"Umgang mit KI-Werkzeugen in Aufgabenstellung und Bewertung","en":"Handling AI tools in assignments and assessment","es":"Manejo de herramientas de IA en tareas y evaluación"},{"de":"Rechtssicherheit im Alltag: Einwilligung, Bildrechte, Materialnutzung","en":"Everyday legal confidence: consent, image rights, use of materials","es":"Seguridad jurídica cotidiana: consentimiento, derechos de imagen, uso de materiales"}],"prep":{"de":"<b>Sie stellen:</b> Raum mit Beamer, Strom, WLAN, gern zwei Ausweichräume für die Werkstätten. <b>Wir bringen:</b> Kameras, Mikrofone, Laptops, Beamer und Lautsprecher bei Bedarf, gedruckte Handreichungen für alle.","en":"<b>You provide:</b> a room with a projector, power, Wi-Fi, ideally two breakout rooms for the workshops. <b>We bring:</b> cameras, microphones, laptops, projector and speakers if needed, printed handbooks for everyone.","es":"<b>Ustedes ponen:</b> sala con proyector, electricidad, wifi y, a ser posible, dos salas adicionales para los talleres. <b>Nosotros llevamos:</b> cámaras, micrófonos, portátiles, proyector y altavoces si hacen falta, y dosieres impresos para todos."},"note":{"de":"Keine Vorführung. Niemand muss vor dem Kollegium etwas beweisen. Die Werkstätten laufen in Kleingruppen, und die Ergebnisse werden nur gezeigt, wenn die Gruppe das möchte.","en":"No performance. Nobody has to prove anything in front of colleagues. The workshops run in small groups, and results are shown only if the group wants to.","es":"Nada de exhibiciones. Nadie tiene que demostrar nada ante sus compañeros. Los talleres se hacen en grupos pequeños y los resultados solo se muestran si el grupo quiere."}}};
+  var CLBL = {"ablauf":{"de":"Ablauf","en":"How the session runs","es":"Desarrollo"},"ergebnis":{"de":"Was am Ende vorliegt","en":"What you end up with","es":"Qué queda al final"},"lernen":{"de":"Was vermittelt wird","en":"What it teaches","es":"Qué se aprende"},"prep":{"de":"Was Sie bereitstellen","en":"What you provide","es":"Qué hace falta"},"note":{"de":"Gut zu wissen","en":"Worth knowing","es":"Conviene saber"},"alter":{"de":"Alter","en":"Age","es":"Edad"},"dauer":{"de":"Dauer","en":"Length","es":"Duración"},"ort":{"de":"Ort","en":"Where","es":"Dónde"},"preis":{"de":"Preis","en":"Price","es":"Precio"},"cta":{"de":"Termin anfragen","en":"Enquire","es":"Solicitar cita"},"foot":{"de":"Alle Preise sind Endpreise. Als Bildungsleistung umsatzsteuerbefreit (§ 4 Nr. 21 UStG). Zeitangaben sind Richtwerte — wir schneiden jedes Format auf Ihre Gruppe zu.","en":"All prices are final. Exempt from German VAT as an educational service (§ 4 no. 21 UStG). Timings are guidelines — we tailor every format to your group.","es":"Todos los precios son finales. Exentos de IVA por tratarse de servicios educativos (§ 4 nº 21 UStG). Los tiempos son orientativos: adaptamos cada formato a su grupo."},"close":{"de":"Schließen","en":"Close","es":"Cerrar"}};
+
+
+  /* ---- Workshop-Detailfenster ---- */
+  var modal    = document.getElementById('modal');
+  var mTag     = document.getElementById('modalTag');
+  var mTitle   = document.getElementById('modalTitle');
+  var mSub     = document.getElementById('modalSub');
+  var mMeta    = document.getElementById('modalMeta');
+  var mBody    = document.getElementById('modalBody');
+  var mFoot    = document.getElementById('modalFoot');
+  var mCta     = document.getElementById('modalCta');
+  var mX       = modal.querySelector('.modal__x');
+  var openId   = null;
+  var lastFocus = null;
+
+  function esc(str){ return str; }
+
+  function renderModal(id, lang){
+    var c = COURSES[id]; if(!c) return;
+    var L = CLBL;
+    mTag.textContent   = c.tag[lang];
+    mTitle.textContent = c.title[lang];
+    mSub.textContent   = c.sub[lang];
+
+    mMeta.innerHTML = ['alter','dauer','ort','preis'].map(function(k){
+      return '<div><dt>' + L[k][lang] + '</dt><dd' + (k==='preis' ? ' class="price"' : '') +
+             '>' + c.meta[k][lang] + '</dd></div>';
+    }).join('');
+
+    var html = '<h4>' + L.ablauf[lang] + '</h4>';
+    html += c.ablauf.map(function(st){
+      return '<div class="step"><span class="step__t">' + st.t[lang] +
+             '</span><p class="step__c">' + st.c[lang] + '</p></div>';
+    }).join('');
+
+    html += '<h4>' + L.ergebnis[lang] + '</h4><ul class="mlist">' +
+            c.ergebnis.map(function(x){ return '<li>' + x[lang] + '</li>'; }).join('') + '</ul>';
+
+    var lernLabel = c.lernen_label ? c.lernen_label[lang] : L.lernen[lang];
+    html += '<h4>' + lernLabel + '</h4><ul class="mlist">' +
+            c.lernen.map(function(x){ return '<li>' + x[lang] + '</li>'; }).join('') + '</ul>';
+
+    html += '<h4>' + L.prep[lang] + '</h4><p class="mprep">' + c.prep[lang] + '</p>';
+    html += '<h4>' + L.note[lang] + '</h4><p class="mnote">' + c.note[lang] + '</p><div style="height:22px"></div>';
+
+    mBody.innerHTML = html;
+    mFoot.textContent = L.foot[lang];
+    mCta.textContent  = L.cta[lang];
+    mX.setAttribute('aria-label', L.close[lang]);
+  }
+
+  function openModal(id){
+    lastFocus = document.activeElement;
+    openId = id;
+    renderModal(id, document.documentElement.lang || 'de');
+    modal.hidden = false;
+    modal.classList.add('open');
+    document.body.classList.add('locked');
+    mBody.scrollTop = 0;
+    mX.focus();
+  }
+
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.hidden = true;
+    document.body.classList.remove('locked');
+    openId = null;
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('.prog__more').forEach(function(b){
+    b.addEventListener('click', function(){
+      var card = b.closest('.prog');
+      if(card && card.dataset.id) openModal(card.dataset.id);
+    });
+  });
+  modal.querySelectorAll('[data-close]').forEach(function(el){
+    el.addEventListener('click', closeModal);
+  });
+  mCta.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && openId) closeModal();
+  });
+  /* Fokus im Fenster halten */
+  modal.addEventListener('keydown', function(e){
+    if(e.key !== 'Tab') return;
+    var f = modal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+    if(!f.length) return;
+    var first = f[0], last = f[f.length-1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+
+  /* ---- Workshop-Filter ---- */
+  var fBtns = document.querySelectorAll('.filter');
+  fBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var cat = b.dataset.cat;
+      fBtns.forEach(function(x){
+        var on = x === b;
+        x.classList.toggle('on', on);
+        x.setAttribute('aria-pressed', on);
+      });
+      document.querySelectorAll('.prog').forEach(function(card){
+        card.hidden = !(cat === 'all' || card.dataset.cat === cat);
+      });
+    });
+  });
+
+  /* ---- Zeeg: erst auf Klick laden (kein Drittanbieter-Kontakt vorher) ---- */
+  var zLoad = document.getElementById('zeegLoad');
+  if(zLoad){
+    zLoad.addEventListener('click', function(){
+      document.getElementById('zeegConsent').hidden = true;
+      document.getElementById('zeegWidget').hidden = false;
+      var sc = document.createElement('script');
+      sc.src = 'https://assets.zeeg.me/embed.min.js';
+      sc.async = true;
+      sc.setAttribute('data-user','afmhahn');
+      sc.setAttribute('data-event-type','kostenfreie-beratung');
+      sc.setAttribute('data-redirect-parent','true');
+      document.body.appendChild(sc);
+    });
+  }
+
+  /* ---- floating popcorn ---- */
+  if(!reduce){
+    var drift = document.getElementById('drift');
+    for(var i=0;i<9;i++){
+      var s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      var u = document.createElementNS('http://www.w3.org/2000/svg','use');
+      u.setAttribute('href','#pop');
+      s.appendChild(u);
+      var size = 16 + Math.random()*26;
+      s.setAttribute('viewBox','0 0 100 100');
+      s.style.width = size+'px'; s.style.height = size+'px';
+      s.style.color = '#FFF4E0';
+      s.style.left = (Math.random()*100)+'%';
+      s.style.top  = (55 + Math.random()*40)+'%';
+      s.style.setProperty('--dx', ((Math.random()-.5)*160).toFixed(0)+'px');
+      s.style.setProperty('--dy', (-180 - Math.random()*200).toFixed(0)+'px');
+      s.style.setProperty('--rot', ((Math.random()-.5)*300).toFixed(0)+'deg');
+      s.style.animation = 'drift '+(9+Math.random()*8).toFixed(1)+'s linear '+(Math.random()*9).toFixed(1)+'s infinite';
+      drift.appendChild(s);
+    }
+  }
+})();
+</script>
+</body>
+</html>
