@@ -21,11 +21,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('countdown').innerHTML = '<a href="programm.html" class="btn btn--primary">Zum Programm</a>';
   }
 
-  // Featured films
-  const { data: films } = await getFeaturedFilms();
+  // Featured films (from cache)
+  const films = await loadFilmsWithCache();
+  const featured = films.filter(f => f.is_featured).slice(0, 3);
+  const displayFilms = featured.length ? featured : films.slice(0, 3);
   const { data: screenings } = await getScreenings();
-  if (films) {
-    renderFilmCards(films, document.getElementById('featured-films'), screenings || []);
+  if (displayFilms.length) {
+    renderFilmCards(displayFilms, document.getElementById('featured-films'), screenings || []);
   }
 
   // Home newsletter form

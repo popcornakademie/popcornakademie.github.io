@@ -7,6 +7,8 @@ const CONFIG = {
   SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_KEY',
   EMAIL_WORKER_URL: 'https://csk-email-worker.YOUR_SUBDOMAIN.workers.dev',
   PAYMENT_WORKER_URL: 'https://csk-payment-worker.YOUR_SUBDOMAIN.workers.dev',
+  FILM_SYNC_WORKER_URL: 'https://csk-film-sync-worker.YOUR_SUBDOMAIN.workers.dev',
+  TMDB_API_KEY: '',
   SITE_NAME: 'Court Side Kino',
   SITE_TAGLINE: 'Open-Air Kino am Tennisplatz',
   SITE_URL: 'https://popcornakademie.github.io/kino',

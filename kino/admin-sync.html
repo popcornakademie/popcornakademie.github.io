@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Film-Sync Admin – Court Side Kino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <main class="main" style="padding:var(--space-3xl) var(--space-md);">
+    <div class="container container--narrow">
+      <h1>Film-Sync Admin</h1>
+      <p class="text-muted">Synchronisiert 10 Public-Domain-Filme von TMDb/Wikidata → Supabase</p>
+
+      <div id="sync-status" style="margin:var(--space-xl) 0;padding:var(--space-lg);background:var(--color-off-white);border-radius:var(--border-radius-lg);">
+        <p>Bereit zum Sync.</p>
+      </div>
+
+      <div style="display:flex;gap:var(--space-md);flex-wrap:wrap;">
+        <button id="btn-sync-all" class="btn btn--primary" type="button">Alle 10 Filme synchronisieren</button>
+        <a href="programm.html" class="btn btn--outline">Zum Programm</a>
+      </div>
+
+      <div id="sync-log" style="margin-top:var(--space-xl);font-family:monospace;font-size:var(--font-size-sm);"></div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/supabase-client.js" defer></script>
+  <script src="js/api/tmdb-client.js" defer></script>
+  <script src="js/api/wikidata-client.js" defer></script>
+  <script src="js/services/film-sync.js" defer></script>
+  <script src="js/services/film-cache.js" defer></script>
+  <script src="js/pages/admin-sync.js" defer></script>
+</body>
+</html>

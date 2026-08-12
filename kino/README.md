@@ -106,18 +106,31 @@ wrangler deploy
 
 Update `js/config.js` with the deployed worker URLs.
 
-### 4. Cloudflare Pages Deployment
+### 4. Deployment
 
-1. Push repository to GitHub
-2. In Cloudflare Dashboard → Pages → Create project
-3. Connect Git repository
-4. Build settings:
-   - **Build command:** (leave empty)
-   - **Build output directory:** `/` (or the kino subfolder path)
-   - **Root directory:** `kino` (if deploying as subfolder)
-5. Deploy
+#### GitHub Pages (aktuell)
 
-For GitHub Pages subfolder deployment at `popcornakademie.github.io/kino`, push files to the `kino/` directory in the `popcornakademie.github.io` repository.
+Das Projekt liegt im Repository `popcornakademie.github.io` unter dem Ordner `kino/`:
+
+```
+popcornakademie.github.io/
+└── kino/              ← Projekt-Root (diese Dateien)
+    ├── index.html
+    ├── css/
+    ├── js/
+    └── ...
+```
+
+Erreichbar unter: **https://popcornakademie.github.io/kino/**
+
+#### Cloudflare Pages (optional)
+
+1. Repository mit GitHub verbinden
+2. Build settings:
+   - **Build command:** (leer lassen)
+   - **Build output directory:** `/`
+   - **Root directory:** `kino`
+3. Deploy
 
 ## Environment Variables
 
@@ -129,6 +142,55 @@ For GitHub Pages subfolder deployment at `popcornakademie.github.io/kino`, push 
 | `SUPABASE_ANON_KEY` | Supabase anonymous/public key |
 | `EMAIL_WORKER_URL` | Deployed email worker URL |
 | `PAYMENT_WORKER_URL` | Deployed payment worker URL |
+| `FILM_SYNC_WORKER_URL` | Film sync worker URL (TMDb + Wikidata → Supabase) |
+
+### Film Sync Worker (Wrangler Secrets)
+
+| Secret | Description |
+|--------|-------------|
+| `TMDB_API_KEY` | TMDb API key ([developer.themoviedb.org](https://developer.themoviedb.org)) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (server-side only) |
+
+## TMDb + WikiFlix Film-Daten
+
+### Architektur
+
+```
+TMDb API (primär) → film-sync-worker → Supabase films-Table → Frontend
+Wikidata (fallback) ↗                      ↑ 7-Tage Cache
+```
+
+### Setup
+
+1. **Migration ausführen:** `supabase/migration-films-api.sql` im SQL Editor
+2. **TMDb API-Key** bei [developer.themoviedb.org](https://developer.themoviedb.org) erstellen
+3. **Film-Sync Worker deployen:**
+   ```bash
+   cd workers/film-sync-worker
+   wrangler secret put TMDB_API_KEY
+   wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+   wrangler deploy
+   ```
+4. **Worker-URL** in `js/config.js` → `FILM_SYNC_WORKER_URL`
+5. **Filme synchronisieren:** `admin-sync.html` öffnen → „Alle 10 Filme synchronisieren“
+6. **Screenings seeden:** `supabase/seed-public-domain.sql` ausführen
+
+### Public-Domain-Filme (10)
+
+Nosferatu (1922), Metropolis (1927), Das Cabinet des Dr. Caligari (1920), Die Nacht der lebenden Toten (1968), Battleship Potemkin (1925), Der Mann mit der Kamera (1929), Steamboat Willie (1928), The Great Train Robbery (1903), Sunrise (1927), Freaks (1932)
+
+Konfiguration: `data/public-domain-films.json`
+
+### Cache-Verhalten
+
+- Frontend lädt Filme aus Supabase (`loadFilmsWithCache()`)
+- TTL: 7 Tage (`last_synced` Feld)
+- Bei stale Cache: automatischer Background-Sync via Worker
+- Manueller Sync: `admin-sync.html`
+
+### TMDb Attribution
+
+TMDb-Logo und Link werden automatisch im Footer eingefügt (Pflicht laut TMDb Terms).
 
 ### Email Worker (Wrangler Secrets)
 

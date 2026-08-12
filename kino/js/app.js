@@ -7,10 +7,28 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooter();
   initThemeToggle();
   initCookieConsent();
+  initTmdbAttribution();
 
-  // Mark page as loaded for entrance animation
   document.body.classList.add('page-enter');
 });
+
+/**
+ * TMDb required attribution in footer
+ */
+function initTmdbAttribution() {
+  document.querySelectorAll('.footer__bottom').forEach(bottom => {
+    if (bottom.querySelector('.tmdb-attribution')) return;
+    const attr = document.createElement('span');
+    attr.className = 'tmdb-attribution';
+    attr.innerHTML = `
+      Film-Daten von
+      <a href="https://www.themoviedb.org/" target="_blank" rel="noopener" class="footer__link" style="display:inline;">
+        <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short.svg" alt="TMDb" width="80" height="16" style="vertical-align:middle;margin:0 4px;" loading="lazy">
+      </a>
+    `;
+    bottom.appendChild(attr);
+  });
+}
 
 /**
  * Shared HTML partials for header and footer

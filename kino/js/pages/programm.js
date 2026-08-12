@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const grid = document.getElementById('program-grid');
   grid.innerHTML = renderLoadingSpinner('Programm wird geladen...');
 
-  const [filmsRes, screeningsRes] = await Promise.all([getFilms(), getScreenings()]);
-  allFilms = filmsRes.data || [];
+  // Load from Supabase cache (background sync if stale)
+  allFilms = await loadFilmsWithCache();
+  const screeningsRes = await getScreenings();
   allScreenings = screeningsRes.data || [];
 
   // Populate date filter
@@ -22,14 +23,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     dateFilter.appendChild(opt);
   });
 
+  // Populate genre filter dynamically
+  const genreFilter = document.getElementById('filter-genre');
+  const genres = [...new Set(allFilms.map(f => f.genre).filter(Boolean))].sort();
+  genres.forEach(g => {
+    if (![...genreFilter.options].some(o => o.value === g)) {
+      const opt = document.createElement('option');
+      opt.value = g;
+      opt.textContent = g;
+      genreFilter.appendChild(opt);
+    }
+  });
+
   renderProgram();
 
-  // Filter events
   document.getElementById('film-search').addEventListener('input', debounce(renderProgram, 300));
   document.getElementById('filter-genre').addEventListener('change', renderProgram);
   document.getElementById('filter-date').addEventListener('change', renderProgram);
 
-  // Check for film detail query param
   const filmSlug = getQueryParam('film');
   if (filmSlug) showFilmDetail(filmSlug);
 });
@@ -65,7 +76,7 @@ async function showFilmDetail(slug) {
   detailEl.style.display = 'block';
 
   const screeningList = (screenings || []).map(s => `
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-md);background:var(--color-off-white);border-radius:var(--border-radius);margin-bottom:var(--space-sm);">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-md);background:var(--color-off-white);border-radius:var(--border-radius);margin-bottom:var(--space-sm);flex-wrap:wrap;gap:var(--space-sm);">
       <div>
         <strong>${formatDate(s.screening_date)}</strong> · ${formatTime(s.start_time)}
         ${s.is_sold_out ? '<span class="badge badge--sold-out">Ausverkauft</span>' : ''}
@@ -74,29 +85,46 @@ async function showFilmDetail(slug) {
     </div>
   `).join('');
 
+  const metaBadges = [
+    film.genre ? `<span class="badge badge--genre">${sanitize(film.genre)}</span>` : '',
+    film.release_year ? `<span class="badge">${film.release_year}</span>` : '',
+    film.is_public_domain ? '<span class="badge badge--tennis">Public Domain</span>' : '',
+    film.rating ? `<span class="badge badge--rating">${sanitize(film.rating)}</span>` : '',
+    film.duration_min ? `<span class="badge">${film.duration_min} Min.</span>` : '',
+  ].filter(Boolean).join('');
+
+  const sourceInfo = film.source
+    ? `<p class="text-muted" style="font-size:var(--font-size-xs);">Datenquelle: ${film.source === 'tmdb' ? 'TMDb' : 'Wikidata/WikiFlix'} · ${getCacheAgeLabel(film)}</p>`
+    : '';
+
   detailEl.innerHTML = `
-    <div style="display:grid;gap:var(--space-2xl);grid-template-columns:1fr;" class="reveal--visible">
-      <div style="display:grid;gap:var(--space-xl);">
-        <div style="display:grid;gap:var(--space-xl);grid-template-columns:200px 1fr;">
-          <img src="${film.poster_url}" alt="Filmplakat: ${sanitize(film.title)}" style="border-radius:var(--border-radius-lg);width:100%;" width="200" height="300">
-          <div>
-            <h2>${sanitize(film.title)}</h2>
-            <div style="display:flex;gap:var(--space-sm);margin:var(--space-md) 0;">
-              <span class="badge badge--genre">${sanitize(film.genre)}</span>
-              ${film.rating ? `<span class="badge badge--rating">${sanitize(film.rating)}</span>` : ''}
-              <span class="badge">${film.duration_min} Min.</span>
-            </div>
-            ${film.director ? `<p><strong>Regie:</strong> ${sanitize(film.director)}</p>` : ''}
-            ${film.cast ? `<p><strong>Besetzung:</strong> ${film.cast.map(sanitize).join(', ')}</p>` : ''}
-            <p>${sanitize(film.description || '')}</p>
-            ${film.trailer_url ? `<a href="${film.trailer_url}" target="_blank" rel="noopener" class="btn btn--outline btn--sm" style="margin-top:var(--space-md);">Trailer ansehen</a>` : ''}
-            <button onclick="shareContent('${sanitize(film.title)}', 'Im Court Side Kino', window.location.href)" class="btn btn--sm btn--outline" style="margin-top:var(--space-md);margin-left:var(--space-sm);">Teilen</button>
+    <div class="film-detail reveal--visible">
+      <div class="film-detail__grid">
+        <img src="${film.poster_url || ''}" alt="Filmplakat: ${sanitize(film.title)}" class="film-detail__poster" width="240" height="360" onerror="this.style.display='none'">
+        <div class="film-detail__info">
+          <h2>${sanitize(film.title)}</h2>
+          <div class="film-detail__badges">${metaBadges}</div>
+          ${film.director ? `<p><strong>Regie:</strong> ${sanitize(film.director)}</p>` : ''}
+          ${film.cast?.length ? `<p><strong>Besetzung:</strong> ${film.cast.map(sanitize).join(', ')}</p>` : ''}
+          <p>${sanitize(film.description || '')}</p>
+          ${sourceInfo}
+          <div class="film-detail__actions">
+            ${film.trailer_url ? `<a href="${film.trailer_url}" target="_blank" rel="noopener" class="btn btn--outline btn--sm">Trailer</a>` : ''}
+            <button onclick="shareContent('${sanitize(film.title)}', 'Im Court Side Kino', window.location.href)" class="btn btn--sm btn--outline">Teilen</button>
           </div>
         </div>
-        <div>
-          <h3>Vorstellungen</h3>
-          ${screeningList || '<p>Keine Vorstellungen geplant.</p>'}
+      </div>
+
+      ${film.is_public_domain || film.video_sources?.length ? `
+        <div class="film-detail__video">
+          <h3>Film & Video</h3>
+          ${renderFilmVideoPlayer(film)}
         </div>
+      ` : ''}
+
+      <div class="film-detail__screenings">
+        <h3>Vorstellungen</h3>
+        ${screeningList || '<p>Keine Vorstellungen geplant. <a href="tickets.html">Tickets für kommende Events</a></p>'}
       </div>
     </div>
   `;

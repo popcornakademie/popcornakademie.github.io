@@ -25,9 +25,20 @@ CREATE TABLE IF NOT EXISTS films (
   language      TEXT DEFAULT 'Deutsch',
   subtitles     TEXT,
   is_featured   BOOLEAN DEFAULT FALSE,
+  release_year  INTEGER,
+  tmdb_id       INTEGER UNIQUE,
+  wikidata_id   TEXT UNIQUE,
+  source        TEXT CHECK (source IN ('tmdb', 'wikidata', 'manual')),
+  is_public_domain BOOLEAN DEFAULT FALSE,
+  video_sources JSONB DEFAULT '[]'::jsonb,
+  last_synced   TIMESTAMPTZ,
+  imdb_id       TEXT,
   created_at    TIMESTAMPTZ DEFAULT NOW(),
   updated_at    TIMESTAMPTZ DEFAULT NOW()
 );
+
+CREATE INDEX IF NOT EXISTS idx_films_tmdb_id ON films(tmdb_id) WHERE tmdb_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_films_public_domain ON films(is_public_domain) WHERE is_public_domain = TRUE;
 
 -- ============================================================
 -- SCREENINGS
@@ -188,6 +199,12 @@ ALTER TABLE seat_availability      ENABLE ROW LEVEL SECURITY;
 -- Films: public read
 CREATE POLICY "films_select_anon" ON films
   FOR SELECT TO anon, authenticated USING (true);
+
+CREATE POLICY "films_insert_anon" ON films
+  FOR INSERT TO anon, authenticated WITH CHECK (true);
+
+CREATE POLICY "films_update_anon" ON films
+  FOR UPDATE TO anon, authenticated USING (true) WITH CHECK (true);
 
 -- Screenings: public read
 CREATE POLICY "screenings_select_anon" ON screenings

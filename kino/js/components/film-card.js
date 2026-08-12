@@ -9,15 +9,27 @@ function renderFilmCard(film, screening = null) {
   const dateInfo = screening
     ? `<span>${formatDate(screening.screening_date, { weekday: 'short', day: 'numeric', month: 'short' })}</span>
        <span>${formatTime(screening.start_time)}</span>`
+    : film.release_year
+      ? `<span>${film.release_year}</span>`
+      : '';
+
+  const pdBadge = film.is_public_domain
+    ? '<span class="badge badge--tennis">Public Domain</span>'
+    : '';
+
+  const sourceBadge = film.source === 'wikidata' && !film.tmdb_id
+    ? '<span class="badge" style="background:var(--color-gray-200);">WikiFlix</span>'
     : '';
 
   return `
     <article class="film-card reveal" data-film-slug="${film.slug}">
       <a href="programm.html?film=${film.slug}" class="film-card__link" aria-label="${sanitize(film.title)} – Details ansehen">
         <div class="film-card__poster">
-          <img src="${film.poster_url || ''}" alt="Filmplakat: ${sanitize(film.title)}" loading="lazy" width="400" height="600">
+          <img src="${film.poster_url || 'assets/images/poster-placeholder.jpg'}" alt="Filmplakat: ${sanitize(film.title)}" loading="lazy" width="400" height="600" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop'">
           <div class="film-card__badges">
             <span class="badge badge--genre">${sanitize(film.genre)}</span>
+            ${pdBadge}
+            ${sourceBadge}
             ${film.rating ? `<span class="badge badge--rating">${sanitize(film.rating)}</span>` : ''}
             ${screening?.is_sold_out ? '<span class="badge badge--sold-out">Ausverkauft</span>' : ''}
           </div>
@@ -182,4 +194,53 @@ function getWeatherDesc(code) {
   if (code <= 67) return 'Regen möglich';
   if (code <= 77) return 'Schnee möglich';
   return 'Gewitter möglich';
+}
+
+/**
+ * Render video player for Public-Domain / WikiFlix sources
+ * @param {Object} film
+ * @returns {string}
+ */
+function renderFilmVideoPlayer(film) {
+  const sources = film.video_sources || [];
+  if (!sources.length) {
+    return film.trailer_url
+      ? renderYouTubeEmbed(film.trailer_url, `${film.title} – Trailer`)
+      : '<p class="text-muted">Video demnächst verfügbar</p>';
+  }
+
+  const primary = sources.find(s => s.type === 'archive')
+    || sources.find(s => s.type === 'commons')
+    || sources.find(s => s.type === 'youtube')
+    || sources[0];
+
+  if (primary.type === 'youtube') {
+    return renderYouTubeEmbed(primary.url, primary.label || 'Video');
+  }
+
+  if (primary.type === 'archive') {
+    return `
+      <div class="video-player">
+        <iframe src="${sanitize(primary.url)}" title="${sanitize(film.title)}" allowfullscreen loading="lazy" class="video-player__iframe"></iframe>
+        <p class="video-player__source">Quelle: Internet Archive · Public Domain</p>
+      </div>`;
+  }
+
+  return `
+    <div class="video-player">
+      <video controls preload="metadata" class="video-player__video" poster="${film.poster_url || ''}">
+        <source src="${sanitize(primary.url)}" type="video/mp4">
+        <a href="${sanitize(primary.url)}" target="_blank" rel="noopener">Video ansehen</a>
+      </video>
+      <p class="video-player__source">Quelle: ${sanitize(primary.label || 'Wikimedia')} · Public Domain</p>
+    </div>`;
+}
+
+function renderYouTubeEmbed(url, title) {
+  const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  if (!match) return `<a href="${sanitize(url)}" target="_blank" rel="noopener" class="btn btn--outline">Video ansehen</a>`;
+  return `
+    <div class="video-player">
+      <iframe src="https://www.youtube-nocookie.com/embed/${match[1]}" title="${sanitize(title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" class="video-player__iframe"></iframe>
+    </div>`;
 }

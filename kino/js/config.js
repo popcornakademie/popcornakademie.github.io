@@ -11,6 +11,10 @@ const CONFIG = {
   // Cloudflare Workers (set after deployment)
   EMAIL_WORKER_URL: 'https://csk-email-worker.YOUR_SUBDOMAIN.workers.dev',
   PAYMENT_WORKER_URL: 'https://csk-payment-worker.YOUR_SUBDOMAIN.workers.dev',
+  FILM_SYNC_WORKER_URL: 'https://csk-film-sync-worker.YOUR_SUBDOMAIN.workers.dev',
+
+  // TMDb (only used for direct calls; prefer FILM_SYNC_WORKER_URL in production)
+  TMDB_API_KEY: '',
 
   // Site
   SITE_NAME: 'Court Side Kino',

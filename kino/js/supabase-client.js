@@ -59,6 +59,24 @@ async function getFeaturedFilms() {
   );
 }
 
+async function getPublicDomainFilms() {
+  return dbQuery(
+    () => initSupabase()
+      .from('films')
+      .select('*')
+      .eq('is_public_domain', true)
+      .order('release_year', { ascending: true }),
+    'Fehler beim Laden der Public-Domain-Filme'
+  );
+}
+
+async function getFilmByTmdbId(tmdbId) {
+  return dbQuery(
+    () => initSupabase().from('films').select('*').eq('tmdb_id', tmdbId).maybeSingle(),
+    'Film nicht gefunden'
+  );
+}
+
 // ============================================================
 // SCREENINGS
 // ============================================================
