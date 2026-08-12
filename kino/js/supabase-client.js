@@ -11,13 +11,18 @@ let supabaseClient = null;
 function initSupabase() {
   if (supabaseClient) return supabaseClient;
 
-  if (typeof supabase === 'undefined') {
-    console.error('Supabase JS library not loaded');
+  if (typeof supabase === 'undefined' || typeof CONFIG === 'undefined') {
+    console.warn('Supabase/CONFIG not ready – using local catalog');
     return null;
   }
 
-  supabaseClient = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
-  return supabaseClient;
+  try {
+    supabaseClient = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    return supabaseClient;
+  } catch (err) {
+    console.warn('Supabase init failed:', err);
+    return null;
+  }
 }
 
 /**
@@ -25,97 +30,78 @@ function initSupabase() {
  */
 async function dbQuery(queryFn, errorMessage = 'Datenbankfehler') {
   try {
-    const { data, error } = await queryFn();
+    const client = initSupabase();
+    if (!client) throw new Error('Supabase nicht verfügbar');
+    const { data, error } = await queryFn(client);
     if (error) throw error;
     return { data, error: null };
   } catch (err) {
-    console.error(errorMessage, err);
+    console.warn(errorMessage, err.message || err);
     return { data: null, error: err.message || errorMessage };
   }
 }
 
 // ============================================================
-// FILMS
-// ============================================================
-
-async function getFilms() {
-  return dbQuery(
-    () => initSupabase().from('films').select('*').order('created_at', { ascending: false }),
-    'Fehler beim Laden der Filme'
-  );
-}
-
-async function getFilmBySlug(slug) {
-  return dbQuery(
-    () => initSupabase().from('films').select('*').eq('slug', slug).single(),
-    'Film nicht gefunden'
-  );
-}
-
-async function getFeaturedFilms() {
-  return dbQuery(
-    () => initSupabase().from('films').select('*').eq('is_featured', true).limit(3),
-    'Fehler beim Laden der Highlights'
-  );
-}
-
-async function getPublicDomainFilms() {
-  return dbQuery(
-    () => initSupabase()
-      .from('films')
-      .select('*')
-      .eq('is_public_domain', true)
-      .order('release_year', { ascending: true }),
-    'Fehler beim Laden der Public-Domain-Filme'
-  );
-}
-
-async function getFilmByTmdbId(tmdbId) {
-  return dbQuery(
-    () => initSupabase().from('films').select('*').eq('tmdb_id', tmdbId).maybeSingle(),
-    'Film nicht gefunden'
-  );
-}
-
-// ============================================================
-// SCREENINGS
+// LOCAL CATALOG (embedded + JSON fallback)
 // ============================================================
 
 let _localScreeningsCache = null;
 let _localFilmsCache = null;
 
+function todayISO() {
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Europe/Berlin',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(new Date());
+  } catch {
+    return new Date().toISOString().split('T')[0];
+  }
+}
+
 async function loadLocalFilmsCache() {
   if (_localFilmsCache) return _localFilmsCache;
+
+  if (Array.isArray(window.LOCAL_FILMS) && window.LOCAL_FILMS.length) {
+    _localFilmsCache = window.LOCAL_FILMS;
+    return _localFilmsCache;
+  }
+
   try {
     const res = await fetch('data/films-cache.json');
-    if (!res.ok) return [];
-    _localFilmsCache = await res.json();
-    return _localFilmsCache;
-  } catch {
-    return [];
-  }
+    if (res.ok) {
+      _localFilmsCache = await res.json();
+      return _localFilmsCache;
+    }
+  } catch (_) { /* ignore */ }
+
+  _localFilmsCache = [];
+  return _localFilmsCache;
 }
 
 async function loadLocalScreeningsCache() {
   if (_localScreeningsCache) return _localScreeningsCache;
-  try {
-    const res = await fetch('data/screenings-cache.json');
-    if (!res.ok) return [];
-    const screenings = await res.json();
-    const films = await loadLocalFilmsCache();
-    const byId = Object.fromEntries(films.map(f => [f.id, f]));
-    _localScreeningsCache = screenings.map(s => ({
-      ...s,
-      films: byId[s.film_id] || { id: s.film_id, title: s.film_id, slug: s.film_id },
-    }));
-    return _localScreeningsCache;
-  } catch {
-    return [];
-  }
-}
 
-function todayISO() {
-  return new Date().toISOString().split('T')[0];
+  let screenings = Array.isArray(window.LOCAL_SCREENINGS) ? window.LOCAL_SCREENINGS : null;
+
+  if (!screenings) {
+    try {
+      const res = await fetch('data/screenings-cache.json');
+      if (res.ok) screenings = await res.json();
+    } catch (_) { /* ignore */ }
+  }
+
+  if (!Array.isArray(screenings)) screenings = [];
+
+  const films = await loadLocalFilmsCache();
+  const byId = Object.fromEntries(films.map(f => [f.id, f]));
+  _localScreeningsCache = screenings.map(s => ({
+    ...s,
+    films: byId[s.film_id] || { id: s.film_id, title: s.film_id, slug: s.film_id },
+  }));
+  return _localScreeningsCache;
 }
 
 async function getLocalUpcomingScreenings() {
@@ -129,9 +115,74 @@ async function getLocalUpcomingScreenings() {
     );
 }
 
+// ============================================================
+// FILMS
+// ============================================================
+
+async function getFilms() {
+  const result = await dbQuery(
+    (db) => db.from('films').select('*').order('created_at', { ascending: false }),
+    'Fehler beim Laden der Filme'
+  );
+  if (result.data?.length) return result;
+
+  const local = await loadLocalFilmsCache();
+  return { data: local, error: local.length ? null : result.error };
+}
+
+async function getFilmBySlug(slug) {
+  const result = await dbQuery(
+    (db) => db.from('films').select('*').eq('slug', slug).single(),
+    'Film nicht gefunden'
+  );
+  if (result.data) return result;
+
+  const local = await loadLocalFilmsCache();
+  const found = local.find(f => f.slug === slug) || null;
+  return { data: found, error: found ? null : 'Film nicht gefunden' };
+}
+
+async function getFeaturedFilms() {
+  const result = await dbQuery(
+    (db) => db.from('films').select('*').eq('is_featured', true).limit(3),
+    'Fehler beim Laden der Highlights'
+  );
+  if (result.data?.length) return result;
+
+  const local = await loadLocalFilmsCache();
+  const featured = local.filter(f => f.is_featured).slice(0, 3);
+  return { data: featured.length ? featured : local.slice(0, 3), error: null };
+}
+
+async function getPublicDomainFilms() {
+  const result = await dbQuery(
+    (db) => db
+      .from('films')
+      .select('*')
+      .eq('is_public_domain', true)
+      .order('release_year', { ascending: true }),
+    'Fehler beim Laden der Public-Domain-Filme'
+  );
+  if (result.data?.length) return result;
+
+  const local = await loadLocalFilmsCache();
+  return { data: local.filter(f => f.is_public_domain), error: null };
+}
+
+async function getFilmByTmdbId(tmdbId) {
+  return dbQuery(
+    (db) => db.from('films').select('*').eq('tmdb_id', tmdbId).maybeSingle(),
+    'Film nicht gefunden'
+  );
+}
+
+// ============================================================
+// SCREENINGS
+// ============================================================
+
 async function getScreenings() {
   const result = await dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('screenings')
       .select('*, films(*)')
       .gte('screening_date', todayISO())
@@ -143,15 +194,15 @@ async function getScreenings() {
 
   const local = await getLocalUpcomingScreenings();
   if (local.length) {
-    console.info(`Showing ${local.length} screenings from local cache`);
+    console.info(`Showing ${local.length} screenings from local catalog`);
     return { data: local, error: null };
   }
-  return result;
+  return { data: [], error: result.error };
 }
 
 async function getScreeningById(id) {
   const result = await dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('screenings')
       .select('*, films(*)')
       .eq('id', id)
@@ -167,7 +218,7 @@ async function getScreeningById(id) {
 
 async function getNextScreening() {
   const result = await dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('screenings')
       .select('*, films(*)')
       .gte('screening_date', todayISO())
@@ -175,7 +226,7 @@ async function getNextScreening() {
       .order('screening_date', { ascending: true })
       .order('start_time', { ascending: true })
       .limit(1)
-      .single(),
+      .maybeSingle(),
     'Keine kommende Vorstellung'
   );
   if (result.data) return result;
@@ -187,7 +238,7 @@ async function getNextScreening() {
 
 async function getScreeningsByFilm(filmId) {
   const result = await dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('screenings')
       .select('*')
       .eq('film_id', filmId)
@@ -198,7 +249,7 @@ async function getScreeningsByFilm(filmId) {
   if (result.data?.length) return result;
 
   const local = await getLocalUpcomingScreenings();
-  const filtered = local.filter(s => s.film_id === filmId || s.films?.slug === filmId);
+  const filtered = local.filter(s => s.film_id === filmId || s.films?.slug === filmId || s.films?.id === filmId);
   return { data: filtered, error: null };
 }
 
@@ -215,7 +266,7 @@ async function createTicket(ticketData) {
   });
 
   return dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('tickets')
       .insert({
         ...ticketData,
@@ -231,7 +282,7 @@ async function createTicket(ticketData) {
 
 async function getTicketByReference(reference) {
   return dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('tickets')
       .select('*, screenings(*, films(*))')
       .eq('booking_reference', reference)
@@ -242,7 +293,7 @@ async function getTicketByReference(reference) {
 
 async function updateTicketPayment(ticketId, paymentData) {
   return dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('tickets')
       .update(paymentData)
       .eq('id', ticketId)
@@ -257,19 +308,37 @@ async function updateTicketPayment(ticketId, paymentData) {
 // ============================================================
 
 async function getSeatAvailability(screeningId) {
-  return dbQuery(
-    () => initSupabase()
+  const result = await dbQuery(
+    (db) => db
       .from('seat_availability')
       .select('*')
       .eq('screening_id', screeningId)
       .order('seat_number', { ascending: true }),
     'Fehler beim Laden der Sitzplätze'
   );
+  if (result.data?.length) return result;
+
+  // Local fallback: all seats available for catalog screenings
+  const screening = (await loadLocalScreeningsCache()).find(s => s.id === screeningId);
+  const total = screening?.total_seats || CONFIG.SEAT_ROWS * CONFIG.SEATS_PER_ROW || 80;
+  const seats = Array.from({ length: total }, (_, i) => ({
+    screening_id: screeningId,
+    seat_number: i + 1,
+    is_available: true,
+    ticket_id: null,
+  }));
+  return { data: seats, error: null };
 }
 
 async function reserveSeats(screeningId, seatNumbers, ticketId) {
+  const client = initSupabase();
+  if (!client) {
+    // Local mode: no persistent seat lock
+    return { data: true, error: null };
+  }
+
   const updates = seatNumbers.map(num =>
-    initSupabase()
+    client
       .from('seat_availability')
       .update({ is_available: false, ticket_id: ticketId })
       .eq('screening_id', screeningId)
@@ -291,17 +360,15 @@ async function reserveSeats(screeningId, seatNumbers, ticketId) {
 // ============================================================
 
 async function getMenuItems(category = null) {
-  let query = initSupabase()
-    .from('menu_items')
-    .select('*')
-    .eq('is_available', true)
-    .order('sort_order', { ascending: true });
-
-  if (category) {
-    query = query.eq('category', category);
-  }
-
-  return dbQuery(() => query, 'Fehler beim Laden der Speisekarte');
+  return dbQuery((db) => {
+    let query = db
+      .from('menu_items')
+      .select('*')
+      .eq('is_available', true)
+      .order('sort_order', { ascending: true });
+    if (category) query = query.eq('category', category);
+    return query;
+  }, 'Fehler beim Laden der Speisekarte');
 }
 
 // ============================================================
@@ -310,11 +377,7 @@ async function getMenuItems(category = null) {
 
 async function createReservation(reservationData) {
   return dbQuery(
-    () => initSupabase()
-      .from('reservations')
-      .insert(reservationData)
-      .select()
-      .single(),
+    (db) => db.from('reservations').insert(reservationData).select().single(),
     'Fehler bei der Reservierung'
   );
 }
@@ -327,7 +390,7 @@ async function subscribeNewsletter(email) {
   const token = crypto.randomUUID();
 
   return dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('newsletter_subscribers')
       .insert({
         email,
@@ -342,7 +405,7 @@ async function subscribeNewsletter(email) {
 
 async function checkNewsletterEmail(email) {
   return dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('newsletter_subscribers')
       .select('id, status')
       .eq('email', email)

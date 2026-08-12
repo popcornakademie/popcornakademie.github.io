@@ -36,11 +36,12 @@ async function loadScreenings() {
   }
 
   container.innerHTML = screenings.map(s => {
-    const film = s.films;
+    const film = s.films || {};
+    const title = film.title || 'Film';
     return `
-      <div class="film-card reveal" style="cursor:pointer;" data-screening-id="${s.id}" role="button" tabindex="0" aria-label="Vorstellung wählen: ${sanitize(film.title)}">
+      <div class="film-card reveal" style="cursor:pointer;" data-screening-id="${s.id}" role="button" tabindex="0" aria-label="Vorstellung wählen: ${sanitize(title)}">
         <div class="film-card__body">
-          <h3 class="film-card__title">${sanitize(film.title)}</h3>
+          <h3 class="film-card__title">${sanitize(title)}</h3>
           <div class="film-card__meta">
             <span>${formatDate(s.screening_date, { weekday: 'short', day: 'numeric', month: 'short' })}</span>
             <span>${formatTime(s.start_time)}</span>

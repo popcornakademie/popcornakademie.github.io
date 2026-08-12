@@ -42,7 +42,7 @@ async function getFilmFromCache(identifier) {
   // Try tmdb_id
   if (/^\d+$/.test(String(identifier))) {
     result = await dbQuery(
-      () => initSupabase().from('films').select('*').eq('tmdb_id', parseInt(identifier, 10)).maybeSingle(),
+      (db) => db.from('films').select('*').eq('tmdb_id', parseInt(identifier, 10)).maybeSingle(),
       'Film nicht im Cache'
     );
     if (result.data) return result;
@@ -51,7 +51,7 @@ async function getFilmFromCache(identifier) {
   // Try wikidata_id
   const qid = String(identifier).startsWith('Q') ? identifier : `Q${identifier}`;
   return dbQuery(
-    () => initSupabase().from('films').select('*').eq('wikidata_id', qid).maybeSingle(),
+    (db) => db.from('films').select('*').eq('wikidata_id', qid).maybeSingle(),
     'Film nicht im Cache'
   );
 }
@@ -61,14 +61,7 @@ async function getFilmFromCache(identifier) {
  * @returns {Promise<{data: Object[]|null, error: string|null}>}
  */
 async function getPublicDomainFilmsFromCache() {
-  return dbQuery(
-    () => initSupabase()
-      .from('films')
-      .select('*')
-      .eq('is_public_domain', true)
-      .order('release_year', { ascending: true }),
-    'Fehler beim Laden der Public-Domain-Filme'
-  );
+  return getPublicDomainFilms();
 }
 
 /**
@@ -85,7 +78,7 @@ async function saveFilmToCache(filmData) {
 
   // Try upsert by slug
   return dbQuery(
-    () => initSupabase()
+    (db) => db
       .from('films')
       .upsert(filmData, { onConflict: 'slug' })
       .select()
@@ -129,6 +122,10 @@ function mapLocalFilmMeta(meta, index = 0) {
  * @returns {Promise<Object[]>}
  */
 async function loadFilmsFromLocalJson() {
+  if (Array.isArray(window.LOCAL_FILMS) && window.LOCAL_FILMS.length) {
+    return window.LOCAL_FILMS;
+  }
+
   try {
     const cacheRes = await fetch('data/films-cache.json');
     if (cacheRes.ok) {
