@@ -112,10 +112,10 @@ function renderCart(container) {
     return;
   }
 
-  const priceKey = `price_${data.ticketType}`;
-  const unitPrice = data.screening[priceKey] || data.screening.price_adult;
+  const unitPrice = getTicketUnitPrice(data.screening);
   const total = unitPrice * data.seats.length;
   const filmTitle = data.screening.films?.title || 'Film';
+  const includes = (typeof CONFIG !== 'undefined' && CONFIG.TICKET_INCLUDES) || 'inkl. einer Tüte Popcorn';
 
   container.innerHTML = `
     <h3 class="cart__title">Warenkorb</h3>
@@ -123,8 +123,11 @@ function renderCart(container) {
       <span>${sanitize(filmTitle)}</span>
     </div>
     <div class="cart__item">
-      <span>${data.seats.length}x ${data.ticketType === 'child' ? 'Kind' : data.ticketType === 'student' ? 'Student' : 'Erwachsener'}</span>
+      <span>${data.seats.length}× Ticket</span>
       <span>${formatPrice(unitPrice)}</span>
+    </div>
+    <div class="cart__item cart__item--note">
+      <span>${sanitize(includes)}</span>
     </div>
     <div class="cart__item">
       <span>Plätze: ${data.seats.join(', ')}</span>

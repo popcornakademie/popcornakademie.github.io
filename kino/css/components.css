@@ -2,6 +2,22 @@
    Court Side Kino – Component Styles
    ============================================================ */
 
+.ticket-price-note {
+  margin: 0 0 var(--space-xl);
+  font-size: var(--font-size-base);
+  color: var(--color-gray-600);
+}
+
+.ticket-price-note strong {
+  color: var(--color-accent);
+  font-size: var(--font-size-lg);
+}
+
+.cart__item--note {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
 /* --- Screening picker (tickets step 1) --- */
 .screening-pick {
   display: flex;

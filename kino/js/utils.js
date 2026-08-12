@@ -3,6 +3,16 @@
  */
 
 /**
+ * Flat ticket price per person (CONFIG.TICKET_PRICE)
+ */
+function getTicketUnitPrice(screening) {
+  if (typeof CONFIG !== 'undefined' && CONFIG.TICKET_PRICE != null) {
+    return Number(CONFIG.TICKET_PRICE);
+  }
+  return Number(screening?.price_adult) || 10;
+}
+
+/**
  * Format price in EUR
  */
 function formatPrice(amount) {
@@ -149,7 +159,7 @@ const cart = {
   KEY: 'csk_cart',
 
   get() {
-    return storage.get(this.KEY, { screening: null, seats: [], ticketType: 'adult', customer: {} });
+    return storage.get(this.KEY, { screening: null, seats: [], ticketType: 'standard', customer: {} });
   },
 
   set(data) {
@@ -196,9 +206,7 @@ const cart = {
   getTotal() {
     const data = this.get();
     if (!data.screening || data.seats.length === 0) return 0;
-    const priceKey = `price_${data.ticketType}`;
-    const price = data.screening[priceKey] || data.screening.price_adult;
-    return price * data.seats.length;
+    return getTicketUnitPrice(data.screening) * data.seats.length;
   },
 };
 

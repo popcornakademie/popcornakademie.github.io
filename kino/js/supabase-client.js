@@ -349,7 +349,7 @@ async function getSeatAvailability(screeningId) {
 
   // Local fallback: all seats available for catalog screenings
   const screening = (await loadLocalScreeningsCache()).find(s => s.id === screeningId);
-  const total = screening?.total_seats || CONFIG.SEAT_ROWS * CONFIG.SEATS_PER_ROW || 80;
+  const total = screening?.total_seats || CONFIG.SEAT_ROWS * CONFIG.SEATS_PER_ROW || 48;
   const seats = Array.from({ length: total }, (_, i) => ({
     screening_id: screeningId,
     seat_number: i + 1,

@@ -17,11 +17,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('btn-back-2')?.addEventListener('click', () => goToStep(2));
   document.getElementById('btn-next-2')?.addEventListener('click', () => goToStep(3));
 
-  document.getElementById('ticket-type')?.addEventListener('change', (e) => {
-    cart.setTicketType(e.target.value);
-    renderCart(document.getElementById('cart-container'));
-  });
-
   document.getElementById('customer-form')?.addEventListener('submit', handleCheckout);
 });
 
@@ -42,7 +37,7 @@ function renderScreeningPicker(container, screenings) {
             · ${formatTime(s.start_time)}
           </p>
           <div class="screening-pick__footer">
-            <span class="screening-pick__price">ab ${formatPrice(s.price_adult)}</span>
+            <span class="screening-pick__price">${formatPrice(getTicketUnitPrice(s))}</span>
             ${s.is_sold_out
               ? '<span class="badge badge--sold-out">Ausverkauft</span>'
               : `<span class="badge badge--tennis">${s.available_seats} Plätze frei</span>`
@@ -155,8 +150,7 @@ async function handleCheckout(e) {
   goToStep(4);
   setPageLoading(true, 'Buchung wird erstellt...');
 
-  const priceKey = `price_${data.ticketType}`;
-  const unitPrice = data.screening[priceKey] || data.screening.price_adult;
+  const unitPrice = getTicketUnitPrice(data.screening);
 
   // Create ticket in database
   const { data: ticket, error } = await createTicket({
@@ -164,7 +158,7 @@ async function handleCheckout(e) {
     customer_name: customer.name,
     customer_email: customer.email,
     customer_phone: customer.phone,
-    ticket_type: data.ticketType,
+    ticket_type: 'standard',
     seat_numbers: data.seats,
     quantity: data.seats.length,
     total_amount: unitPrice * data.seats.length,

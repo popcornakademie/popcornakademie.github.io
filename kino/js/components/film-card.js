@@ -3,8 +3,8 @@
  */
 function renderFilmCard(film, screening = null) {
   const price = screening
-    ? formatPrice(screening.price_adult)
-    : 'ab 12,00 €';
+    ? formatPrice(getTicketUnitPrice(screening))
+    : formatPrice(typeof CONFIG !== 'undefined' ? CONFIG.TICKET_PRICE : 10);
 
   const dateInfo = screening
     ? `<span>${formatDate(screening.screening_date, { weekday: 'short', day: 'numeric', month: 'short' })}</span>
