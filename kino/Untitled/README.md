@@ -22,9 +22,7 @@ Open-Air Kino am Tennisplatz des Sportcenters Hahn in Wolfratshausen – by Popc
 ├── index.html                  # Homepage
 ├── programm.html               # Film program & calendar
 ├── tickets.html                # Ticket booking with seat plan
-├── imbiss.html                 # Food menu
-├── suesses.html                # Popcorn & sweets
-├── biergarten.html             # Drinks & reservations
+├── biergarten.html             # Imbiss: popcorn, food, drinks & reservations
 ├── ueber-uns.html              # About us
 ├── kontakt.html                # Contact, FAQ, map
 ├── buchung-erfolgreich.html    # Booking confirmation
@@ -33,11 +31,16 @@ Open-Air Kino am Tennisplatz des Sportcenters Hahn in Wolfratshausen – by Popc
 │   ├── global.css              # Variables, reset, typography
 │   ├── layout.css              # Header, footer, hero, grid
 │   ├── components.css          # Cards, forms, seat plan
-│   └── animations.css          # Keyframes, scroll reveal
+│   ├── animations.css          # Keyframes, scroll reveal
+│   └── popcorn-theme.css       # Popcorn Akademie visual theme
 ├── js/
 │   ├── config.js               # Site configuration
 │   ├── supabase-client.js      # Database operations
 │   ├── utils.js                # Helpers, cart, toast
+│   ├── popcorn.js              # Floating popcorn animations
+│   ├── animations.js           # Scroll reveal, FAQ
+│   └── pages/
+│       └── menu.js             # Imbiss menu + reservation
 │   ├── animations.js           # Scroll & parallax
 │   ├── app.js                  # App initialization
 │   ├── components/             # Reusable UI components
