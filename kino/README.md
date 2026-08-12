@@ -22,9 +22,7 @@ Open-Air Kino am Tennisplatz des Sportcenters Hahn in Wolfratshausen – by Popc
 ├── index.html                  # Homepage
 ├── programm.html               # Film program & calendar
 ├── tickets.html                # Ticket booking with seat plan
-├── imbiss.html                 # Food menu
-├── suesses.html                # Popcorn & sweets
-├── biergarten.html             # Drinks & reservations
+├── biergarten.html             # Imbiss: popcorn, food, drinks & reservations
 ├── ueber-uns.html              # About us
 ├── kontakt.html                # Contact, FAQ, map
 ├── buchung-erfolgreich.html    # Booking confirmation
@@ -33,11 +31,16 @@ Open-Air Kino am Tennisplatz des Sportcenters Hahn in Wolfratshausen – by Popc
 │   ├── global.css              # Variables, reset, typography
 │   ├── layout.css              # Header, footer, hero, grid
 │   ├── components.css          # Cards, forms, seat plan
-│   └── animations.css          # Keyframes, scroll reveal
+│   ├── animations.css          # Keyframes, scroll reveal
+│   └── popcorn-theme.css       # Popcorn Akademie visual theme
 ├── js/
 │   ├── config.js               # Site configuration
 │   ├── supabase-client.js      # Database operations
 │   ├── utils.js                # Helpers, cart, toast
+│   ├── popcorn.js              # Floating popcorn animations
+│   ├── animations.js           # Scroll reveal, FAQ
+│   └── pages/
+│       └── menu.js             # Imbiss menu + reservation
 │   ├── animations.js           # Scroll & parallax
 │   ├── app.js                  # App initialization
 │   ├── components/             # Reusable UI components
@@ -162,28 +165,34 @@ Wikidata (fallback) ↗                      ↑ 7-Tage Cache
 
 ### Setup
 
-1. **Migration ausführen:** `supabase/migration-films-api.sql` im SQL Editor
-2. **TMDb API-Key** bei [developer.themoviedb.org](https://developer.themoviedb.org) erstellen
-3. **Film-Sync Worker deployen:**
+1. **Migration ausführen:** `supabase/schema.sql` + `supabase/migration-films-api.sql` im Supabase SQL Editor
+2. **TMDb API-Key** in `js/config.js` (oder Worker-Secret)
+3. **Lokaler Sync (ohne Cloudflare):**
+   ```bash
+   node scripts/sync-films.mjs
+   ```
+   Schreibt auch `data/films-cache.json`, falls die Tabelle noch fehlt.
+4. **Film-Sync Worker deployen (optional):**
    ```bash
    cd workers/film-sync-worker
-   wrangler secret put TMDB_API_KEY
-   wrangler secret put SUPABASE_SERVICE_ROLE_KEY
-   wrangler deploy
+   npx wrangler login
+   npx wrangler secret put TMDB_API_KEY
+   npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+   npx wrangler deploy
    ```
-4. **Worker-URL** in `js/config.js` → `FILM_SYNC_WORKER_URL`
-5. **Filme synchronisieren:** `admin-sync.html` öffnen → „Alle 10 Filme synchronisieren“
+5. **Worker-URL** in `js/config.js` → `FILM_SYNC_WORKER_URL`
 6. **Screenings seeden:** `supabase/seed-public-domain.sql` ausführen
 
 ### Public-Domain-Filme (10)
 
 Nosferatu (1922), Metropolis (1927), Das Cabinet des Dr. Caligari (1920), Die Nacht der lebenden Toten (1968), Battleship Potemkin (1925), Der Mann mit der Kamera (1929), Steamboat Willie (1928), The Great Train Robbery (1903), Sunrise (1927), Freaks (1932)
 
-Konfiguration: `data/public-domain-films.json`
+Konfiguration: `data/public-domain-films.json` · Cache: `data/films-cache.json`
 
 ### Cache-Verhalten
 
 - Frontend lädt Filme aus Supabase (`loadFilmsWithCache()`)
+- Fallback: `data/films-cache.json` (volle TMDb-Daten), dann `public-domain-films.json`
 - TTL: 7 Tage (`last_synced` Feld)
 - Bei stale Cache: automatischer Background-Sync via Worker
 - Manueller Sync: `admin-sync.html`

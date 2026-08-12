@@ -95,7 +95,65 @@ async function saveFilmToCache(filmData) {
 }
 
 /**
- * Load films – Supabase first, trigger sync if stale/empty
+ * Map local JSON seed entries to displayable film records
+ * @param {Object} meta
+ * @param {number} index
+ */
+function mapLocalFilmMeta(meta, index = 0) {
+  return {
+    id: meta.slug || `local-${index}`,
+    slug: meta.slug,
+    title: meta.title,
+    release_year: meta.year,
+    director: meta.director || null,
+    wikidata_id: meta.wikidataId || null,
+    is_public_domain: true,
+    is_featured: index < 3,
+    genre: 'Klassiker',
+    description: meta.alternativeTitles?.length
+      ? `Auch bekannt als: ${meta.alternativeTitles.slice(0, 2).join(', ')}`
+      : (meta.director
+        ? `Public-Domain-Klassiker von ${meta.director} (${meta.year}).`
+        : `Public-Domain-Film (${meta.year}).`),
+    duration_min: null,
+    poster_url: '',
+    rating: null,
+    source: 'local',
+    last_synced: null,
+  };
+}
+
+/**
+ * Load films from local cache JSON (offline / empty DB fallback)
+ * Prefers data/films-cache.json (full TMDb records), then public-domain-films.json
+ * @returns {Promise<Object[]>}
+ */
+async function loadFilmsFromLocalJson() {
+  try {
+    const cacheRes = await fetch('data/films-cache.json');
+    if (cacheRes.ok) {
+      const cached = await cacheRes.json();
+      if (Array.isArray(cached) && cached.length) return cached;
+    }
+  } catch (err) {
+    console.warn('films-cache.json not available:', err.message);
+  }
+
+  try {
+    const list = typeof loadPublicDomainFilmList === 'function'
+      ? await loadPublicDomainFilmList()
+      : await (await fetch('data/public-domain-films.json')).json();
+
+    if (!Array.isArray(list) || !list.length) return [];
+    return list.map(mapLocalFilmMeta);
+  } catch (err) {
+    console.warn('Local film JSON fallback failed:', err);
+    return [];
+  }
+}
+
+/**
+ * Load films – Supabase first, local JSON fallback, optional background sync
  * @param {Object} [options]
  * @param {boolean} [options.forceSync=false]
  * @returns {Promise<Object[]>}
@@ -108,19 +166,37 @@ async function loadFilmsWithCache(options = {}) {
     console.warn('Supabase film load failed:', error);
   }
 
-  const needsSync = forceSync || isCatalogCacheStale(films || []);
+  const cached = films || [];
+  const needsSync = forceSync || isCatalogCacheStale(cached);
 
+  // Prefer live Supabase data when available
+  if (cached.length && !forceSync) {
+    if (needsSync && typeof syncFilmsFromAPIs === 'function') {
+      syncFilmsFromAPIs({ silent: true }).catch(err => {
+        console.warn('Background sync failed:', err);
+      });
+    }
+    return cached;
+  }
+
+  // Empty DB or forced sync: try API sync, then fall back to local JSON
   if (needsSync && typeof syncFilmsFromAPIs === 'function') {
     try {
       await syncFilmsFromAPIs({ silent: true });
       const refreshed = await getFilms();
-      return refreshed.data || [];
+      if (refreshed.data?.length) return refreshed.data;
     } catch (err) {
-      console.warn('Background sync failed, using cached data:', err);
+      console.warn('Background sync failed, using local JSON fallback:', err);
     }
   }
 
-  return films || [];
+  if (cached.length) return cached;
+
+  const local = await loadFilmsFromLocalJson();
+  if (local.length) {
+    console.info(`Showing ${local.length} films from local JSON (Supabase empty or unreachable).`);
+  }
+  return local;
 }
 
 /**
@@ -143,6 +219,8 @@ if (typeof window !== 'undefined') {
     getFilmFromCache,
     getPublicDomainFilmsFromCache,
     saveFilmToCache,
+    loadFilmsFromLocalJson,
+    mapLocalFilmMeta,
     loadFilmsWithCache,
     getCacheAgeLabel,
   };

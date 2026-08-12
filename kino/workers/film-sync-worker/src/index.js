@@ -39,27 +39,32 @@ const delay = ms => new Promise(r => setTimeout(r, ms));
 // TMDb
 // ============================================================
 
-async function tmdbFetch(path, params, apiKey) {
-  const qs = new URLSearchParams({ ...params, api_key: apiKey, language: 'de-DE' });
-  const res = await fetch(`${TMDB_BASE}${path}?${qs}`);
+async function tmdbFetch(path, params, apiKey, accessToken) {
+  const qs = new URLSearchParams({ ...params, language: 'de-DE' });
+  if (apiKey) qs.set('api_key', apiKey);
+
+  const headers = { Accept: 'application/json' };
+  if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
+
+  const res = await fetch(`${TMDB_BASE}${path}?${qs}`, { headers });
   if (res.status === 429) {
     await delay(10000);
-    return tmdbFetch(path, params, apiKey);
+    return tmdbFetch(path, params, apiKey, accessToken);
   }
   if (!res.ok) throw new Error(`TMDb ${res.status}: ${await res.text()}`);
   return res.json();
 }
 
-async function searchTMDb(title, year, apiKey) {
-  const data = await tmdbFetch('/search/movie', { query: title, year: String(year) }, apiKey);
+async function searchTMDb(title, year, env) {
+  const data = await tmdbFetch('/search/movie', { query: title, year: String(year) }, env.TMDB_API_KEY, env.TMDB_ACCESS_TOKEN);
   const results = data.results || [];
   if (!results.length) return null;
   const match = results.find(r => r.release_date?.startsWith(String(year)));
   return match || results[0];
 }
 
-async function getTMDbDetails(id, apiKey) {
-  return tmdbFetch(`/movie/${id}`, { append_to_response: 'credits,videos,images' }, apiKey);
+async function getTMDbDetails(id, env) {
+  return tmdbFetch(`/movie/${id}`, { append_to_response: 'credits,videos,images' }, env.TMDB_API_KEY, env.TMDB_ACCESS_TOKEN);
 }
 
 function mapTMDb(details, meta) {
@@ -198,10 +203,10 @@ async function syncFilm(meta, env) {
   let source = 'none';
 
   try {
-    const hit = await searchTMDb(meta.tmdbSearchTitle, meta.year, env.TMDB_API_KEY);
+    const hit = await searchTMDb(meta.tmdbSearchTitle, meta.year, env);
     if (hit?.id) {
       await delay(SYNC_DELAY);
-      const details = await getTMDbDetails(hit.id, env.TMDB_API_KEY);
+      const details = await getTMDbDetails(hit.id, env);
       film = mapTMDb(details, meta);
       source = 'tmdb';
     }
@@ -255,11 +260,14 @@ async function proxyTMDb(url, env) {
   for (const [k, v] of url.searchParams) {
     if (k !== 'path') params[k] = v;
   }
-  params.api_key = env.TMDB_API_KEY;
+  if (env.TMDB_API_KEY) params.api_key = env.TMDB_API_KEY;
   params.language = 'de-DE';
 
+  const headers = { Accept: 'application/json' };
+  if (env.TMDB_ACCESS_TOKEN) headers.Authorization = `Bearer ${env.TMDB_ACCESS_TOKEN}`;
+
   const qs = new URLSearchParams(params);
-  const res = await fetch(`${TMDB_BASE}${path}?${qs}`);
+  const res = await fetch(`${TMDB_BASE}${path}?${qs}`, { headers });
   const data = await res.json();
   return json(data, res.status);
 }
@@ -282,8 +290,8 @@ export default {
 
       // Sync all
       if (url.pathname === '/sync' && request.method === 'POST') {
-        if (!env.TMDB_API_KEY || !env.SUPABASE_SERVICE_ROLE_KEY) {
-          return json({ error: 'Worker not configured' }, 500);
+        if ((!env.TMDB_API_KEY && !env.TMDB_ACCESS_TOKEN) || !env.SUPABASE_SERVICE_ROLE_KEY) {
+          return json({ error: 'Worker not configured (need TMDB key + SUPABASE_SERVICE_ROLE_KEY)' }, 500);
         }
         const data = await syncAll(env);
         return json(data);

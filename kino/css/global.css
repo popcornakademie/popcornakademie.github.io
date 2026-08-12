@@ -164,10 +164,11 @@ select {
 
 /* --- Typography --- */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   color: var(--color-primary);
   line-height: 1.2;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 h1 { font-size: var(--font-size-3xl); }

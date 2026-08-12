@@ -5,18 +5,19 @@
   <meta name="description" content="Kontakt, Anfahrt und FAQ – Court Side Kino in Wolfratshausen.">
   <title>Kontakt – Court Side Kino</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/popcorn-theme.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Zum Inhalt springen</a>
   <header class="header" role="banner"><div class="header__inner">
-    <a href="index.html" class="header__logo"><span class="header__logo-icon" aria-hidden="true">🎾</span><span>Court Side Kino<span class="header__logo-sub">by Popcornakademie</span></span></a>
+    <a href="index.html" class="header__logo"><span class="header__logo-icon" aria-hidden="true"><svg viewBox="0 0 100 100"><g fill="#FFF4E0"><circle cx="50" cy="27" r="13"/><circle cx="33" cy="35" r="11"/><circle cx="67" cy="35" r="11"/></g><path d="M19 53 h62 l-8 38 h-46 z" fill="#E5423C"/><rect x="15" y="46" width="70" height="11" rx="5.5" fill="#FFC24B"/></svg></span><span>Court Side Kino<span class="header__logo-sub">by Popcornakademie</span></span></a>
     <div class="header__actions"><button class="theme-toggle" aria-label="Dunkelmodus aktivieren" type="button"></button><button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Menü öffnen" type="button"><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span></button></div>
     <nav id="main-nav" class="nav" role="navigation" aria-label="Hauptnavigation"><ul class="nav__list">
       <li><a href="index.html" class="nav__link">Start</a></li><li><a href="programm.html" class="nav__link">Programm</a></li><li><a href="tickets.html" class="nav__link">Tickets</a></li>
-      <li><a href="imbiss.html" class="nav__link">Imbiss</a></li><li><a href="suesses.html" class="nav__link">Süßes</a></li><li><a href="biergarten.html" class="nav__link">Biergarten</a></li>
+      <li><a href="biergarten.html" class="nav__link">Biergarten</a></li>
       <li><a href="ueber-uns.html" class="nav__link">Über uns</a></li><li><a href="kontakt.html" class="nav__link nav__link--active" aria-current="page">Kontakt</a></li><li><a href="tickets.html" class="nav__link nav__link--cta">Tickets kaufen</a></li>
     </ul></nav>
   </div></header>
@@ -79,6 +80,7 @@
   </main>
   <footer class="footer" role="contentinfo"><div class="container"><div class="footer__bottom" style="border:none;padding:0;"><span>&copy; 2026 Court Side Kino · Popcornakademie</span></div></div></footer>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
-  <script src="js/config.js" defer></script><script src="js/utils.js" defer></script><script src="js/components/navbar.js" defer></script><script src="js/animations.js" defer></script><script src="js/app.js" defer></script>
+  <script src="js/config.js" defer></script><script src="js/utils.js" defer></script><script src="js/components/navbar.js" defer></script><script src="js/animations.js" defer></script>
+  <script src="js/popcorn.js" defer></script><script src="js/app.js" defer></script>
   <script src="js/pages/kontakt.js" defer></script>
 </body></html>

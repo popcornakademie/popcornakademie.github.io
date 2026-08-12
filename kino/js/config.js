@@ -14,7 +14,8 @@ const CONFIG = {
   FILM_SYNC_WORKER_URL: 'https://csk-film-sync-worker.YOUR_SUBDOMAIN.workers.dev',
 
   // TMDb (only used for direct calls; prefer FILM_SYNC_WORKER_URL in production)
-  TMDB_API_KEY: '',
+  TMDB_API_KEY: '571b549f304aa24f708509fcd8573094',
+  TMDB_ACCESS_TOKEN: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NzFiNTQ5ZjMwNGFhMjRmNzA4NTA5ZmNkODU3MzA5NCIsIm5iZiI6MTc4NjUzMDI5Mi40LCJzdWIiOiI2YTdjNDlmNGMwMzM5NmNhZDNhNTVjNTQiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.ycFvp9DEefNXU71BZN3SgvXPYLjmMu_R0CMMpru1hLU',
 
   // Site
   SITE_NAME: 'Court Side Kino',

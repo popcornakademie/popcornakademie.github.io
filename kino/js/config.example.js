@@ -9,6 +9,7 @@ const CONFIG = {
   PAYMENT_WORKER_URL: 'https://csk-payment-worker.YOUR_SUBDOMAIN.workers.dev',
   FILM_SYNC_WORKER_URL: 'https://csk-film-sync-worker.YOUR_SUBDOMAIN.workers.dev',
   TMDB_API_KEY: '',
+  TMDB_ACCESS_TOKEN: '',
   SITE_NAME: 'Court Side Kino',
   SITE_TAGLINE: 'Open-Air Kino am Tennisplatz',
   SITE_URL: 'https://popcornakademie.github.io/kino',

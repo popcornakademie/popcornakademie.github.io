@@ -39,8 +39,6 @@ function getHeaderHTML(activePage = '') {
     { href: 'index.html', label: 'Start' },
     { href: 'programm.html', label: 'Programm' },
     { href: 'tickets.html', label: 'Tickets' },
-    { href: 'imbiss.html', label: 'Imbiss' },
-    { href: 'suesses.html', label: 'Süßes' },
     { href: 'biergarten.html', label: 'Biergarten' },
     { href: 'ueber-uns.html', label: 'Über uns' },
     { href: 'kontakt.html', label: 'Kontakt' },
@@ -56,7 +54,7 @@ function getHeaderHTML(activePage = '') {
     <header class="header" role="banner">
       <div class="header__inner">
         <a href="index.html" class="header__logo" aria-label="Court Side Kino – Startseite">
-          <span class="header__logo-icon" aria-hidden="true">🎾</span>
+          <span class="header__logo-icon" aria-hidden="true"><svg viewBox="0 0 100 100"><g fill="#FFF4E0"><circle cx="50" cy="27" r="13"/><circle cx="33" cy="35" r="11"/><circle cx="67" cy="35" r="11"/></g><path d="M19 53 h62 l-8 38 h-46 z" fill="#E5423C"/><rect x="15" y="46" width="70" height="11" rx="5.5" fill="#FFC24B"/></svg></span>
           <span>
             Court Side Kino
             <span class="header__logo-sub">by Popcornakademie</span>
@@ -104,7 +102,6 @@ function getFooterHTML() {
             <h3 class="footer__heading">Programm</h3>
             <a href="programm.html" class="footer__link">Aktuelles Programm</a>
             <a href="tickets.html" class="footer__link">Tickets kaufen</a>
-            <a href="imbiss.html" class="footer__link">Imbiss</a>
             <a href="biergarten.html" class="footer__link">Biergarten</a>
           </div>
           <div>
@@ -152,7 +149,7 @@ function getHeadLinks(pageTitle = '') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Court Side Kino – Open-Air Kino am Tennisplatz in Wolfratshausen. Filmabende unter freiem Himmel by Popcornakademie @ Sportcenter Hahn.">
-    <meta name="theme-color" content="#1a2a4a">
+    <meta name="theme-color" content="#1e1233">
     <meta property="og:title" content="${pageTitle || 'Court Side Kino'}">
     <meta property="og:description" content="Open-Air Kino am Tennisplatz in Wolfratshausen – Filmgenuss mit Biergarten-Feeling">
     <meta property="og:type" content="website">
@@ -161,11 +158,12 @@ function getHeadLinks(pageTitle = '') {
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/popcorn-theme.css">
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
     <title>${pageTitle ? pageTitle + ' – ' : ''}Court Side Kino</title>
   `;
@@ -181,6 +179,7 @@ function getScripts(pageScript = '') {
     <script src="js/components/film-card.js" defer></script>
     <script src="js/components/seat-plan.js" defer></script>
     <script src="js/animations.js" defer></script>
+    <script src="js/popcorn.js" defer></script>
     <script src="js/app.js" defer></script>
     ${pageScript ? `<script src="js/pages/${pageScript}" defer></script>` : ''}
   `;

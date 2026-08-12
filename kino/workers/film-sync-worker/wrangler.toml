@@ -3,11 +3,12 @@ main = "src/index.js"
 compatibility_date = "2024-01-01"
 
 # Secrets (set via wrangler secret put):
-# TMDB_API_KEY
-# SUPABASE_SERVICE_ROLE_KEY
-#
-# Vars:
-# SUPABASE_URL = "https://fixatrnmeuhfaspkvlcc.supabase.co"
+#   npx wrangler login
+#   npx wrangler secret put TMDB_API_KEY
+#   npx wrangler secret put TMDB_ACCESS_TOKEN   # optional
+#   npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+#   npx wrangler deploy
+# Then set FILM_SYNC_WORKER_URL in js/config.js
 
 [vars]
-SUPABASE_URL = "https://fixatrnmeuhfaspkvlcc.supabase.co"
+SUPABASE_URL = "https://formatrnmeuhfaspkvlcc.supabase.co"

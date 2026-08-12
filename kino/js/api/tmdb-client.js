@@ -44,7 +44,13 @@ function stringifyParams(params) {
  * @returns {Promise<Response>}
  */
 async function tmdbFetch(url, retries = 2) {
-  const res = await fetch(url);
+  const headers = {};
+  if (CONFIG.TMDB_ACCESS_TOKEN) {
+    headers.Authorization = `Bearer ${CONFIG.TMDB_ACCESS_TOKEN}`;
+    headers.Accept = 'application/json';
+  }
+
+  const res = await fetch(url, { headers });
 
   if (res.status === 429 && retries > 0) {
     await delay(10000);

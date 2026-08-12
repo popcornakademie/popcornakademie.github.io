@@ -2,67 +2,119 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Biergarten – Getränke und Atmosphäre beim Court Side Kino. Reservierung für Tische.">
+  <meta name="description" content="Imbiss beim Court Side Kino – Popcorn, Snacks, Süßes und Biergarten in Wolfratshausen.">
+  <meta name="theme-color" content="#1e1233">
   <title>Biergarten – Court Side Kino</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/popcorn-theme.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Zum Inhalt springen</a>
   <header class="header" role="banner"><div class="header__inner">
-    <a href="index.html" class="header__logo"><span class="header__logo-icon" aria-hidden="true">🎾</span><span>Court Side Kino<span class="header__logo-sub">by Popcornakademie</span></span></a>
+    <a href="index.html" class="header__logo"><span class="header__logo-icon" aria-hidden="true"><svg viewBox="0 0 100 100"><g fill="#FFF4E0"><circle cx="50" cy="27" r="13"/><circle cx="33" cy="35" r="11"/><circle cx="67" cy="35" r="11"/></g><path d="M19 53 h62 l-8 38 h-46 z" fill="#E5423C"/><rect x="15" y="46" width="70" height="11" rx="5.5" fill="#FFC24B"/></svg></span><span>Court Side Kino<span class="header__logo-sub">by Popcornakademie</span></span></a>
     <div class="header__actions"><button class="theme-toggle" aria-label="Dunkelmodus aktivieren" type="button"></button><button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Menü öffnen" type="button"><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span></button></div>
     <nav id="main-nav" class="nav" role="navigation" aria-label="Hauptnavigation"><ul class="nav__list">
       <li><a href="index.html" class="nav__link">Start</a></li><li><a href="programm.html" class="nav__link">Programm</a></li><li><a href="tickets.html" class="nav__link">Tickets</a></li>
-      <li><a href="imbiss.html" class="nav__link">Imbiss</a></li><li><a href="suesses.html" class="nav__link">Süßes</a></li><li><a href="biergarten.html" class="nav__link nav__link--active" aria-current="page">Biergarten</a></li>
+      <li><a href="biergarten.html" class="nav__link nav__link--active" aria-current="page">Biergarten</a></li>
       <li><a href="ueber-uns.html" class="nav__link">Über uns</a></li><li><a href="kontakt.html" class="nav__link">Kontakt</a></li><li><a href="tickets.html" class="nav__link nav__link--cta">Tickets kaufen</a></li>
     </ul></nav>
   </div></header>
   <div class="nav__overlay" aria-hidden="true"></div>
-  <main id="main" class="main">
-    <div class="page-header"><div class="container"><h1 class="page-header__title">Biergarten</h1><p class="page-header__subtitle">Bayerisches Biergarten-Feeling – vor und nach dem Film</p></div></div>
 
-    <section class="section" style="background:var(--color-off-white);"><div class="container">
-      <div class="grid grid--2 reveal" style="align-items:center;gap:var(--space-2xl);">
-        <div>
-          <h2 class="section-title">Atmosphäre pur</h2>
-          <p>Genieße einen kühlen Augustiner unter freiem Himmel, direkt am Tennisplatz des Sportcenters Hahn. Unser Biergarten öffnet eine Stunde vor jeder Vorstellung und bleibt nach dem Film noch eine Weile geöffnet.</p>
-          <p>Mit gemütlichen Bierzeltgarnituren, warmem Licht und dem besonderen Flair eines Sommerabends am Court – so beginnt und endet jeder Filmabend perfekt.</p>
+  <main id="main" class="main">
+    <div class="page-header"><div class="container">
+      <h1 class="page-header__title">Biergarten</h1>
+      <p class="page-header__subtitle">Popcorn, Snacks, Süßes und Biergarten – alles für deinen Filmabend</p>
+    </div></div>
+
+    <section class="section section--cream"><div class="container">
+      <nav class="menu-nav reveal" aria-label="Speisekarten-Bereiche">
+        <a href="#popcorn" class="menu-nav__link menu-nav__link--active">🍿 Popcorn & Süßes</a>
+        <a href="#herzhaft" class="menu-nav__link">🌭 Herzhaft</a>
+        <a href="#getraenke" class="menu-nav__link">🍺 Biergarten</a>
+        <a href="#reservierung" class="menu-nav__link">📅 Reservieren</a>
+      </nav>
+
+      <div id="popcorn" class="menu-section reveal">
+        <div class="text-center" style="margin-bottom:var(--space-xl);">
+          <span class="badge badge--tennis" style="font-size:var(--font-size-sm);padding:0.5em 1.5em;">🍿 Popcornakademie</span>
         </div>
-        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600&h=400&fit=crop" alt="Biergarten-Atmosphäre mit Bierzeltgarnituren" loading="lazy" style="border-radius:var(--border-radius-lg);width:100%;" width="600" height="400">
+        <h2 class="section-title">Popcorn-Variationen</h2>
+        <div id="menu-popcorn-grid" class="grid grid--2" style="margin-top:var(--space-xl);"></div>
+
+        <div id="suess" class="menu-section" style="border:none;padding-top:var(--space-2xl);margin-top:var(--space-2xl);">
+          <h2 class="section-title">Süßigkeiten</h2>
+          <div id="menu-suess-grid" class="grid grid--2" style="margin-top:var(--space-xl);"></div>
+        </div>
+
+        <div style="margin-top:var(--space-2xl);">
+          <h2 class="section-title">Kombi-Pakete</h2>
+          <div id="menu-kombi-grid" class="grid grid--2" style="margin-top:var(--space-xl);"></div>
+        </div>
+      </div>
+
+      <div id="herzhaft" class="menu-section reveal">
+        <h2 class="section-title">Herzhaftes</h2>
+        <div id="menu-salzig-grid" class="grid grid--2" style="margin-top:var(--space-xl);"></div>
+        <div style="margin-top:var(--space-2xl);">
+          <h2 class="section-title">Snacks</h2>
+          <div id="menu-snack-grid" class="grid grid--2" style="margin-top:var(--space-xl);"></div>
+        </div>
+        <p class="text-muted text-center" style="margin-top:var(--space-xl);font-size:var(--font-size-sm);">Alle Preise inkl. MwSt. Allergene auf Anfrage. Speisen werden vor Ort zubereitet.</p>
+      </div>
+
+      <div id="getraenke" class="menu-section reveal">
+        <div class="grid grid--2" style="align-items:center;gap:var(--space-2xl);margin-bottom:var(--space-2xl);">
+          <div>
+            <h2 class="section-title">Biergarten-Feeling</h2>
+            <p>Genieße einen kühlen Augustiner unter freiem Himmel, direkt am Tennisplatz des Sportcenters Hahn. Der Biergarten öffnet eine Stunde vor jeder Vorstellung und bleibt nach dem Film noch eine Weile geöffnet.</p>
+            <p class="text-muted">Mit gemütlichen Bierzeltgarnituren, warmem Licht und Sommerabend-Stimmung am Court.</p>
+          </div>
+          <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600&h=400&fit=crop&q=80" alt="Biergarten-Atmosphäre mit Bierzeltgarnituren" loading="lazy" style="border-radius:var(--border-radius-lg);width:100%;" width="600" height="400">
+        </div>
+
+        <h2 class="section-title">Getränkekarte</h2>
+        <div id="menu-bier" style="margin-top:var(--space-xl);">
+          <h3 style="margin-bottom:var(--space-md);">Bier vom Fass</h3>
+          <div id="menu-bier-grid" class="grid grid--2"></div>
+        </div>
+        <div id="menu-getraenk" style="margin-top:var(--space-2xl);">
+          <h3 style="margin-bottom:var(--space-md);">Alkoholfreie Getränke</h3>
+          <div id="menu-getraenk-grid" class="grid grid--2"></div>
+        </div>
+        <div id="menu-cocktail" style="margin-top:var(--space-2xl);">
+          <h3 style="margin-bottom:var(--space-md);">Cocktails & Specials</h3>
+          <div id="menu-cocktail-grid" class="grid grid--2"></div>
+        </div>
       </div>
     </div></section>
 
-    <section class="section"><div class="container">
-      <h2 class="section-title reveal">Getränkekarte</h2>
-      <div id="menu-bier" class="reveal"><h3 style="margin:var(--space-xl) 0 var(--space-md);">Bier vom Fass</h3><div id="menu-bier-grid" class="grid grid--2"></div></div>
-      <div id="menu-getraenk" class="reveal" style="margin-top:var(--space-2xl);"><h3 style="margin-bottom:var(--space-md);">Alkoholfreie Getränke</h3><div id="menu-getraenk-grid" class="grid grid--2"></div></div>
-      <div id="menu-cocktail" class="reveal" style="margin-top:var(--space-2xl);"><h3 style="margin-bottom:var(--space-md);">Cocktails & Specials</h3><div id="menu-cocktail-grid" class="grid grid--2"></div></div>
-    </div></section>
-
-    <section class="section" style="background:var(--color-primary);color:var(--color-white);" id="reservierung"><div class="container container--narrow">
-      <h2 class="section-title reveal" style="color:var(--color-white);">Tisch reservieren</h2>
+    <section class="section section--night" id="reservierung"><div class="container container--narrow">
+      <h2 class="section-title reveal" style="color:var(--color-cream);">Tisch reservieren</h2>
       <p class="section-subtitle reveal" style="color:var(--color-gray-300);">Sichere dir einen Platz im Biergarten für deinen Filmabend</p>
       <form id="reservation-form" class="reveal" aria-label="Biergarten-Reservierung">
-        <div class="form-group"><label class="form-label" for="res-name" style="color:var(--color-white);">Name *</label><input type="text" id="res-name" class="form-input" required></div>
-        <div class="form-group"><label class="form-label" for="res-email" style="color:var(--color-white);">E-Mail *</label><input type="email" id="res-email" class="form-input" required></div>
-        <div class="form-group"><label class="form-label" for="res-phone" style="color:var(--color-white);">Telefon</label><input type="tel" id="res-phone" class="form-input"></div>
+        <div class="form-group"><label class="form-label" for="res-name" style="color:var(--color-cream);">Name *</label><input type="text" id="res-name" class="form-input" required></div>
+        <div class="form-group"><label class="form-label" for="res-email" style="color:var(--color-cream);">E-Mail *</label><input type="email" id="res-email" class="form-input" required></div>
+        <div class="form-group"><label class="form-label" for="res-phone" style="color:var(--color-cream);">Telefon</label><input type="tel" id="res-phone" class="form-input"></div>
         <div class="grid grid--2" style="gap:var(--space-md);">
-          <div class="form-group"><label class="form-label" for="res-date" style="color:var(--color-white);">Datum *</label><input type="date" id="res-date" class="form-input" required></div>
-          <div class="form-group"><label class="form-label" for="res-time" style="color:var(--color-white);">Uhrzeit *</label><input type="time" id="res-time" class="form-input" required></div>
+          <div class="form-group"><label class="form-label" for="res-date" style="color:var(--color-cream);">Datum *</label><input type="date" id="res-date" class="form-input" required></div>
+          <div class="form-group"><label class="form-label" for="res-time" style="color:var(--color-cream);">Uhrzeit *</label><input type="time" id="res-time" class="form-input" required></div>
         </div>
-        <div class="form-group"><label class="form-label" for="res-party" style="color:var(--color-white);">Personenzahl *</label>
+        <div class="form-group"><label class="form-label" for="res-party" style="color:var(--color-cream);">Personenzahl *</label>
           <select id="res-party" class="form-select" required><option value="">Bitte wählen</option><option value="2">2 Personen</option><option value="4">4 Personen</option><option value="6">6 Personen</option><option value="8">8 Personen</option><option value="10">10+ Personen</option></select>
         </div>
-        <div class="form-group"><label class="form-label" for="res-notes" style="color:var(--color-white);">Anmerkungen</label><textarea id="res-notes" class="form-textarea" placeholder="z.B. Kinderstuhl, Geburtstag..."></textarea></div>
+        <div class="form-group"><label class="form-label" for="res-notes" style="color:var(--color-cream);">Anmerkungen</label><textarea id="res-notes" class="form-textarea" placeholder="z.B. Kinderstuhl, Geburtstag..."></textarea></div>
         <button type="submit" class="btn btn--primary btn--lg">Reservierung absenden</button>
       </form>
     </div></section>
   </main>
+
   <footer class="footer" role="contentinfo"><div class="container"><div class="footer__bottom" style="border:none;padding:0;"><span>&copy; 2026 Court Side Kino · Popcornakademie</span></div></div></footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
   <script src="js/config.js" defer></script><script src="js/utils.js" defer></script><script src="js/supabase-client.js" defer></script>
-  <script src="js/components/navbar.js" defer></script><script src="js/components/film-card.js" defer></script><script src="js/animations.js" defer></script><script src="js/app.js" defer></script>
-  <script src="js/pages/biergarten.js" defer></script>
+  <script src="js/components/navbar.js" defer></script><script src="js/components/film-card.js" defer></script><script src="js/animations.js" defer></script>
+  <script src="js/popcorn.js" defer></script><script src="js/app.js" defer></script>
+  <script src="js/pages/menu.js" defer></script>
 </body></html>

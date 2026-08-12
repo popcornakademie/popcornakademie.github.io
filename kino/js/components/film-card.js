@@ -27,7 +27,7 @@ function renderFilmCard(film, screening = null) {
         <div class="film-card__poster">
           <img src="${film.poster_url || 'assets/images/poster-placeholder.jpg'}" alt="Filmplakat: ${sanitize(film.title)}" loading="lazy" width="400" height="600" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop'">
           <div class="film-card__badges">
-            <span class="badge badge--genre">${sanitize(film.genre)}</span>
+            <span class="badge badge--genre">${sanitize(film.genre || 'Film')}</span>
             ${pdBadge}
             ${sourceBadge}
             ${film.rating ? `<span class="badge badge--rating">${sanitize(film.rating)}</span>` : ''}
@@ -37,7 +37,7 @@ function renderFilmCard(film, screening = null) {
         <div class="film-card__body">
           <h3 class="film-card__title">${sanitize(film.title)}</h3>
           <div class="film-card__meta">
-            <span>${film.duration_min} Min.</span>
+            ${film.duration_min ? `<span>${film.duration_min} Min.</span>` : ''}
             ${dateInfo}
           </div>
           <p class="film-card__description">${sanitize(film.description || '')}</p>
@@ -151,6 +151,7 @@ function initCountdown(targetDate, container) {
 
 /**
  * Court Side Kino – Weather Widget
+ * Shows forecast for dusk/sunset hour of the current day
  */
 async function initWeatherWidget(container) {
   if (!container || !CONFIG.ENABLE_WEATHER) return;
@@ -159,19 +160,48 @@ async function initWeatherWidget(container) {
 
   try {
     const res = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weather_code&timezone=Europe/Berlin`
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&hourly=temperature_2m,weather_code&daily=sunset&timezone=Europe/Berlin&forecast_days=1`
     );
     const data = await res.json();
-    const temp = Math.round(data.current.temperature_2m);
-    const code = data.current.weather_code;
+    const times = data.hourly?.time || [];
+    const temps = data.hourly?.temperature_2m || [];
+    const codes = data.hourly?.weather_code || [];
+    const sunsetIso = data.daily?.sunset?.[0];
+
+    if (!times.length || !sunsetIso) {
+      container.innerHTML = '';
+      return;
+    }
+
+    // Sunset time parts (already Europe/Berlin from API)
+    const sunsetTime = sunsetIso.includes('T') ? sunsetIso.split('T')[1] : sunsetIso;
+    const [sunsetH, sunsetM] = sunsetTime.split(':').map(Number);
+    const sunsetMinutes = sunsetH * 60 + sunsetM;
+
+    // Pick hourly slot closest to sunset
+    let idx = 0;
+    let bestDiff = Infinity;
+    times.forEach((t, i) => {
+      const timePart = t.includes('T') ? t.split('T')[1] : t;
+      const [hh, mm] = timePart.split(':').map(Number);
+      const diff = Math.abs(hh * 60 + mm - sunsetMinutes);
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        idx = i;
+      }
+    });
+
+    const temp = Math.round(temps[idx]);
+    const code = codes[idx];
     const icon = getWeatherIcon(code);
+    const duskLabel = `${String(sunsetH).padStart(2, '0')}:${String(sunsetM).padStart(2, '0')}`;
 
     container.innerHTML = `
       <div class="weather-widget">
         <span class="weather-widget__icon" aria-hidden="true">${icon}</span>
         <div>
           <div class="weather-widget__temp">${temp}°C</div>
-          <div class="weather-widget__desc">${getWeatherDesc(code)} · Wolfratshausen</div>
+          <div class="weather-widget__desc">${getWeatherDesc(code)} · Dunkel ab ${duskLabel} Uhr · Wolfratshausen</div>
         </div>
       </div>
     `;

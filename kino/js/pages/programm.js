@@ -68,7 +68,10 @@ function renderProgram() {
 }
 
 async function showFilmDetail(slug) {
-  const { data: film } = await getFilmBySlug(slug);
+  let { data: film } = await getFilmBySlug(slug);
+  if (!film) {
+    film = allFilms.find(f => f.slug === slug) || null;
+  }
   if (!film) return;
 
   const { data: screenings } = await getScreeningsByFilm(film.id);

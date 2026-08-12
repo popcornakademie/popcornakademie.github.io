@@ -1,7 +1,0 @@
-name = "csk-email-worker"
-main = "src/index.js"
-compatibility_date = "2024-01-01"
-
-# Set secrets via: wrangler secret put RESEND_API_KEY
-# [vars]
-# No public vars needed – all secrets via wrangler secret

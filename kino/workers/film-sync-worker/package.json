@@ -1,0 +1,14 @@
+{
+  "name": "csk-film-sync-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node ../../scripts/sync-films.mjs",
+    "deploy": "wrangler deploy",
+    "secret:tmdb": "wrangler secret put TMDB_API_KEY",
+    "secret:supabase": "wrangler secret put SUPABASE_SERVICE_ROLE_KEY"
+  },
+  "devDependencies": {
+    "wrangler": "^4.22.0"
+  }
+}
