@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Buchung erfolgreich – Court Side Kino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/popcorn-theme.css">
+  <style>@media print { .no-print { display: none !important; } .print-only { display: block !important; } } .print-only { display: none; }</style>
+</head>
+<body>
+  <main id="main" class="main" style="padding-top:var(--space-3xl);">
+    <section class="section"><div class="container container--narrow text-center">
+      <div class="reveal" id="success-content">
+        <div style="font-size:4rem;margin-bottom:var(--space-lg);" aria-hidden="true">🎬</div>
+        <h1 class="section-title" style="color:var(--color-success);">Buchung erfolgreich!</h1>
+        <p class="section-subtitle">Deine Tickets sind gesichert. Eine Bestätigung wurde an deine E-Mail gesendet.</p>
+
+        <div id="booking-details" class="qr-display" style="margin:var(--space-2xl) 0;">
+          <!-- Loaded dynamically -->
+        </div>
+
+        <div class="no-print" style="display:flex;gap:var(--space-md);justify-content:center;flex-wrap:wrap;margin-top:var(--space-xl);">
+          <button onclick="window.print()" class="btn btn--outline">Ticket drucken</button>
+          <a href="programm.html" class="btn btn--primary">Zurück zum Programm</a>
+        </div>
+      </div>
+    </div></section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  <script src="js/config.js" defer></script><script src="js/utils.js" defer></script><script src="js/supabase-client.js" defer></script>
+  <script src="js/pages/buchung-erfolgreich.js" defer></script>
+</body></html>

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://popcornakademie.github.io/kino/sitemap.xml
+
+Disallow: /buchung-erfolgreich.html
+Disallow: /404.html
