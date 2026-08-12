@@ -54,9 +54,12 @@ function renderFilmCard(film, screening = null) {
 function renderFilmCards(films, container, screenings = []) {
   if (!container) return;
   container.innerHTML = films.map(film => {
-    const screening = screenings.find(s => s.film_id === film.id);
+    const screening = screenings.find(s => s.film_id === film.id || s.film_id === film.slug);
     return renderFilmCard(film, screening);
   }).join('');
+  container.classList.add('reveal--visible');
+  container.querySelectorAll('.reveal').forEach(el => el.classList.add('reveal--visible'));
+  if (typeof observeReveals === 'function') observeReveals(container);
 }
 
 /**

@@ -2,23 +2,43 @@
  * Court Side Kino – Scroll Animations & Parallax
  */
 
-function initScrollAnimations() {
-  const reveals = document.querySelectorAll('.reveal, .stagger-children');
-  if (!reveals.length) return;
+let revealObserver = null;
 
-  const observer = new IntersectionObserver(
+function getRevealObserver() {
+  if (revealObserver) return revealObserver;
+
+  revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('reveal--visible');
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+    { threshold: 0.1, rootMargin: '0px 0px -20px 0px' }
   );
 
-  reveals.forEach(el => observer.observe(el));
+  return revealObserver;
+}
+
+/** Observe newly injected .reveal elements (safe to call after dynamic HTML) */
+function observeReveals(root = document) {
+  const observer = getRevealObserver();
+  root.querySelectorAll('.reveal:not(.reveal--visible), .stagger-children:not(.reveal--visible)').forEach(el => {
+    // If already in viewport (or tiny), show immediately
+    const rect = el.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (inView) {
+      el.classList.add('reveal--visible');
+    } else {
+      observer.observe(el);
+    }
+  });
+}
+
+function initScrollAnimations() {
+  observeReveals(document);
 }
 
 function initParallax() {

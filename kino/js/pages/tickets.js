@@ -39,7 +39,7 @@ async function loadScreenings() {
     const film = s.films || {};
     const title = film.title || 'Film';
     return `
-      <div class="film-card reveal" style="cursor:pointer;" data-screening-id="${s.id}" role="button" tabindex="0" aria-label="Vorstellung wählen: ${sanitize(title)}">
+      <div class="film-card reveal reveal--visible" style="cursor:pointer;" data-screening-id="${s.id}" role="button" tabindex="0" aria-label="Vorstellung wählen: ${sanitize(title)}">
         <div class="film-card__body">
           <h3 class="film-card__title">${sanitize(title)}</h3>
           <div class="film-card__meta">
@@ -57,6 +57,10 @@ async function loadScreenings() {
       </div>
     `;
   }).join('');
+
+  // Parent section may still be .reveal without --visible
+  container.classList.add('reveal--visible');
+  if (typeof observeReveals === 'function') observeReveals(container);
 
   container.querySelectorAll('[data-screening-id]').forEach(el => {
     el.addEventListener('click', () => selectScreening(el.dataset.screeningId));
