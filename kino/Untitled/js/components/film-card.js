@@ -27,7 +27,7 @@ function renderFilmCard(film, screening = null) {
         <div class="film-card__poster">
           <img src="${film.poster_url || 'assets/images/poster-placeholder.jpg'}" alt="Filmplakat: ${sanitize(film.title)}" loading="lazy" width="400" height="600" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop'">
           <div class="film-card__badges">
-            <span class="badge badge--genre">${sanitize(film.genre)}</span>
+            <span class="badge badge--genre">${sanitize(film.genre || 'Film')}</span>
             ${pdBadge}
             ${sourceBadge}
             ${film.rating ? `<span class="badge badge--rating">${sanitize(film.rating)}</span>` : ''}
@@ -37,7 +37,7 @@ function renderFilmCard(film, screening = null) {
         <div class="film-card__body">
           <h3 class="film-card__title">${sanitize(film.title)}</h3>
           <div class="film-card__meta">
-            <span>${film.duration_min} Min.</span>
+            ${film.duration_min ? `<span>${film.duration_min} Min.</span>` : ''}
             ${dateInfo}
           </div>
           <p class="film-card__description">${sanitize(film.description || '')}</p>

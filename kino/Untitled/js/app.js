@@ -39,7 +39,7 @@ function getHeaderHTML(activePage = '') {
     { href: 'index.html', label: 'Start' },
     { href: 'programm.html', label: 'Programm' },
     { href: 'tickets.html', label: 'Tickets' },
-    { href: 'biergarten.html', label: 'Imbiss' },
+    { href: 'biergarten.html', label: 'Biergarten' },
     { href: 'ueber-uns.html', label: 'Über uns' },
     { href: 'kontakt.html', label: 'Kontakt' },
   ];
@@ -54,7 +54,7 @@ function getHeaderHTML(activePage = '') {
     <header class="header" role="banner">
       <div class="header__inner">
         <a href="index.html" class="header__logo" aria-label="Court Side Kino – Startseite">
-          <span class="header__logo-icon" aria-hidden="true">🎾</span>
+          <span class="header__logo-icon" aria-hidden="true"><svg viewBox="0 0 100 100"><g fill="#FFF4E0"><circle cx="50" cy="27" r="13"/><circle cx="33" cy="35" r="11"/><circle cx="67" cy="35" r="11"/></g><path d="M19 53 h62 l-8 38 h-46 z" fill="#E5423C"/><rect x="15" y="46" width="70" height="11" rx="5.5" fill="#FFC24B"/></svg></span>
           <span>
             Court Side Kino
             <span class="header__logo-sub">by Popcornakademie</span>
@@ -102,7 +102,7 @@ function getFooterHTML() {
             <h3 class="footer__heading">Programm</h3>
             <a href="programm.html" class="footer__link">Aktuelles Programm</a>
             <a href="tickets.html" class="footer__link">Tickets kaufen</a>
-            <a href="biergarten.html" class="footer__link">Imbiss</a>
+            <a href="biergarten.html" class="footer__link">Biergarten</a>
           </div>
           <div>
             <h3 class="footer__heading">Infos</h3>
