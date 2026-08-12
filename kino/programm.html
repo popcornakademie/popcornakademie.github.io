@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Programm – Alle Vorstellungen im Court Side Kino Wolfratshausen. Open-Air Filmabende am Tennisplatz.">
+  <meta property="og:title" content="Programm – Court Side Kino">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <title>Programm – Court Side Kino</title>
+</head>
+<body>
+  <a href="#main" class="skip-link">Zum Inhalt springen</a>
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo"><span class="header__logo-icon" aria-hidden="true">🎾</span><span>Court Side Kino<span class="header__logo-sub">by Popcornakademie</span></span></a>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Dunkelmodus aktivieren" type="button"></button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Menü öffnen" type="button"><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span></button>
+      </div>
+      <nav id="main-nav" class="nav" role="navigation" aria-label="Hauptnavigation">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">Start</a></li>
+          <li><a href="programm.html" class="nav__link nav__link--active" aria-current="page">Programm</a></li>
+          <li><a href="tickets.html" class="nav__link">Tickets</a></li>
+          <li><a href="imbiss.html" class="nav__link">Imbiss</a></li>
+          <li><a href="suesses.html" class="nav__link">Süßes</a></li>
+          <li><a href="biergarten.html" class="nav__link">Biergarten</a></li>
+          <li><a href="ueber-uns.html" class="nav__link">Über uns</a></li>
+          <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
+          <li><a href="tickets.html" class="nav__link nav__link--cta">Tickets kaufen</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main id="main" class="main">
+    <div class="page-header">
+      <div class="container">
+        <h1 class="page-header__title">Programm</h1>
+        <p class="page-header__subtitle">Alle Vorstellungen der Saison – Open-Air am Tennisplatz</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <!-- Search & Filter -->
+        <div class="filter-bar reveal" role="search" aria-label="Filme filtern">
+          <div class="search-box" style="flex:2;">
+            <svg class="search-box__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="search" id="film-search" class="search-box__input" placeholder="Film suchen..." aria-label="Film suchen">
+          </div>
+          <select id="filter-genre" class="filter-bar__select" aria-label="Nach Genre filtern">
+            <option value="">Alle Genres</option>
+            <option value="Action">Action</option>
+            <option value="Drama">Drama</option>
+            <option value="Komödie">Komödie</option>
+            <option value="Musical">Musical</option>
+          </select>
+          <select id="filter-date" class="filter-bar__select" aria-label="Nach Datum filtern">
+            <option value="">Alle Daten</option>
+          </select>
+        </div>
+
+        <!-- Film Grid -->
+        <div id="program-grid" class="grid grid--3 stagger-children reveal">
+          <!-- Loaded dynamically -->
+        </div>
+
+        <!-- Film Detail Modal -->
+        <div id="film-detail" class="reveal" style="display:none;margin-top:var(--space-3xl);">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__bottom" style="border:none;padding:0;">
+        <span>&copy; 2026 Court Side Kino · Popcornakademie</span>
+        <span><a href="kontakt.html#datenschutz" class="footer__link" style="display:inline;">Datenschutz</a> · <a href="kontakt.html#impressum" class="footer__link" style="display:inline;">Impressum</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/supabase-client.js" defer></script>
+  <script src="js/components/navbar.js" defer></script>
+  <script src="js/components/film-card.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/pages/programm.js" defer></script>
+</body>
+</html>

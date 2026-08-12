@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Court Side Kino – Open-Air Kino am Tennisplatz in Wolfratshausen. Filmabende unter freiem Himmel by Popcornakademie @ Sportcenter Hahn.">
+  <meta name="theme-color" content="#1a2a4a">
+  <meta property="og:title" content="Court Side Kino – Open-Air Kino in Wolfratshausen">
+  <meta property="og:description" content="Filmgenuss unter freiem Himmel am Tennisplatz – mit Biergarten-Feeling by Popcornakademie">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://popcornakademie.github.io/kino">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <title>Court Side Kino – Open-Air Kino in Wolfratshausen</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MovieTheater",
+    "name": "Court Side Kino",
+    "description": "Open-Air Kino am Tennisplatz des Sportcenters Hahn in Wolfratshausen",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Hahner Straße 12",
+      "addressLocality": "Wolfratshausen",
+      "postalCode": "82515",
+      "addressCountry": "DE"
+    },
+    "url": "https://popcornakademie.github.io/kino"
+  }
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Zum Inhalt springen</a>
+
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo" aria-label="Court Side Kino – Startseite">
+        <span class="header__logo-icon" aria-hidden="true">🎾</span>
+        <span>Court Side Kino<span class="header__logo-sub">by Popcornakademie</span></span>
+      </a>
+      <div class="header__actions">
+        <button class="theme-toggle" aria-label="Dunkelmodus aktivieren" type="button"></button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Menü öffnen" type="button">
+          <span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span><span class="nav-toggle__bar"></span>
+        </button>
+      </div>
+      <nav id="main-nav" class="nav" role="navigation" aria-label="Hauptnavigation">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link nav__link--active" aria-current="page">Start</a></li>
+          <li><a href="programm.html" class="nav__link">Programm</a></li>
+          <li><a href="tickets.html" class="nav__link">Tickets</a></li>
+          <li><a href="imbiss.html" class="nav__link">Imbiss</a></li>
+          <li><a href="suesses.html" class="nav__link">Süßes</a></li>
+          <li><a href="biergarten.html" class="nav__link">Biergarten</a></li>
+          <li><a href="ueber-uns.html" class="nav__link">Über uns</a></li>
+          <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
+          <li><a href="tickets.html" class="nav__link nav__link--cta">Tickets kaufen</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main id="main" class="main">
+    <!-- Hero -->
+    <section class="hero" aria-label="Willkommen">
+      <div class="hero__bg parallax-bg" data-speed="0.2">
+        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1920&h=1080&fit=crop" alt="" role="presentation" width="1920" height="1080">
+      </div>
+      <div class="hero__overlay"></div>
+      <div class="hero__projector-light" aria-hidden="true"></div>
+      <div class="hero__content">
+        <span class="hero__badge">🎾 Open-Air am Tennisplatz · Wolfratshausen</span>
+        <h1 class="hero__title">Court Side Kino</h1>
+        <p class="hero__subtitle">Filmabende unter freiem Himmel – mit Popcorn, Biergarten-Feeling und dem besonderen Flair des Sportcenters Hahn.</p>
+        <div class="hero__actions">
+          <a href="tickets.html" class="btn btn--primary btn--lg">Tickets sichern</a>
+          <a href="programm.html" class="btn btn--secondary btn--lg">Programm ansehen</a>
+        </div>
+        <div id="weather-widget" style="margin-top:var(--space-2xl);"></div>
+      </div>
+      <div class="hero__scroll-indicator" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </div>
+    </section>
+
+    <!-- Countdown -->
+    <section class="section" style="background:var(--color-primary);color:var(--color-white);">
+      <div class="container text-center">
+        <h2 class="section-title reveal" style="color:var(--color-white);">Nächste Vorstellung</h2>
+        <p class="section-subtitle reveal" style="color:var(--color-gray-300);" id="next-screening-info">Wird geladen...</p>
+        <div id="countdown" class="reveal"></div>
+      </div>
+    </section>
+
+    <!-- Aktuelles Programm -->
+    <section class="section" aria-labelledby="program-heading">
+      <div class="container">
+        <h2 id="program-heading" class="section-title reveal">Aktuelles Programm</h2>
+        <p class="section-subtitle reveal">Die heißesten Filme des Sommers – unter freiem Himmel</p>
+        <div id="featured-films" class="grid grid--3 stagger-children reveal">
+          <!-- Loaded dynamically -->
+        </div>
+        <div class="text-center" style="margin-top:var(--space-2xl);">
+          <a href="programm.html" class="btn btn--outline">Alle Filme ansehen</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="section" style="background:var(--color-off-white);" aria-labelledby="quicklinks-heading">
+      <div class="container">
+        <h2 id="quicklinks-heading" class="section-title reveal text-center">Alles für deinen Filmabend</h2>
+        <div class="quick-links reveal" style="margin-top:var(--space-2xl);">
+          <a href="tickets.html" class="quick-link">
+            <span class="quick-link__icon">🎟️</span>
+            <span class="quick-link__label">Tickets</span>
+          </a>
+          <a href="imbiss.html" class="quick-link">
+            <span class="quick-link__icon">🍿</span>
+            <span class="quick-link__label">Imbiss</span>
+          </a>
+          <a href="biergarten.html" class="quick-link">
+            <span class="quick-link__icon">🍺</span>
+            <span class="quick-link__label">Biergarten</span>
+          </a>
+          <a href="suesses.html" class="quick-link">
+            <span class="quick-link__icon">🍬</span>
+            <span class="quick-link__label">Süßes</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <h2 id="testimonials-heading" class="section-title reveal text-center">Das sagen unsere Gäste</h2>
+        <div class="grid grid--3 stagger-children reveal" style="margin-top:var(--space-2xl);">
+          <blockquote class="testimonial">
+            <div class="testimonial__stars" aria-label="5 von 5 Sternen">★★★★★</div>
+            <p class="testimonial__text">„Ein magischer Abend! Popcorn, Bier und ein großartiger Film – direkt am Tennisplatz. So schön war Kino noch nie."</p>
+            <cite class="testimonial__author">— Maria K., Wolfratshausen</cite>
+          </blockquote>
+          <blockquote class="testimonial">
+            <div class="testimonial__stars" aria-label="5 von 5 Sternen">★★★★★</div>
+            <p class="testimonial__text">„Das Court Side Kino ist unser Sommer-Highlight. Die Atmosphäre ist einzigartig – Sport, Kino und Biergarten in einem."</p>
+            <cite class="testimonial__author">— Thomas & Lisa, Geretsried</cite>
+          </blockquote>
+          <blockquote class="testimonial">
+            <div class="testimonial__stars" aria-label="5 von 5 Sternen">★★★★★</div>
+            <p class="testimonial__text">„Popcornakademie macht das einfach perfekt. Bestes Popcorn ever und die Location ist der Hammer!"</p>
+            <cite class="testimonial__author">— Stefan M., München</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="section" style="background:var(--color-primary);color:var(--color-white);" aria-labelledby="newsletter-heading">
+      <div class="container container--narrow text-center">
+        <h2 id="newsletter-heading" class="section-title reveal" style="color:var(--color-white);">Bleib auf dem Laufenden</h2>
+        <p class="section-subtitle reveal" style="color:var(--color-gray-300);">Erhalte Updates zu neuen Filmen, Special Events und exklusiven Angeboten.</p>
+        <form id="home-newsletter-form" class="reveal" style="display:flex;gap:var(--space-sm);max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center;" aria-label="Newsletter-Anmeldung">
+          <input type="email" class="form-input" placeholder="deine@email.de" required aria-label="E-Mail-Adresse" style="flex:1;min-width:200px;">
+          <button type="submit" class="btn btn--primary">Anmelden</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand">Court Side Kino</div>
+          <div class="footer__tagline">by Popcornakademie</div>
+          <p>Open-Air Kino am Tennisplatz des Sportcenters Hahn in Wolfratshausen.</p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg></a>
+            <a href="#" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer__heading">Programm</h3>
+          <a href="programm.html" class="footer__link">Aktuelles Programm</a>
+          <a href="tickets.html" class="footer__link">Tickets kaufen</a>
+          <a href="imbiss.html" class="footer__link">Imbiss</a>
+          <a href="biergarten.html" class="footer__link">Biergarten</a>
+        </div>
+        <div>
+          <h3 class="footer__heading">Infos</h3>
+          <a href="ueber-uns.html" class="footer__link">Über uns</a>
+          <a href="kontakt.html" class="footer__link">Kontakt & FAQ</a>
+        </div>
+        <div>
+          <h3 class="footer__heading">Newsletter</h3>
+          <form id="footer-newsletter-form" class="footer__newsletter-form" aria-label="Newsletter-Anmeldung">
+            <input type="email" class="footer__newsletter-input" placeholder="deine@email.de" required aria-label="E-Mail-Adresse">
+            <button type="submit" class="btn btn--primary btn--sm">Anmelden</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Court Side Kino · Popcornakademie · Sportcenter Hahn, Wolfratshausen</span>
+        <span><a href="kontakt.html#datenschutz" class="footer__link" style="display:inline;">Datenschutz</a> · <a href="kontakt.html#impressum" class="footer__link" style="display:inline;">Impressum</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner" role="dialog" aria-label="Cookie-Hinweis">
+    <div class="cookie-banner__inner">
+      <p class="cookie-banner__text">Wir verwenden Cookies, um dein Erlebnis zu verbessern. <a href="kontakt.html#datenschutz" style="color:var(--color-accent);">Mehr erfahren</a></p>
+      <div class="cookie-banner__actions">
+        <button class="btn btn--primary btn--sm" data-cookie-accept type="button">Akzeptieren</button>
+        <button class="btn btn--outline btn--sm" data-cookie-decline type="button" style="color:var(--color-white);border-color:var(--color-gray-400);">Ablehnen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/supabase-client.js" defer></script>
+  <script src="js/components/navbar.js" defer></script>
+  <script src="js/components/film-card.js" defer></script>
+  <script src="js/components/seat-plan.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/pages/home.js" defer></script>
+</body>
+</html>
