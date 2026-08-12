@@ -39,9 +39,7 @@ function getHeaderHTML(activePage = '') {
     { href: 'index.html', label: 'Start' },
     { href: 'programm.html', label: 'Programm' },
     { href: 'tickets.html', label: 'Tickets' },
-    { href: 'imbiss.html', label: 'Imbiss' },
-    { href: 'suesses.html', label: 'Süßes' },
-    { href: 'biergarten.html', label: 'Biergarten' },
+    { href: 'imbiss.html', label: 'Essen & Trinken' },
     { href: 'ueber-uns.html', label: 'Über uns' },
     { href: 'kontakt.html', label: 'Kontakt' },
   ];
@@ -104,8 +102,7 @@ function getFooterHTML() {
             <h3 class="footer__heading">Programm</h3>
             <a href="programm.html" class="footer__link">Aktuelles Programm</a>
             <a href="tickets.html" class="footer__link">Tickets kaufen</a>
-            <a href="imbiss.html" class="footer__link">Imbiss</a>
-            <a href="biergarten.html" class="footer__link">Biergarten</a>
+            <a href="imbiss.html" class="footer__link">Essen & Trinken</a>
           </div>
           <div>
             <h3 class="footer__heading">Infos</h3>

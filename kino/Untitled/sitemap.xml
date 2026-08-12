@@ -3,9 +3,7 @@
   <url><loc>https://popcornakademie.github.io/kino/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://popcornakademie.github.io/kino/programm.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://popcornakademie.github.io/kino/tickets.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://popcornakademie.github.io/kino/imbiss.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://popcornakademie.github.io/kino/suesses.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://popcornakademie.github.io/kino/biergarten.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://popcornakademie.github.io/kino/imbiss.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://popcornakademie.github.io/kino/ueber-uns.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://popcornakademie.github.io/kino/kontakt.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>

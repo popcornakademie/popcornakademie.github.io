@@ -503,3 +503,54 @@ h1, h2, h3, h4, h5, h6 {
   .float { animation: none; }
   .beam { animation: none; opacity: 0.7; }
 }
+
+/* Gastronomie page – section nav */
+.menu-nav {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: var(--space-md) 0;
+  position: sticky;
+  top: var(--header-height);
+  z-index: calc(var(--z-sticky) - 1);
+  background: rgba(255, 244, 224, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-gray-100);
+  margin-bottom: var(--space-2xl);
+}
+
+.menu-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1rem;
+  min-height: 44px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  border-radius: var(--border-radius-full);
+  border: 2px solid transparent;
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.menu-nav__link:hover {
+  background: rgba(30, 18, 51, 0.06);
+  color: var(--color-primary);
+}
+
+.menu-nav__link--active {
+  background: var(--color-primary);
+  color: var(--color-cream);
+}
+
+.menu-section {
+  scroll-margin-top: calc(var(--header-height) + 72px);
+}
+
+.menu-section + .menu-section {
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-3xl);
+  border-top: 1px solid var(--color-gray-100);
+}
