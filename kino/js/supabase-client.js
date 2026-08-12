@@ -81,19 +81,76 @@ async function getFilmByTmdbId(tmdbId) {
 // SCREENINGS
 // ============================================================
 
+let _localScreeningsCache = null;
+let _localFilmsCache = null;
+
+async function loadLocalFilmsCache() {
+  if (_localFilmsCache) return _localFilmsCache;
+  try {
+    const res = await fetch('data/films-cache.json');
+    if (!res.ok) return [];
+    _localFilmsCache = await res.json();
+    return _localFilmsCache;
+  } catch {
+    return [];
+  }
+}
+
+async function loadLocalScreeningsCache() {
+  if (_localScreeningsCache) return _localScreeningsCache;
+  try {
+    const res = await fetch('data/screenings-cache.json');
+    if (!res.ok) return [];
+    const screenings = await res.json();
+    const films = await loadLocalFilmsCache();
+    const byId = Object.fromEntries(films.map(f => [f.id, f]));
+    _localScreeningsCache = screenings.map(s => ({
+      ...s,
+      films: byId[s.film_id] || { id: s.film_id, title: s.film_id, slug: s.film_id },
+    }));
+    return _localScreeningsCache;
+  } catch {
+    return [];
+  }
+}
+
+function todayISO() {
+  return new Date().toISOString().split('T')[0];
+}
+
+async function getLocalUpcomingScreenings() {
+  const all = await loadLocalScreeningsCache();
+  const today = todayISO();
+  return all
+    .filter(s => s.screening_date >= today)
+    .sort((a, b) =>
+      a.screening_date.localeCompare(b.screening_date) ||
+      String(a.start_time).localeCompare(String(b.start_time))
+    );
+}
+
 async function getScreenings() {
-  return dbQuery(
+  const result = await dbQuery(
     () => initSupabase()
       .from('screenings')
       .select('*, films(*)')
-      .gte('screening_date', new Date().toISOString().split('T')[0])
+      .gte('screening_date', todayISO())
       .order('screening_date', { ascending: true }),
     'Fehler beim Laden der Vorstellungen'
   );
+
+  if (result.data?.length) return result;
+
+  const local = await getLocalUpcomingScreenings();
+  if (local.length) {
+    console.info(`Showing ${local.length} screenings from local cache`);
+    return { data: local, error: null };
+  }
+  return result;
 }
 
 async function getScreeningById(id) {
-  return dbQuery(
+  const result = await dbQuery(
     () => initSupabase()
       .from('screenings')
       .select('*, films(*)')
@@ -101,15 +158,19 @@ async function getScreeningById(id) {
       .single(),
     'Vorstellung nicht gefunden'
   );
+  if (result.data) return result;
+
+  const local = await loadLocalScreeningsCache();
+  const found = local.find(s => s.id === id) || null;
+  return { data: found, error: found ? null : 'Vorstellung nicht gefunden' };
 }
 
 async function getNextScreening() {
-  const today = new Date().toISOString().split('T')[0];
-  return dbQuery(
+  const result = await dbQuery(
     () => initSupabase()
       .from('screenings')
       .select('*, films(*)')
-      .gte('screening_date', today)
+      .gte('screening_date', todayISO())
       .eq('is_sold_out', false)
       .order('screening_date', { ascending: true })
       .order('start_time', { ascending: true })
@@ -117,18 +178,28 @@ async function getNextScreening() {
       .single(),
     'Keine kommende Vorstellung'
   );
+  if (result.data) return result;
+
+  const local = await getLocalUpcomingScreenings();
+  const next = local.find(s => !s.is_sold_out) || null;
+  return { data: next, error: next ? null : 'Keine kommende Vorstellung' };
 }
 
 async function getScreeningsByFilm(filmId) {
-  return dbQuery(
+  const result = await dbQuery(
     () => initSupabase()
       .from('screenings')
       .select('*')
       .eq('film_id', filmId)
-      .gte('screening_date', new Date().toISOString().split('T')[0])
+      .gte('screening_date', todayISO())
       .order('screening_date', { ascending: true }),
     'Fehler beim Laden der Vorstellungen'
   );
+  if (result.data?.length) return result;
+
+  const local = await getLocalUpcomingScreenings();
+  const filtered = local.filter(s => s.film_id === filmId || s.films?.slug === filmId);
+  return { data: filtered, error: null };
 }
 
 // ============================================================
