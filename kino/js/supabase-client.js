@@ -26,13 +26,22 @@ function initSupabase() {
 }
 
 /**
- * Generic query wrapper with error handling
+ * Generic query wrapper with error handling + timeout
+ * (avoids hanging forever when Supabase is slow/unreachable)
  */
-async function dbQuery(queryFn, errorMessage = 'Datenbankfehler') {
+async function dbQuery(queryFn, errorMessage = 'Datenbankfehler', timeoutMs = 2500) {
   try {
     const client = initSupabase();
     if (!client) throw new Error('Supabase nicht verfügbar');
-    const { data, error } = await queryFn(client);
+
+    const result = await Promise.race([
+      queryFn(client),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Zeitüberschreitung')), timeoutMs)
+      ),
+    ]);
+
+    const { data, error } = result;
     if (error) throw error;
     return { data, error: null };
   } catch (err) {
@@ -181,6 +190,25 @@ async function getFilmByTmdbId(tmdbId) {
 // ============================================================
 
 async function getScreenings() {
+  // Local catalog first – Supabase screenings table may not exist yet
+  const localUpcoming = await getLocalUpcomingScreenings();
+  if (localUpcoming.length) {
+    // Still try Supabase in background-friendly short timeout; prefer DB if populated
+    const result = await dbQuery(
+      (db) => db
+        .from('screenings')
+        .select('*, films(*)')
+        .gte('screening_date', todayISO())
+        .order('screening_date', { ascending: true }),
+      'Fehler beim Laden der Vorstellungen',
+      2000
+    );
+    if (result.data?.length) return result;
+
+    console.info(`Showing ${localUpcoming.length} screenings from local catalog`);
+    return { data: localUpcoming, error: null };
+  }
+
   const result = await dbQuery(
     (db) => db
       .from('screenings')
@@ -189,14 +217,15 @@ async function getScreenings() {
       .order('screening_date', { ascending: true }),
     'Fehler beim Laden der Vorstellungen'
   );
-
   if (result.data?.length) return result;
 
-  const local = await getLocalUpcomingScreenings();
-  if (local.length) {
-    console.info(`Showing ${local.length} screenings from local catalog`);
-    return { data: local, error: null };
+  // Last resort: show full local season even if date filter emptied it
+  const allLocal = await loadLocalScreeningsCache();
+  if (allLocal.length) {
+    console.info(`Showing full local season (${allLocal.length} screenings)`);
+    return { data: allLocal, error: null };
   }
+
   return { data: [], error: result.error };
 }
 

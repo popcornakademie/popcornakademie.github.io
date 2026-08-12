@@ -25,52 +25,65 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('customer-form')?.addEventListener('submit', handleCheckout);
 });
 
-async function loadScreenings() {
-  const container = document.getElementById('screening-list');
-  container.innerHTML = renderLoadingSpinner();
-
-  const { data: screenings } = await getScreenings();
-  if (!screenings?.length) {
-    container.innerHTML = '<p>Keine Vorstellungen verfügbar. <a href="programm.html">Zum Programm</a></p>';
-    return;
-  }
-
+function renderScreeningPicker(container, screenings) {
   container.innerHTML = screenings.map(s => {
     const film = s.films || {};
     const title = film.title || 'Film';
+    const poster = film.poster_url
+      ? `<div class="screening-pick__poster"><img src="${sanitize(film.poster_url)}" alt="" loading="lazy" width="80" height="120"></div>`
+      : '';
     return `
-      <div class="film-card reveal reveal--visible" style="cursor:pointer;" data-screening-id="${s.id}" role="button" tabindex="0" aria-label="Vorstellung wählen: ${sanitize(title)}">
-        <div class="film-card__body">
-          <h3 class="film-card__title">${sanitize(title)}</h3>
-          <div class="film-card__meta">
-            <span>${formatDate(s.screening_date, { weekday: 'short', day: 'numeric', month: 'short' })}</span>
-            <span>${formatTime(s.start_time)}</span>
-          </div>
-          <div class="film-card__footer">
-            <span class="film-card__price">ab ${formatPrice(s.price_adult)}</span>
+      <button type="button" class="screening-pick" data-screening-id="${s.id}" aria-label="Vorstellung wählen: ${sanitize(title)}" ${s.is_sold_out ? 'disabled' : ''}>
+        ${poster}
+        <div class="screening-pick__body">
+          <h3 class="screening-pick__title">${sanitize(title)}</h3>
+          <p class="screening-pick__meta">
+            ${formatDate(s.screening_date, { weekday: 'short', day: 'numeric', month: 'short', year: undefined })}
+            · ${formatTime(s.start_time)}
+          </p>
+          <div class="screening-pick__footer">
+            <span class="screening-pick__price">ab ${formatPrice(s.price_adult)}</span>
             ${s.is_sold_out
               ? '<span class="badge badge--sold-out">Ausverkauft</span>'
               : `<span class="badge badge--tennis">${s.available_seats} Plätze frei</span>`
             }
           </div>
         </div>
-      </div>
+      </button>
     `;
   }).join('');
 
-  // Parent section may still be .reveal without --visible
-  container.classList.add('reveal--visible');
-  if (typeof observeReveals === 'function') observeReveals(container);
-
   container.querySelectorAll('[data-screening-id]').forEach(el => {
     el.addEventListener('click', () => selectScreening(el.dataset.screeningId));
-    el.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        selectScreening(el.dataset.screeningId);
-      }
-    });
   });
+}
+
+async function loadScreenings() {
+  const container = document.getElementById('screening-list');
+  if (!container) return;
+
+  // Paint immediately from embedded catalog (no network)
+  let instant = [];
+  try {
+    instant = await getLocalUpcomingScreenings();
+    if (!instant.length) instant = await loadLocalScreeningsCache();
+  } catch (_) { /* ignore */ }
+
+  if (instant.length) {
+    renderScreeningPicker(container, instant);
+  } else {
+    container.innerHTML = renderLoadingSpinner();
+  }
+
+  const { data: screenings } = await getScreenings();
+  if (screenings?.length) {
+    renderScreeningPicker(container, screenings);
+    return;
+  }
+
+  if (!instant.length) {
+    container.innerHTML = '<p>Keine Vorstellungen verfügbar. <a href="programm.html">Zum Programm</a></p>';
+  }
 }
 
 async function selectScreening(id) {

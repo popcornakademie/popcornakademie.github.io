@@ -13,11 +13,26 @@ function formatPrice(amount) {
 }
 
 /**
+ * Parse YYYY-MM-DD as local calendar date (avoid UTC day shift)
+ */
+function parseLocalDate(dateStr) {
+  if (typeof dateStr === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+  return new Date(dateStr);
+}
+
+/**
  * Format date in German locale
  */
 function formatDate(dateStr, options = {}) {
   const defaults = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-  return new Date(dateStr).toLocaleDateString('de-DE', { ...defaults, ...options });
+  const opts = { ...defaults, ...options };
+  Object.keys(opts).forEach((k) => {
+    if (opts[k] === undefined) delete opts[k];
+  });
+  return parseLocalDate(dateStr).toLocaleDateString('de-DE', opts);
 }
 
 /**
